@@ -1,6 +1,4 @@
 import React from 'react';
-import { Switch, BrowserRouter as Router, Route, Link } from 'react-router-dom';
-
 const Task = ({lists, match, history, editDate}) => {
   let currentListObject = lists.filter( item => {
     return item.listName === match.params.listname

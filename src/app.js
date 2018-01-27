@@ -1,34 +1,14 @@
-// bootstrap css
+// bootstrap css + main styles
 import 'bootstrap/dist/css/bootstrap.css'
 import styles from './app.css';
-const path = require('path');
-//console.log('helo this dirname is ',path.resolve(__dirname, 'dist'));
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+
+import Title from './components/Title';
 import List from './components/List'
 import Task from './components/Task';
-
-// title component
-const Title = ({numberOfLists}) => {
-  return (
-    <div>
-      <Route exact path='/' render={ () => <h1> All Lists ({numberOfLists}) </h1>} />
-      <Route exact path='/:listname' render={ ({match}) => <h1>{match.params.listname}</h1> } />
-    </div>
-  );
-};
-
-// list item component
-const ListName = ({name, removeList}) => {
-  return (
-    <div>
-    <Link to={`/${name}`}>{name}</Link>
-    <button onClick={() => removeList(name)}>X</button>
-    </div>
-  );
-};
 
 // createList component
 const CreateList = ({ addList }) => {
@@ -41,22 +21,29 @@ const CreateList = ({ addList }) => {
   );
 };
 
-// list area component
-const ListArea = ({lists, addList, removeList, addTask, editDate}) => {
-  const allListsFunction = () => {
-    return (
-      <div>
-      {lists.map( (item, index) => <ListName name={item.listName} key={index} removeList={removeList}/> )}
-      <hr/>
-      <CreateList addList={addList}/>
-      </div>
-    );
-  }
-
+// common area component
+const CommonArea = ({lists, addList, removeList, addTask, editDate}) => {
  return (
     <Switch>
+      <Route exact path='/' render={() => {
+        return (
+          <div>
+            {
+              lists.map( (item, index) => {
+                return (
+                  <div key={index}>
+                    <Link to={`/${item.listName}`}>{item.listName}</Link>
+                    <button onClick={() => removeList(item.listName)}>X</button>
+                  </div>
+                );
+              })
+            }
+            <hr/>
+            <CreateList addList={addList}/>
+          </div>
+        );
+      }} />
       <Route exact path='/:listname' render={ props => <List lists={lists} addTask={addTask} {...props} />} />
-      <Route exact path='/' render={allListsFunction} />
       <Route exact path='/:listname/:taskid' render={ props => <Task lists={lists} editDate={editDate} {...props}/>}/>
     </Switch>
   );
@@ -169,7 +156,7 @@ class Main extends React.Component {
     return (
       <div>
         <Title numberOfLists = { this.state.listCollection.length }/>
-        <ListArea lists = { this.state.listCollection } addList = {this.addList.bind(this)}
+        <CommonArea lists = { this.state.listCollection } addList = {this.addList.bind(this)}
          editDate={this.editDate.bind(this)} addTask={this.addTask.bind(this)} removeList = {this.removeList.bind(this)} />
       </div>
     );

@@ -3,10 +3,10 @@ dist: precise
 rvm:
   - "2.3.1"
 install:
-  - ". ../shell-scripts/install.sh"
+  - ". shell-scripts/install.sh"
 branches:
   only:
     - "master"
     - "development"
-script: ". ../shell-scripts/test.sh"
-after_success: ". ../shell-scripts/final.sh"
+script: ". shell-scripts/test.sh"
+after_success: ". shell-scripts/final.sh"

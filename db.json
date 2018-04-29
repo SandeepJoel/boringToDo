@@ -1,0 +1,43 @@
+{
+  "listCollection": [
+    {
+      "listName": "List-1",
+      "id": 1,
+      "data": [
+        {
+          "taskName": "Task 1",
+          "taskId": "t1",
+          "isDone": false,
+          "details": {
+            "date": "10-11-2017",
+            "time": "10:30pm"
+          }
+        },
+        {
+          "taskName": "Task 2",
+          "taskId": "t2",
+          "isDone": false,
+          "details": {
+            "date": "12-11-2017",
+            "time": "11:30pm"
+          }
+        }
+      ]
+    },
+    {
+      "listName": "List-2",
+      "id": 2,
+      "data": [
+        {
+          "taskName": "Task 3",
+          "taskId": "t3",
+          "isDone": false,
+          "details": {
+            "date": "13-11-2017",
+            "time": "13:30pm"
+          }
+        }
+      ]
+    }
+  ]
+}

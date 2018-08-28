@@ -1,6 +1,5 @@
-// bootstrap css + main styles
-import 'bootstrap/dist/css/bootstrap.css'
-import styles from './app.css';
+// main styles
+import styles from './app.scss';
 
 import React from 'react';
 import ReactDOM from 'react-dom';

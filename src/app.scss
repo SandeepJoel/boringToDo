@@ -9,9 +9,11 @@ html {
 body {
   background: var(--primary-color);
 }
-#root > div {
-  margin: 0 auto;
-  text-align: center;
+#root {
+  div {
+    margin: 0 auto;
+    text-align: center;
+  }
 }
 
 h1,

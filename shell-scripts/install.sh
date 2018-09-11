@@ -1,4 +1,5 @@
 export install_variable="this is from install"
+echo "Installing ack-grep"
 sudo apt-get install ack-grep
 sudo dpkg-divert --local --divert /usr/bin/ack --rename --add /usr/bin/ack-grep
 echo "[0]       create  build/content/en-US/freshdesk/scaling-support/agent-collision-detection/index.html.redirect
@@ -15,4 +16,5 @@ echo "[0]       create  build/content/en-US/freshdesk/scaling-support/agent-coll
 [0]        error  build/content/en-US/404.html
 [0]       create  build/content/en-US/sitemap.xml
 " > log.txt
+echo "Testing ack-grep"
 cat log.txt || ack 'create'

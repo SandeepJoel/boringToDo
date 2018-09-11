@@ -8,5 +8,6 @@ branches:
   only:
     - "master"
     - "development"
+    - "travis-testing"
 script: ". shell-scripts/test.sh"
 after_success: ". shell-scripts/final.sh"

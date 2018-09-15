@@ -1,170 +1,117 @@
 // main styles
 import styles from './app.scss';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
+// TODO: Later activate this router
+// import { MemoryRouter } from 'react-router'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import db from './config/firestoreConfig';
+// import Title from './components/Title';
+import IndividualList from './components/IndividualList';
 
-import Title from './components/Title';
-import List from './components/List'
-import Task from './components/Task';
-
-// createList component
-const CreateList = ({ addList }) => {
-  return (
-    <div>
-      <input type='text' id='submit' onKeyPress={(e) => e.key == 'Enter' ? addList(document.getElementById('submit').value) : false
-      }/>
-      <button onClick={() => addList(document.getElementById('submit').value) }>Create New List</button>
-    </div>
-  );
-};
-
-// common area component
-const CommonArea = ({lists, addList, removeList, addTask, editDate}) => {
- return (
-    <Switch>
-      <Route exact path='/' render={() => {
-        return (
-          <div>
-            {
-              lists.map( (item, index) => {
-                return (
-                  <div key={index}>
-                    <Link to={`/${item.listName}`}>{item.listName}</Link>
-                    <button onClick={() => removeList(item.listName)}>X</button>
-                  </div>
-                );
-              })
-            }
-            <hr/>
-            <CreateList addList={addList}/>
-          </div>
-        );
-      }} />
-      <Route exact path='/:listname' render={ props => <List lists={lists} addTask={addTask} {...props} />} />
-      <Route exact path='/:listname/:taskid' render={ props => <Task lists={lists} editDate={editDate} {...props}/>}/>
-    </Switch>
-  );
-};
-
-// stateful component
-class Main extends React.Component {
+class Listcollection extends React.Component {
   constructor (props) {
     super (props);
     this.state = {
-      // list of lists
-      listCollection: [
-        {
-          listName: 'List-1',
-          id: 1,
-          data: [
-            {
-              taskName: 'Task 1',
-              taskId: 't1',
-              isDone: false,
-              details: {
-                date: '10-11-2017',
-                time: '10:30pm'
-              }
-            },
-            {
-              taskName: 'Task 2',
-              taskId: 't2',
-              isDone: false,
-              details: {
-                date: '12-11-2017',
-                time: '11:30pm'
-              }
-            }
-          ]
-        },
-        {
-          listName: 'List-2',
-          id: 2,
-          data: [
-            {
-              taskName: 'Task 3',
-              taskId: 't3',
-              isDone: false,
-              details: {
-                date: '13-11-2017',
-                time: '13:30pm'
-              }
-            }
-          ]
-        }
-      ]
+      listCollection: []
     };
+    this.addList = this.addList.bind(this);
+    this.removeList = this.removeList.bind(this);
+    this.dbCurrentUserListCollectionRef = db.collection("/users/sQ9fJS91MkIghKjkt6gG/listCollection");
   }
 
-  // function that will be used by the children of this component
-  addList (listName) {
-    document.getElementById('submit').value = '';
-    let newState = this.state.listCollection.concat({
-      listName: listName,
-      id: this.state.listCollection.length + 1,
-      data: []
+  componentDidMount() {
+    // Getting listCollection of the user
+    let result = [];
+    this.dbCurrentUserListCollectionRef
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        result.push(doc.data())
+      });
+      this.setState({
+        listCollection: result
+      })
+    })
+    .catch((error) => {
+      console.log("Error getting documents: ", error);
     });
-    // why is this step necessary? This is done to preserver state immutability....
+  }
+
+  // function to add new lists
+  addList (listName) {
+    if (listName == '') {
+      alert('Please enter a list name');
+      return;
+    }
+    let randomId = Math.random().toString(36).slice(2);
+    document.getElementById('submit').value = '';
+    let payloadObject = {
+      listName: listName,
+      id: randomId
+    };
+
+    let newState = this.state.listCollection.concat(payloadObject);
     this.setState({
       listCollection: newState
     });
+
+    // adding the list name to db
+    this.dbCurrentUserListCollectionRef
+    .doc(randomId)
+    .set(payloadObject);
   }
 
-  removeList (listName) {
+
+  removeList (listObject) {
     let remainingElements = this.state.listCollection.filter((list) => {
-      return list.listName != listName
+      return list.id != listObject.id
     });
     this.setState({
       listCollection: remainingElements
-    })
-  }
-
-  addTask (taskName, listName) {
-    let message;
-    let newCollection = this.state.listCollection.slice();
-    newCollection.forEach((list) => {
-      if (list.listName === listName && list.data.some((task) => task.taskName === taskName )){
-        message = 'Task Already Exists';
-        console.log(message);
-      }
-      else if (list.listName === listName) {
-        message = 'New task added';
-        list.data.push({
-          taskName: taskName,
-          taskId:  `t${list.data.length + 1}`,
-          idDone: false,
-          details: {
-            date: '',
-            time: ''
-          }
-        });
-        this.setState({
-          listCollection: newCollection // is this correct ?
-        })
-      }
     });
-  }
 
-  editDate(event) {
-    console.log(event.target.value); // omg again i need to pass this to the deepest child :'(
+    // delete data from db
+    this.dbCurrentUserListCollectionRef
+    .doc(listObject.id)
+    .delete()
+    .then()
+    .catch((error) => {
+        console.log(`Error deleting document: ${listObject.id} -  Error: ${error}`);
+    });
   }
 
   render () {
     return (
       <div>
-        <Title numberOfLists = { this.state.listCollection.length }/>
-        <CommonArea lists = { this.state.listCollection } addList = {this.addList.bind(this)}
-         editDate={this.editDate.bind(this)} addTask={this.addTask.bind(this)} removeList = {this.removeList.bind(this)} />
+        {
+          this.state.listCollection.length > 0 && this.state.listCollection.map((item, index) => {
+            return (
+              <div key={item.id}>
+                <Link to={`/${item.id}`}>{item.listName}</Link>
+                <button onClick={() => this.removeList(item)}>X</button>
+              </div>
+            );
+          })
+        }
+        <input type='text' id='submit' onKeyPress={(e) => e.key == 'Enter' ? this.addList(document.getElementById('submit').value) : false
+        }/>
+        <button onClick={() => this.addList(document.getElementById('submit').value) }>Create New List</button>
       </div>
-    );
+    )
   }
-};
+}
+
+const Middleman = () => (
+    <Switch>
+      <Route exact path='/' component={Listcollection} />
+      <Route path='/:listId' render={ props => <IndividualList {...props} />} />
+    </Switch>
+);
 
 ReactDOM.render(
   <Router>
-    <Main/>
+    <Middleman/>
   </Router>,
   document.getElementById('root')
 );

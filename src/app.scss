@@ -1,6 +1,6 @@
 :root {
-  --primary-color: #C7EFCF;
-  --secondary-color: #585B66;
+  --primary-color:rgb(68, 68, 68);
+  --secondary-color:rgb(221, 211, 151);
 }
 
 html {
@@ -8,12 +8,6 @@ html {
 }
 body {
   background: var(--primary-color);
-}
-#root {
-  div {
-    margin: 0 auto;
-    text-align: center;
-  }
 }
 
 h1,
@@ -29,6 +23,7 @@ h6 {
 a {
   margin: 20px;
   font-weight: bold;
+  text-decoration: none;
   color: var(--secondary-color);
 }
 

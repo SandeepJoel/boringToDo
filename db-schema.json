@@ -1,0 +1,50 @@
+{
+  "userId": 1,
+  "userDetails": {
+    "name": "Joel"
+  },
+  "listCollection": [
+    {
+      "listName": "Personal",
+      "id": 1,
+      "taskCollection": [
+        {
+          "taskName": "Finish the todo app",
+          "taskId": "t1",
+          "isDone": false,
+          "details": {
+            "date": "10-11-2017",
+            "time": "",
+            "description": "cool man"
+          }
+        },
+        {
+          "taskName": "Make it chrome extension",
+          "taskId": "t2",
+          "isDone": false,
+          "details": {
+            "date": "12-11-2017",
+            "time": "",
+            "description": "cool man"
+          }
+        }
+      ]
+    },
+    {
+      "listName": "Office",
+      "id": 23,
+      "taskCollection": [
+        {
+          "taskName": "Complete the content work",
+          "taskId": "t3",
+          "isDone": false,
+          "details": {
+            "date": "13-11-2017",
+            "time": "13:30pm",
+            "description": ""
+          }
+        }
+      ]
+    }
+  ]
+}

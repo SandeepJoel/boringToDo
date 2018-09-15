@@ -1,6 +1,7 @@
 export install_variable="this is from install"
 echo "Installing ack-grep"
 sudo apt-get install ack-grep
+sudo dpkg-divert --local --divert /usr/bin/ack --rename --add /usr/bin/ack-grep
 echo "[0]       create  build/content/en-US/freshdesk/scaling-support/agent-collision-detection/index.html.redirect
 [0]       create  build/content/en-US/freshdesk/scaling-support/mobile-help-desk-management/index.html.redirect
 [0]       create  build/content/en-US/freshdesk/multi-lingual-global-helpdesk/index.html.redirect

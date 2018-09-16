@@ -13,11 +13,16 @@ class Listcollection extends React.Component {
   constructor (props) {
     super (props);
     this.state = {
-      listCollection: []
+      listCollection: [],
+      editingListId: '',
+      editing: false
     };
+    this.dbCurrentUserListCollectionRef = db.collection("/users/sQ9fJS91MkIghKjkt6gG/listCollection");
+    this.listNameEdit = React.createRef();
     this.addList = this.addList.bind(this);
     this.removeList = this.removeList.bind(this);
-    this.dbCurrentUserListCollectionRef = db.collection("/users/sQ9fJS91MkIghKjkt6gG/listCollection");
+    this.toggleEditListName = this.toggleEditListName.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
   }
 
   componentDidMount() {
@@ -62,7 +67,7 @@ class Listcollection extends React.Component {
     .set(payloadObject);
   }
 
-
+  // function to delete lists
   removeList (listObject) {
     let remainingElements = this.state.listCollection.filter((list) => {
       return list.id != listObject.id
@@ -81,14 +86,56 @@ class Listcollection extends React.Component {
     });
   }
 
+  /* function to toggle list name editing */
+  toggleEditListName (listId) {
+    if (this.state.editing == true && this.state.editingListId === listId) {
+      this.setState({
+        editingListId: '',
+        editing: false
+      })
+    } else {
+      this.setState({
+        editingListId: listId,
+        editing: true
+      })
+    }
+  }
+
+  /* function for storing the changing list name value in UI State and in DB */
+  handleEdit (listId, event) {
+    let newListName = event.target.value;
+    let newState = this.state.listCollection.map(item => {
+      return item.listId === listId ? { listId: item.listId, listName: newListName } : item
+      });
+    this.setState({
+      listCollection: newState
+    });
+
+    this.dbCurrentUserListCollectionRef
+    .doc(listId)
+    .update({
+      listName: newListName
+    })
+    .then()
+    .catch((error) => {
+      console.error("Error updating document: ", error);
+    })
+
+  }
+
   render () {
     return (
       <div>
         {
           this.state.listCollection.length > 0 && this.state.listCollection.map((item, index) => {
             return (
-              <div key={item.id}>
-                <Link to={`/${item.id}`}>{item.listName}</Link>
+              <div key={item.listId}>
+                {
+                  (this.state.editing && this.state.editingListId == item.listId) ?
+                    <input ref={this.listNameEdit} type="text" value={item.listName} onChange={(e) => this.handleEdit(item.listId, e)}></input> : <Link to={`/${item.listId}`}>{item.listName}</Link>
+                }
+
+                <button onClick={() => this.toggleEditListName(item.listId)}>i</button>
                 <button onClick={() => this.removeList(item)}>X</button>
               </div>
             );
@@ -103,10 +150,10 @@ class Listcollection extends React.Component {
 }
 
 const Middleman = () => (
-    <Switch>
-      <Route exact path='/' component={Listcollection} />
-      <Route path='/:listId' render={ props => <IndividualList {...props} />} />
-    </Switch>
+  <Switch>
+    <Route exact path='/' component={Listcollection} />
+    <Route path='/:listId' render={ props => <IndividualList {...props} />} />
+  </Switch>
 );
 
 ReactDOM.render(

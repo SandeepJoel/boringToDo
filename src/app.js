@@ -53,7 +53,7 @@ class Listcollection extends React.Component {
     document.getElementById('submit').value = '';
     let payloadObject = {
       listName: listName,
-      id: randomId
+      listId: randomId
     };
 
     let newState = this.state.listCollection.concat(payloadObject);
@@ -70,7 +70,7 @@ class Listcollection extends React.Component {
   // function to delete lists
   removeList (listObject) {
     let remainingElements = this.state.listCollection.filter((list) => {
-      return list.id != listObject.id
+      return list.listId != listObject.listId
     });
     this.setState({
       listCollection: remainingElements
@@ -78,11 +78,11 @@ class Listcollection extends React.Component {
 
     // delete data from db
     this.dbCurrentUserListCollectionRef
-    .doc(listObject.id)
+    .doc(listObject.listId)
     .delete()
     .then()
     .catch((error) => {
-        console.log(`Error deleting document: ${listObject.id} -  Error: ${error}`);
+        console.log(`Error deleting document: ${listObject.listId} -  Error: ${error}`);
     });
   }
 
@@ -120,7 +120,6 @@ class Listcollection extends React.Component {
     .catch((error) => {
       console.error("Error updating document: ", error);
     })
-
   }
 
   render () {

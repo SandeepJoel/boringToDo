@@ -9,10 +9,12 @@ class IndividualList extends React.Component {
     this.state = {
       tasks: []
     };
+
+    this.dbCurrentTaskCollectionRef = db.collection(`/users/sQ9fJS91MkIghKjkt6gG/listCollection/${this.props.match.params.listId}/taskCollection`);
+    this.currentListId = this.props.match.params.listId;
     this.addTask = this.addTask.bind(this);
     this.removeTask = this.removeTask.bind(this);
-    this.currentListId = this.props.match.params.listId;
-    this.dbCurrentTaskCollectionRef = db.collection(`/users/sQ9fJS91MkIghKjkt6gG/listCollection/${this.props.match.params.listId}/taskCollection`);
+    this.handleDescriptionEdit = this.handleDescriptionEdit.bind(this);
   }
 
   componentDidMount() {
@@ -79,6 +81,10 @@ class IndividualList extends React.Component {
     })
   }
 
+  handleDescriptionEdit () {
+    console.log('handling...');
+  }
+
   render () {
     return (
       <Switch>
@@ -104,7 +110,7 @@ class IndividualList extends React.Component {
           )
         }
         } />
-        <Route exact path={`${this.props.match.url}/:taskId`} render = {(props) => <IndividualTask {...props} tasks={this.state.tasks} /> } />
+        <Route exact path={`${this.props.match.url}/:taskId`} render = {(props) => <IndividualTask {...props} tasks={this.state.tasks} handleDescriptionEdit={this.handleDescriptionEdit} /> } />
       </Switch>
     )
   }

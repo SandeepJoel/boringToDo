@@ -131,7 +131,9 @@ class Listcollection extends React.Component {
               <div key={item.listId}>
                 {
                   (this.state.editing && this.state.editingListId == item.listId) ?
-                    <input ref={this.listNameEdit} type="text" value={item.listName} onChange={(e) => this.handleEdit(item.listId, e)}></input> : <Link to={`/${item.listId}`}>{item.listName}</Link>
+                    <input ref={this.listNameEdit} type="text" value={item.listName} onChange={(e) => this.handleEdit(item.listId, e)}></input>
+                    :
+                    <Link to={`/${item.listId}`}>{item.listName}</Link>
                 }
 
                 <button onClick={() => this.toggleEditListName(item.listId)}>i</button>

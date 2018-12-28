@@ -2,13 +2,17 @@
 import styles from './app.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
 // TODO: Later activate this router
 // import { MemoryRouter } from 'react-router'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import db from './config/firestoreConfig';
-// import Title from './components/Title';
 import IndividualList from './components/IndividualList';
 
+library.add(fas, far);
 class Listcollection extends React.Component {
   constructor (props) {
     super (props);
@@ -18,7 +22,6 @@ class Listcollection extends React.Component {
       editing: false
     };
     this.dbCurrentUserListCollectionRef = db.collection("/users/sQ9fJS91MkIghKjkt6gG/listCollection");
-    this.listNameEdit = React.createRef();
     this.addList = this.addList.bind(this);
     this.removeList = this.removeList.bind(this);
     this.toggleEditListName = this.toggleEditListName.bind(this);
@@ -44,13 +47,9 @@ class Listcollection extends React.Component {
   }
 
   // function to add new lists
-  addList (listName) {
-    if (listName == '') {
-      alert('Please enter a list name');
-      return;
-    }
+  addList () {
+    let listName = '';
     let randomId = Math.random().toString(36).slice(2);
-    document.getElementById('submit').value = '';
     let payloadObject = {
       listName: listName,
       listId: randomId
@@ -61,10 +60,12 @@ class Listcollection extends React.Component {
       listCollection: newState
     });
 
-    // adding the list name to db
+    // adding the empty list name to db
     this.dbCurrentUserListCollectionRef
     .doc(randomId)
     .set(payloadObject);
+
+    this.toggleEditListName(randomId);
   }
 
   // function to delete lists
@@ -103,6 +104,10 @@ class Listcollection extends React.Component {
 
   /* function for storing the changing list name value in UI State and in DB */
   handleEdit (listId, event) {
+    if (event.key == 'Enter') {
+      this.toggleEditListName(listId);
+      return;
+    }
     let newListName = event.target.value;
     let newState = this.state.listCollection.map(item => {
       return item.listId === listId ? { listId: item.listId, listName: newListName } : item
@@ -124,27 +129,38 @@ class Listcollection extends React.Component {
 
   render () {
     return (
-      <div>
-        {
-          this.state.listCollection.length > 0 && this.state.listCollection.map((item, index) => {
-            return (
-              <div key={item.listId}>
-                {
-                  (this.state.editing && this.state.editingListId == item.listId) ?
-                    <input ref={this.listNameEdit} type="text" value={item.listName} onChange={(e) => this.handleEdit(item.listId, e)}></input>
-                    :
-                    <Link to={`/${item.listId}`}>{item.listName}</Link>
-                }
+      <div className='lists-section screen-1'>
+        <header>
+          <h2>All lists</h2>
+          <FontAwesomeIcon icon='plus-circle' size="lg" id='create-list' onClick={() => this.addList()} ></FontAwesomeIcon>
+        </header>
+        <div className='lists'>
+          {
+            this.state.listCollection.length > 0 && this.state.listCollection.slice(0).reverse().map((item, index) => {
+              return (
+                <div key={item.listId} className='list'>
+                  <div className='list-initial-view'>
+                  {
+                    (this.state.editing && this.state.editingListId == item.listId) ?
+                      <input autoFocus className='list-name' type="text" value={item.listName} onChange={(e) => this.handleEdit(item.listId, e)} onKeyPress={(e) => this.handleEdit(item.listId, e)}></input>
+                      :
+                      <Link className='list-name' to={`/${item.listId}`}>{item.listName}</Link>
+                  }
 
-                <button onClick={() => this.toggleEditListName(item.listId)}>i</button>
-                <button onClick={() => this.removeList(item)}>X</button>
-              </div>
-            );
-          })
-        }
-        <input type='text' id='submit' onKeyPress={(e) => e.key == 'Enter' ? this.addList(document.getElementById('submit').value) : false
-        }/>
-        <button onClick={() => this.addList(document.getElementById('submit').value) }>Create New List</button>
+                  <FontAwesomeIcon icon="pen" size="sm" className='editListIcon' onClick={() => this.toggleEditListName(item.listId)} />
+                  </div>
+                  <div className={`list-details ${this.state.editingListId == item.listId ? 'active' : ''}`}>
+                    <span className='default-list-input'>
+                      Set as default list <input type='radio' name='default-list'></input></span>
+                    <span onClick={() => this.removeList(item)}>
+                    Delete <FontAwesomeIcon icon="trash-alt"  size="sm" />        </span>
+                    <span>Label <FontAwesomeIcon icon="square" size="sm" /></span>
+                  </div>
+                </div>
+              );
+            })
+          }
+        </div>
       </div>
     )
   }
@@ -158,8 +174,10 @@ const Middleman = () => (
 );
 
 ReactDOM.render(
-  <Router>
-    <Middleman/>
-  </Router>,
-  document.getElementById('root')
+  <div className='widgetContainer'>
+    <Router>
+      <Middleman/>
+    </Router>
+  </div>,
+  document.getElementById('widget-area')
 );

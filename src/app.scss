@@ -1,13 +1,35 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
+
 :root {
-  --primary-color:rgb(68, 68, 68);
-  --secondary-color:rgb(221, 211, 151);
+  --black: #222f3e;
+  --white: #ffffff;
+  --primary-background: #00d2d3;
+  --secondary-background: #ffffff;
+  --debug-color:#57606f;
+  --font-family: 'Roboto', sans-serif
+}
+
+* {
+  font-family: var(--font-family);
+  box-sizing: border-box;
 }
 
 html {
   height: 100vh;
 }
+
 body {
-  background: var(--primary-color);
+  background: var(--debug-color);
+  margin: 0;
+}
+
+input{
+  padding: 0;
+  border: 0;
+  background: transparent;
+  &:focus {
+    outline: none;
+  }
 }
 
 h1,
@@ -16,28 +38,21 @@ h3,
 h4,
 h5,
 h6 {
-  margin-top: 50px;
-  color: var(--secondary-color);
+  color: var(--white);
 }
 
 a {
-  margin: 20px;
-  font-weight: bold;
   text-decoration: none;
-  color: var(--secondary-color);
-}
-
-input {
-  margin: 15px 10px;
-
+  color: var(--black);
 }
 
 button {
-  margin: 5px 15px;
+  margin: 5px;
   padding: 5px 15px;
-  border-color: var(--secondary-color);
-  background-color:  var(--secondary-color);
-  color: var(--primary-color);
+  border-color: var(--black);
+  background-color: var(--white);
+  color: var(--black);
+  border-radius: 3px;
 }
 
 .done {
@@ -46,4 +61,147 @@ button {
 
 input[type="checkbox"] {
  cursor: pointer;
+}
+
+#root {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 100vh;
+}
+
+#animating-area {
+  background-color: #464d5a;
+  flex: 0 0 800px;
+  height: 500px;
+}
+
+#widget-area {
+  border-radius: 3px;
+  background-color: var(--primary-background);
+  height: 600px;
+  flex: 0 0 350px;
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+.hide {
+  display: none;
+}
+
+.editListIcon,
+.deleteIcon {
+  cursor: pointer;
+}
+
+#create-list {
+  cursor: pointer;
+  color: var(--secondary-background);
+}
+
+.lists-section {
+  padding: 10px 30px;
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.lists {
+  height: 450px;
+  overflow-y: auto;
+}
+
+.list {
+  margin-bottom: 20px;
+  width: 100%;
+  font-size: 14px;
+}
+
+input {
+  border: 1px solid white;
+}
+
+input, button {
+  font-size: 14px;
+}
+
+.list-initial-view {
+  position: relative;
+  background-color: var(--secondary-background);
+  padding: 20px 25px;
+  border-radius: 3px;
+  box-shadow: 0 18px 30px -15px rgba(0, 0, 0, .19);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .list-name {
+    flex: 0 0 80%;
+  }
+}
+
+.list-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  position: relative;
+  width: 90%;
+  margin: -50px auto 0;
+  padding: 5px 10px;
+  background-color: var(--secondary-background);
+  box-shadow: 0px 1px 2px 0.5px rgba(0, 0, 0, .09);
+  z-index: 10;
+  height: 65px;
+  transition: margin-top 0.15s ease-in;
+
+  &.active {
+    margin-top: 0px;
+  }
+
+  .default-list-input {
+    align-content: center;
+  }
+}
+
+.lists::-webkit-scrollbar {
+  display: none;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+}
+
+.task-name {
+  flex-grow: 1;
+  input[type=text] {
+    width: 100%;
+  }
+}
+
+.main-body {
+  background-color: #ecf0f1;
+}
+
+
+.screen-2 {
+  .status {
+    display: flex;
+    justify-content: space-between;
+  }
+  header {
+    padding: 0 10px;
+    h3 {
+      margin-bottom: 7px;
+    }
+  }
 }

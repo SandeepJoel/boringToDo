@@ -1,4 +1,6 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 const IndividualTask = (props) => {
   let {tasks, match, history, handleDetailedEdit} = props
   let currentTask = tasks.find( item => {
@@ -6,20 +8,26 @@ const IndividualTask = (props) => {
   });
   if (currentTask) {
     return (
-      <div>
-        <a href='#' onClick={() => history.goBack() }>Back</a>
-        <input type="text" value={currentTask.taskName} onChange={(e) => handleDetailedEdit('taskName',currentTask.taskId, false, e)}></input>
-        <br/>
-        <br/>
-        Description:
-        <br/>
-        <br/>
-        <textarea rows='10' cols='50' value={currentTask.details.description} onChange={(e) => handleDetailedEdit('description', currentTask.taskId, 'details', e)}></textarea>
+      <div className="screen-3">
+        <header>
+          <h2>{currentTask.taskName}</h2>
+          <FontAwesomeIcon className="back" icon="arrow-left" size="lg" onClick={() => history.goBack() }></FontAwesomeIcon>
+        </header>
+        <section className="main-body">
+            <label>Task Name</label>
+            <input type="text" value={currentTask.taskName} onChange={(e) => handleDetailedEdit('taskName',currentTask.taskId, false, e)}></input>
+            <label>Task Description</label>
+            <textarea rows='10' value={currentTask.details.description} onChange={(e) => handleDetailedEdit('description', currentTask.taskId, 'details', e)}></textarea>
+        </section>
       </div>
     );
   } else {
     return (
-      <div>Loading..</div>
+      <div className="screen-3">
+        <header>
+          <h2>Loading...</h2>
+        </header>
+      </div>
     );
   }
 };

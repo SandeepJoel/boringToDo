@@ -9,7 +9,7 @@ class IndividualList extends React.Component {
     super (props);
     this.state = {
       tasks: [],
-      selectedFilter: 'all',
+      selectedFilter: 'active',
       currentListName: '',
       editingTaskId: '',
       editing: false
@@ -199,40 +199,51 @@ class IndividualList extends React.Component {
           return (
             <div className='screen-2'>
               <header>
-                <h3>{this.state.currentListName}</h3>
+                <h2 className="list-heading">{this.state.currentListName || '....'}</h2>
                 <div className="status">
-                  <span>{ isNaN(donePercent) ? "..." : `${donePercent} % done` }</span>
-                  <FontAwesomeIcon icon='plus-circle' size="lg" onClick={() => this.addTask("")}></FontAwesomeIcon>
+                  <span>{ isNaN(donePercent) ? "..." : `${donePercent}% done` }</span>
+                  <FontAwesomeIcon className='add-task' icon='plus-circle' size='2x' onClick={() => this.addTask("")}></FontAwesomeIcon>
                 </div>
               </header>
               <section className='main-body'>
-               {
-                filteredTasks.length > 0 && filteredTasks.slice(0).reverse().map((item, index) => {
-                  return (
-                  <div key={item.taskId} className={ item.isDone ? 'task-item done': 'task-item' }>
-                    <input type='checkbox' name={item.taskName} defaultChecked={item.isDone} onChange={() => this.tickCheckbox(item.taskId)}></input>
-                    <div className='task-name'>
-                    {
-                      (this.state.editing && this.state.editingTaskId == item.taskId) ?
-                      <input  autoFocus type="text" defaultValue={item.taskName} onKeyUp={(e) => this.handleDetailedEdit('taskName',item.taskId, false, e)} ></input>
-                      :
-                      <Link to={`${this.props.match.url}/${item.taskId}`}>{item.taskName}</Link>
-                    }
+               <div className='tasks'>
+                {
+                  filteredTasks.length > 0 && filteredTasks.slice(0).reverse().map((item, index) => {
+                    return (
+                    <div key={item.taskId} className={ "task " + (item.isDone ? 'done': '') }>
+                      <div className='task-initial-view'>
+                        <input type='checkbox' name={item.taskName} defaultChecked={item.isDone} onChange={() => this.tickCheckbox(item.taskId)}></input>
+                        <div className='task-name'>
+                          {
+                            (this.state.editing && this.state.editingTaskId == item.taskId) ?
+                            <input  autoFocus type="text" defaultValue={item.taskName} onKeyUp={(e) => this.handleDetailedEdit('taskName',item.taskId, false, e)} ></input>
+                            :
+                            <Link to={`${this.props.match.url}/${item.taskId}`}>{item.taskName}</Link>
+                          }
+                        </div>
+                        <FontAwesomeIcon icon="pen" size="sm" className='editListIcon' onClick={() => this.toggleEditTaskName(item.taskId)} />
+                      </div>
+                      <div className={`task-details ${this.state.editingTaskId == item.taskId ? 'active' : ''} `}>
+                        <div className='delete-task' onClick={() => this.removeTask(item)}>
+                          <span> Delete task</span>
+                          <FontAwesomeIcon className='delete-icon' icon="trash-alt"  size="sm"/>
+                        </div>
+                      </div>
                     </div>
-                    <button onClick={() => this.toggleEditTaskName(item.taskId)}>i</button>
-                    <button onClick={() => this.removeTask(item)}>X</button>
-                  </div>
-                  );
-                })
-               }
+                    );
+                  })
+                }
+               </div>
               </section>
               <footer>
                 <Link to='/'>
-                  <FontAwesomeIcon icon="arrow-left" size="sm"></FontAwesomeIcon>
+                  <FontAwesomeIcon className="back" icon="arrow-left" size="sm"></FontAwesomeIcon>
                 </Link>
-                <button onClick={() => this.setTasksfilter('all')}> All </button>
-                <button onClick={() => this.setTasksfilter('active')}> Active </button>
-                <button onClick={() => this.setTasksfilter('completed')}> Completed </button>
+                <div className="filters">
+                  <button className={ this.state.selectedFilter === 'all' ? 'selected' : '' } onClick={() => this.setTasksfilter('all')}> All </button>
+                  <button className={ this.state.selectedFilter === 'active' ? 'selected' : '' } onClick={() => this.setTasksfilter('active')}> Active </button>
+                  <button className={ this.state.selectedFilter === 'completed' ? 'selected' : '' } onClick={() => this.setTasksfilter('completed')}> Completed </button>
+                </div>
               </footer>
             </div>
           )

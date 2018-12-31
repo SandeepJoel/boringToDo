@@ -151,10 +151,10 @@ class Listcollection extends React.Component {
                   </div>
                   <div className={`list-details ${this.state.editingListId == item.listId ? 'active' : ''}`}>
                     <span className='default-list-input'>
-                      Set as default list <input type='radio' name='default-list'></input></span>
+                      Set as default <input type='radio' name='default-list'></input></span>
                     <span onClick={() => this.removeList(item)}>
-                    Delete <FontAwesomeIcon icon="trash-alt"  size="sm" />        </span>
-                    <span>Label <FontAwesomeIcon icon="square" size="sm" /></span>
+                      Delete List <FontAwesomeIcon icon="trash-alt"  size="sm" />
+                    </span>
                   </div>
                 </div>
               );

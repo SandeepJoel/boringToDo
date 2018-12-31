@@ -3,6 +3,7 @@
 :root {
   --black: #222f3e;
   --white: #ffffff;
+  --gray: #535c68;
   --primary-background: #00d2d3;
   --secondary-background: #ffffff;
   --debug-color:#57606f;
@@ -26,11 +27,29 @@ body {
 input{
   padding: 0;
   border: 0;
+  margin: 0;
   background: transparent;
+}
+
+input,
+button,
+textarea {
   &:focus {
-    outline: none;
+    outline: none
   }
 }
+
+textarea {
+  border: none;
+  resize: none;
+}
+
+label {
+  padding: 25px 0px 10px;
+  font-size: 14px;
+  color: var(--gray);
+}
+
 
 h1,
 h2,
@@ -52,7 +71,11 @@ button {
   border-color: var(--black);
   background-color: var(--white);
   color: var(--black);
-  border-radius: 3px;
+  border: none;
+  font-size: 12px;
+  color: var(--gray);
+  box-shadow: 0px 1px 3px 1.5px rgba(0, 0, 0, .1);
+  border-radius: 2px;
 }
 
 .done {
@@ -79,6 +102,7 @@ input[type="checkbox"] {
 }
 
 #widget-area {
+  position: relative;
   border-radius: 3px;
   background-color: var(--primary-background);
   height: 600px;
@@ -110,22 +134,27 @@ input[type="checkbox"] {
   }
 }
 
+input {
+  border: 1px solid var(--white);
+}
+
+input {
+  font-size: 14px;
+}
+
+// main list modules
 .lists {
   height: 450px;
   overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .list {
   margin-bottom: 20px;
   width: 100%;
-  font-size: 14px;
-}
-
-input {
-  border: 1px solid white;
-}
-
-input, button {
   font-size: 14px;
 }
 
@@ -160,7 +189,7 @@ input, button {
   background-color: var(--secondary-background);
   box-shadow: 0px 1px 2px 0.5px rgba(0, 0, 0, .09);
   z-index: 10;
-  height: 65px;
+  padding: 20px 15px;
   transition: margin-top 0.15s ease-in;
 
   &.active {
@@ -172,9 +201,65 @@ input, button {
   }
 }
 
-.lists::-webkit-scrollbar {
-  display: none;
+
+// task module
+
+.tasks {
+  height: 460px;
+  overflow-y: auto;
+  padding: 30px 20px 0px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
+
+.task {
+  margin-bottom: 20px;
+  width: 100%;
+  font-size: 14px;
+  padding: 0 15px;
+}
+
+.task-initial-view {
+  position: relative;
+  background-color: var(--secondary-background);
+  padding: 15px 20px;
+  border-radius: 3px;
+  box-shadow: 0 18px 30px -15px rgba(0, 0, 0, .19);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .task-name {
+    flex: 0 0 80%;
+  }
+}
+
+.task-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  position: relative;
+  width: 90%;
+  margin: -40px auto 0;
+  background-color: var(--secondary-background);
+  box-shadow: 0px 1px 2px 0.5px rgba(0, 0, 0, .09);
+  z-index: 10;
+  padding: 15px 20px;
+  transition: margin-top 0.15s ease-in;
+
+  &.active {
+    margin-top: 0px;
+  }
+
+}
+
 
 .task-item {
   display: flex;
@@ -188,20 +273,84 @@ input, button {
   }
 }
 
+// TODO: 2. dirty code -> for alignment fix
+.delete-task {
+  cursor: pointer;
+  svg {
+    margin-left: 10px;
+  }
+}
+
 .main-body {
   background-color: #ecf0f1;
 }
 
-
-.screen-2 {
+.screen-2 { // TODO: 3. class name resolution fix
   .status {
     display: flex;
     justify-content: space-between;
+    margin: 10px 0; // TODO: 4. how to reduce this code ?
+    span {
+      font-size: 12px;
+    }
   }
   header {
-    padding: 0 10px;
-    h3 {
-      margin-bottom: 7px;
+    margin: 0 20px; // TODO: 1. wrapper fixes  is there a better way for this ?
+    overflow: auto;
+    position: relative;
+
+    .list-heading {
+      margin-bottom: 10px;
+    }
+
+    .add-task {
+      position: absolute;
+      right: 0;
+      top: 35px;
+      color: var(--white);
+    }
+  }
+
+  footer {
+    display: flex;
+    padding: 10px 20px; // TODO: 1. wrapper fixes  is there a better way for this ?
+    align-items: center;
+    justify-content: space-between;
+
+    .back {
+      color: var(--gray);
+    }
+
+    .selected {
+      background-color: lightgrey;
+    }
+  }
+}
+
+.screen-3 {
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 20px;
+
+    .back {
+      color: var(--white);
+    }
+  }
+
+  .main-body {
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+    min-height: 400px;
+
+    textarea,
+    input[type="text"] {
+      background-color: var(--white);
+      padding: 10px;
+      font-size: 16px;
+      box-shadow: 0px 2px 3px 0.5px rgba(0, 0, 0, .06);
     }
   }
 }

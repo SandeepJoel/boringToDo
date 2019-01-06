@@ -9,7 +9,7 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 // TODO: Later activate this router
 // import { MemoryRouter } from 'react-router'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
-import db from './config/firestoreConfig';
+import {db, googleSignIn, googleSignOut, authStateChange } from './config/firestoreConfig';
 import IndividualList from './components/IndividualList';
 
 library.add(fas, far);
@@ -173,6 +173,46 @@ const Middleman = () => (
   </Switch>
 );
 
+
+class User extends React.Component {
+  constructor (props) {
+    super (props);
+    this.defaultState = {
+      userName: "User",
+      userPhotoUrl: ""
+    };
+    this.state = this.defaultState;
+  }
+  componentDidMount () {
+    authStateChange(
+      // on google signIn state
+      (user) => {
+      this.setState({
+        userName: user.displayName,
+        userPhotoUrl: user.photoURL
+      })
+    },
+    // on google signOut state
+    () => {
+      this.setState(this.defaultState);
+    }
+    )
+  }
+
+  render () {
+    return (
+      <div>
+        <button onClick={googleSignIn}>Google Sign In</button>
+        <span id="user-name">
+          { this.state.userName }
+        </span>
+        <img src={ this.state.userPhotoUrl } alt="" id="user-photo" />
+        <button onClick={googleSignOut}>Google Sign out</button>
+      </div>
+    );
+  }
+}
+
 ReactDOM.render(
   <div className='widgetContainer'>
     <Router>
@@ -180,4 +220,9 @@ ReactDOM.render(
     </Router>
   </div>,
   document.getElementById('widget-area')
+);
+
+ReactDOM.render(
+  <User/>,
+  document.getElementById('user')
 );

@@ -95,13 +95,13 @@ input[type="checkbox"] {
   min-height: 100vh;
 }
 
-#animating-area {
-  background-color: #464d5a;
-  flex: 0 0 800px;
-  height: 500px;
-}
+// #animating-area {
+//   background-color: #464d5a;
+//   flex: 0 0 800px;
+//   height: 500px;
+// }
 
-#widget-area {
+#todo-container {
   position: relative;
   border-radius: 3px;
   background-color: var(--primary-background);

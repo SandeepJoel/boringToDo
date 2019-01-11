@@ -21,12 +21,12 @@ export function authStateChange (signInCallback, signOutCallback) {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       console.log("User is signed in --- ASC")
-      console.log(user);
+      // console.log(user);
       // trigger the passed callback function with the user object
       signInCallback(user);
     } else {
       console.log("User is signed out --- ASC")
-      signOutCallback();
+      signOutCallback && signOutCallback();
     }
   });
 }

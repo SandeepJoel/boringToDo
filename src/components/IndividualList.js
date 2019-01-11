@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
-import db from '../config/firestoreConfig';
+import { db, authStateChange } from '../config/firestoreConfig';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import IndividualTask from './IndividualTask';
 
@@ -14,8 +14,7 @@ class IndividualList extends React.Component {
       editingTaskId: '',
       editing: false
     };
-    this.dbCurrentTaskCollectionRef = db.collection(`/users/sQ9fJS91MkIghKjkt6gG/listCollection/${this.props.match.params.listId}/taskCollection`);
-    this.dbCurrentListDocRef = db.collection(`/users/sQ9fJS91MkIghKjkt6gG/listCollection`).doc(this.props.match.params.listId);
+
     this.currentListId = this.props.match.params.listId;
     this.addTask = this.addTask.bind(this);
     this.removeTask = this.removeTask.bind(this);
@@ -27,27 +26,42 @@ class IndividualList extends React.Component {
   }
 
   componentDidMount() {
-    let tasksArray = [];
+    authStateChange(
+      (user) => {
+        db.collection("users").where("userDetails.name", "==", user.displayName)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            console.log("In individual list");
+            console.log(doc.id, "===>", doc.data())
+            this.dbCurrentListDocRef = db.collection(`/users/${doc.id}/listCollection`).doc(this.props.match.params.listId);
+            this.dbCurrentTaskCollectionRef = db.collection(`/users/${doc.id}/listCollection/${this.props.match.params.listId}/taskCollection`);
 
-    this.dbCurrentListDocRef.get().then((doc) => {
-      this.setState({
-        currentListName :doc.data().listName
-      });
-    });
-    // get data from db
-    this.dbCurrentTaskCollectionRef
-    .get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        tasksArray.push(doc.data());
-      });
-      this.setState({
-        tasks: tasksArray
-      });
-    })
-    .catch((error) => {
-      console.log(`Error: ${error}`);
-    });
+            // get user's tasks in a particular list
+            let tasksArray = [];
+            this.dbCurrentListDocRef.get().then((doc) => {
+              this.setState({
+                currentListName :doc.data().listName
+              });
+            });
+            // get data from db
+            this.dbCurrentTaskCollectionRef
+            .get()
+            .then((querySnapshot) => {
+              querySnapshot.forEach((doc) => {
+                tasksArray.push(doc.data());
+              });
+              this.setState({
+                tasks: tasksArray
+              });
+            })
+            .catch((error) => {
+              console.log(`Error: ${error}`);
+            });
+          })
+        })
+      }
+    )
   }
 
   addTask (taskName) {

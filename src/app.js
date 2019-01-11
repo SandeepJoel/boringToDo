@@ -13,6 +13,57 @@ import {db, googleSignIn, googleSignOut, authStateChange } from './config/firest
 import IndividualList from './components/IndividualList';
 
 library.add(fas, far);
+
+const MyContext = React.createContext();
+class MyProvider extends React.Component {
+  constructor (props) {
+    super (props);
+    this.defaultState = {
+      userName: "X - User",
+      userPhotoUrl: "",
+      userId: ""
+    }
+    this.state = this.defaultState;
+  }
+
+  componentDidMount() {
+    authStateChange (
+      // on google signIn state
+      (user) => {
+        db.collection("users").where("userDetails.name", "==", user.displayName)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            console.log("In PROVIDER");
+            console.log(doc.id, "===>", doc.data());
+            this.setState({
+              userName: user.displayName,
+              userPhotoUrl: user.photoURL,
+              userId: doc.id
+            })
+          })
+        })
+        .catch((error) => {
+          console.log("Error getting documents: ", error);
+        });
+      },
+      // on google signOut state
+      () => {
+        this.setState(this.defaultState);
+      }
+    )
+  }
+
+  render () {
+    return (
+      <MyContext.Provider value={{
+        state: this.state
+      }}>
+        {this.props.children}
+      </MyContext.Provider>
+    );
+  }
+}
 class Listcollection extends React.Component {
   constructor (props) {
     super (props);
@@ -21,29 +72,33 @@ class Listcollection extends React.Component {
       editingListId: '',
       editing: false
     };
-    this.dbCurrentUserListCollectionRef = db.collection("/users/sQ9fJS91MkIghKjkt6gG/listCollection");
     this.addList = this.addList.bind(this);
     this.removeList = this.removeList.bind(this);
     this.toggleEditListName = this.toggleEditListName.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
   }
 
-  componentDidMount() {
-    // Getting listCollection of the user
-    let result = [];
-    this.dbCurrentUserListCollectionRef
-    .get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        result.push(doc.data())
-      });
-      this.setState({
-        listCollection: result
+  componentDidUpdate(prevProps) {
+    console.log(this.props.userData.state.userId);
+    console.log(prevProps.userData.state.userId)
+    if (this.props.userData.state.userId !== prevProps.userData.state.userId && this.props.userData.state.userId !== "") {
+      this.dbCurrentUserListCollectionRef = db.collection(`/users/${this.props.userData.state.userId}/listCollection`);
+      let result = [];
+      // Getting listCollection of the user
+      this.dbCurrentUserListCollectionRef
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          result.push(doc.data())
+        });
+        this.setState({
+          listCollection: result
+        })
       })
-    })
-    .catch((error) => {
-      console.log("Error getting documents: ", error);
-    });
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
+      });
+    }
   }
 
   // function to add new lists
@@ -131,7 +186,7 @@ class Listcollection extends React.Component {
     return (
       <div className='lists-section screen-1'>
         <header>
-          <h2>All lists</h2>
+          <h2>All lists {this.props.userData.state.userId}</h2>
           <FontAwesomeIcon icon='plus-circle' size="lg" id='create-list' onClick={() => this.addList()} ></FontAwesomeIcon>
         </header>
         <div className='lists'>
@@ -166,9 +221,18 @@ class Listcollection extends React.Component {
   }
 }
 
-const Middleman = () => (
+const ListcollectionWrapper = () => (
+  <MyContext.Consumer>
+    {(context) => (
+      <Listcollection userData = {context}/>
+    )}
+  </MyContext.Consumer>
+);
+
+
+const Todo = () => (
   <Switch>
-    <Route exact path='/' component={Listcollection} />
+    <Route exact path='/' component={ListcollectionWrapper} />
     <Route path='/:listId' render={ props => <IndividualList {...props} />} />
   </Switch>
 );
@@ -177,52 +241,36 @@ const Middleman = () => (
 class User extends React.Component {
   constructor (props) {
     super (props);
-    this.defaultState = {
-      userName: "User",
-      userPhotoUrl: ""
-    };
-    this.state = this.defaultState;
   }
-  componentDidMount () {
-    authStateChange(
-      // on google signIn state
-      (user) => {
-      this.setState({
-        userName: user.displayName,
-        userPhotoUrl: user.photoURL
-      })
-    },
-    // on google signOut state
-    () => {
-      this.setState(this.defaultState);
-    }
-    )
-  }
-
   render () {
     return (
-      <div>
-        <button onClick={googleSignIn}>Google Sign In</button>
-        <span id="user-name">
-          { this.state.userName }
-        </span>
-        <img src={ this.state.userPhotoUrl } alt="" id="user-photo" />
-        <button onClick={googleSignOut}>Google Sign out</button>
-      </div>
+      <MyContext.Consumer>
+        {(context) => (
+          <div>
+            <button onClick={googleSignIn}>Google Sign In</button>
+            <span id="user-name">
+              { context.state.userName }
+              { context.state.userId }
+            </span>
+            <img src={ context.state.userPhotoUrl } alt="" id="user-photo" />
+            <button onClick={googleSignOut}>Google Sign out</button>
+          </div>
+        )}
+      </MyContext.Consumer>
     );
   }
 }
 
-ReactDOM.render(
-  <div className='widgetContainer'>
+const App = () => (
+  <MyProvider>
+    <User/>
     <Router>
-      <Middleman/>
+      <Todo/>
     </Router>
-  </div>,
-  document.getElementById('widget-area')
+  </MyProvider>
 );
 
 ReactDOM.render(
-  <User/>,
-  document.getElementById('user')
+  <App/>,
+  document.getElementById('root')
 );

@@ -23,45 +23,50 @@ class IndividualList extends React.Component {
     this.tickCheckbox = this.tickCheckbox.bind(this);
     this.setTasksfilter = this.setTasksfilter.bind(this);
     this.getFilteredTasks = this.getFilteredTasks.bind(this);
+    this.fetchTasksDataAndStoreItInState = this.fetchTasksDataAndStoreItInState.bind(this);
+  }
+
+  fetchTasksDataAndStoreItInState() {
+    if (this.props.userData.userId == "") {
+      return;
+    } 
+    console.log("In Individual list - componentDidMount");
+    this.dbCurrentListDocRef = db.collection(`/users/${this.props.userData.userId}/listCollection`).doc(this.props.match.params.listId);
+    this.dbCurrentTaskCollectionRef = db.collection(`/users/${this.props.userData.userId}/listCollection/${this.props.match.params.listId}/taskCollection`);
+    // get user's tasks in a particular list
+    let tasksArray = [];
+    this.dbCurrentListDocRef.get().then((doc) => {
+      this.setState({
+        currentListName :doc.data().listName
+      });
+    });
+    
+    // get task of the current list from db
+    this.dbCurrentTaskCollectionRef
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        tasksArray.push(doc.data());
+      });
+      this.setState({
+        tasks: tasksArray
+      });
+    })
+    .catch((error) => {
+      console.log(`Error: ${error}`);
+    });      
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log("componentDidUpdate - Individual List");
+    if (this.props.userData.userId !== prevProps.userData.userId ) {
+      this.fetchTasksDataAndStoreItInState()
+    }
   }
 
   componentDidMount() {
-    authStateChange(
-      (user) => {
-        db.collection("users").where("userDetails.name", "==", user.displayName)
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            console.log("In individual list");
-            console.log(doc.id, "===>", doc.data())
-            this.dbCurrentListDocRef = db.collection(`/users/${doc.id}/listCollection`).doc(this.props.match.params.listId);
-            this.dbCurrentTaskCollectionRef = db.collection(`/users/${doc.id}/listCollection/${this.props.match.params.listId}/taskCollection`);
-
-            // get user's tasks in a particular list
-            let tasksArray = [];
-            this.dbCurrentListDocRef.get().then((doc) => {
-              this.setState({
-                currentListName :doc.data().listName
-              });
-            });
-            // get data from db
-            this.dbCurrentTaskCollectionRef
-            .get()
-            .then((querySnapshot) => {
-              querySnapshot.forEach((doc) => {
-                tasksArray.push(doc.data());
-              });
-              this.setState({
-                tasks: tasksArray
-              });
-            })
-            .catch((error) => {
-              console.log(`Error: ${error}`);
-            });
-          })
-        })
-      }
-    )
+    console.log("componentDidMount - Individual List");
+    this.fetchTasksDataAndStoreItInState();
   }
 
   addTask (taskName) {
@@ -211,7 +216,7 @@ class IndividualList extends React.Component {
           let filteredTasks = this.getFilteredTasks();
           let donePercent = Math.round((this.state.tasks.filter(item => item.isDone === true).length/this.state.tasks.length) * 100)
           return (
-            <div className='screen-2'>
+            <div className='todo-container screen-2'>
               <header>
                 <h2 className="list-heading">{this.state.currentListName || '....'}</h2>
                 <div className="status">

@@ -2,8 +2,9 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom'
 import {db } from '../config/firestoreConfig';
+import { withUserContext } from './UserLoginSignup';
 
-export class Listcollection extends React.Component {
+class Listcollection extends React.Component {
   constructor (props) {
     super (props);
     this.state = {
@@ -20,7 +21,7 @@ export class Listcollection extends React.Component {
 
   fetchListDataAndStoreItInState () {    
     // dont do anything when the user is not logged in
-    if (this.props.userData.userId == "") {
+    if (!this.props.userData || this.props.userData.userId == "") {
       return;
     }
     console.log("fetching list data and storing it in state");
@@ -174,3 +175,6 @@ export class Listcollection extends React.Component {
     )
   }
 }
+
+const ListcollectionWithContext = withUserContext(Listcollection);
+export { ListcollectionWithContext };

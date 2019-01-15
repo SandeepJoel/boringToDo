@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import { db, authStateChange } from '../config/firestoreConfig';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import IndividualTask from './IndividualTask';
+import { withUserContext } from './UserLoginSignup';
 
 class IndividualList extends React.Component {
   constructor (props) {
@@ -27,7 +28,7 @@ class IndividualList extends React.Component {
   }
 
   fetchTasksDataAndStoreItInState() {
-    if (this.props.userData.userId == "") {
+    if (!this.props.userData || this.props.userData.userId == "") {
       return;
     } 
     console.log("In Individual list - componentDidMount");
@@ -274,4 +275,5 @@ class IndividualList extends React.Component {
   }
  };
 
-export default IndividualList;
+const IndividualListWithContext = withUserContext(IndividualList)
+export { IndividualListWithContext };

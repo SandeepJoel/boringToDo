@@ -8,50 +8,25 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 // TODO: Later activate this router
 // import { MemoryRouter } from 'react-router'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import IndividualList from './components/IndividualList';
-import { UserLoginSignup, UserContext } from './components/UserLoginSignup';
+import { IndividualListWithContext as IndividualList } from './components/IndividualList';
+import { UserLoginSignup, UserContext, withUserContext } from './components/UserLoginSignup';
 import { UserProvider } from './providers/UserProvider';
-import { Listcollection } from './components/ListCollection';
 import { SettingsView } from './components/SettingsView';
-
+import { ListcollectionWithContext as Listcollection }  from './components/ListCollection';
 library.add(fas, far);
 
-const ListcollectionWrapper = () => (
-  <UserContext.Consumer>
-    {(context) => (
-      <Listcollection {...context}/>
-    )}
-  </UserContext.Consumer>
-);
-
-const IndividualListWrapper = (props) => (
-  <UserContext.Consumer>
-    {(context) => (
-      <IndividualList {...context} {...props}/>
-    )}
-  </UserContext.Consumer>
-);
-
-const AppWrapper = (props) => (
-  <UserContext.Consumer>
-    {(context) => (
-      <App {...context} {...props}/>
-    )}
-  </UserContext.Consumer>
-);
-
-
 const Todo = () => (
-  <Router>
+  <Router>    
     <Switch>
-      <Route exact path='/' component={ListcollectionWrapper} />
-      <Route path='/:listId' render={ props => <IndividualListWrapper {...props} />} />
+      <Route exact path='/' component={Listcollection} />
+      <Route path='/:listId' render={ props => <IndividualList {...props} />} />
     </Switch>
   </Router>
 );
 
-const App = (props) => {
-  return(
+const App = withUserContext(
+  (props) => {
+  return (
     <React.Fragment>
       { 
         props.userData.userName == "Guest" ?
@@ -63,12 +38,13 @@ const App = (props) => {
          </React.Fragment>
       }                 
     </React.Fragment>
-  )
-}    
+    )
+  }
+);
 
 ReactDOM.render(
   <UserProvider>
-    <AppWrapper/>
+    <App/>
   </UserProvider>,
   document.getElementById('root')
 );

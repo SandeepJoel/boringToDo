@@ -9,7 +9,7 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 // import { MemoryRouter } from 'react-router'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { IndividualListWithContext as IndividualList } from './components/IndividualList';
-import { UserLoginSignup, UserContext, withUserContext } from './components/UserLoginSignup';
+import { UserLoginSignup, withUserContext } from './components/UserLoginSignup';
 import { UserProvider } from './providers/UserProvider';
 import { SettingsView } from './components/SettingsView';
 import { ListcollectionWithContext as Listcollection }  from './components/ListCollection';

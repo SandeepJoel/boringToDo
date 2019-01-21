@@ -1,5 +1,5 @@
 import React from 'react';
-import { googleSignOut } from '../config/firestoreConfig';
+import { googleSignOut } from '../api/auth';
 
 export const SettingsView = () => {
   return (

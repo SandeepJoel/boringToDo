@@ -1,5 +1,5 @@
 import React from 'react';
-import { googleSignIn } from '../config/firestoreConfig';
+import { googleSignIn } from '../api/auth';
 
 export const UserContext = React.createContext();
 

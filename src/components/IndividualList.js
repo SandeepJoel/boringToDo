@@ -1,8 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
-import { db, authStateChange } from '../config/firestoreConfig';
+import { Switch, Route, Link } from 'react-router-dom'
+import { getCurrentListDataFS, getCurrentTasksFS, addTaskFS, removeTaskFS, updateTaskPropertiesFS } from  "../api/todoFirestore";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import IndividualTask from './IndividualTask';
+import { generateRandomString } from '../utils/helpers';
 import { withUserContext } from './UserLoginSignup';
 
 class IndividualList extends React.Component {
@@ -27,75 +28,54 @@ class IndividualList extends React.Component {
     this.fetchTasksDataAndStoreItInState = this.fetchTasksDataAndStoreItInState.bind(this);
   }
 
-  fetchTasksDataAndStoreItInState() {
+  async fetchTasksDataAndStoreItInState() {
     if (!this.props.userData || this.props.userData.userId == "") {
       return;
     } 
-    console.log("In Individual list - componentDidMount");
-    this.dbCurrentListDocRef = db.collection(`/users/${this.props.userData.userId}/listCollection`).doc(this.props.match.params.listId);
-    this.dbCurrentTaskCollectionRef = db.collection(`/users/${this.props.userData.userId}/listCollection/${this.props.match.params.listId}/taskCollection`);
-    // get user's tasks in a particular list
-    let tasksArray = [];
-    this.dbCurrentListDocRef.get().then((doc) => {
-      this.setState({
-        currentListName :doc.data().listName
-      });
+    // get and set current selected listname in state
+    this.setState({
+      currentListName: (await getCurrentListDataFS(this.props.userData.userId, this.props.match.params.listId)).listName
     });
     
-    // get task of the current list from db
-    this.dbCurrentTaskCollectionRef
-    .get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        tasksArray.push(doc.data());
-      });
-      this.setState({
-        tasks: tasksArray
-      });
-    })
-    .catch((error) => {
-      console.log(`Error: ${error}`);
-    });      
+    // get tasks of the current list from db
+    this.setState({
+      tasks: await getCurrentTasksFS(this.props.userData.userId, this.props.match.params.listId)
+    });
   }
 
   componentDidUpdate(prevProps) {
-    console.log("componentDidUpdate - Individual List");
     if (this.props.userData.userId !== prevProps.userData.userId ) {
       this.fetchTasksDataAndStoreItInState()
     }
   }
 
   componentDidMount() {
-    console.log("componentDidMount - Individual List");
     this.fetchTasksDataAndStoreItInState();
   }
 
   addTask (taskName) {
-    let randomId = Math.random().toString(36).slice(2);
-    let payloadObject = {
+    let newtaskId = generateRandomString();
+    let payload = {
       details: {
         description: ''
       },
       isDone: false,
-      taskId: randomId,
+      taskId: newtaskId,
       taskName: taskName
     };
-    let newState = this.state.tasks.concat(payloadObject);
+    let newState = this.state.tasks.concat(payload);
     this.setState({
       tasks: newState
     });
+    
+    addTaskFS(this.props.userData.userId, this.props.match.params.listId, newtaskId, payload)
 
-    // add task to db
-    this.dbCurrentTaskCollectionRef
-    .doc(randomId)
-    .set(payloadObject)
-
-    this.toggleEditTaskName(randomId);
+    this.toggleEditTaskName(newtaskId);
   }
 
-  removeTask (taskObject) {
+  removeTask (taskId) {
     let remainingTasks = this.state.tasks.filter((task) => {
-      return task.taskId != taskObject.taskId;
+      return task.taskId != taskId;
     });
 
     // update new tasks array to state
@@ -103,24 +83,17 @@ class IndividualList extends React.Component {
       tasks: remainingTasks
     });
 
-    // delete task from db
-    this.dbCurrentTaskCollectionRef
-    .doc(taskObject.taskId)
-    .delete()
-    .then()
-    .catch((error) => {
-      console.error("Error removing task: ", error);
-    })
+    removeTaskFS(this.props.userData.userId, this.props.match.params.listId, taskId)
   }
 
   // this function handles only for one level of nesting inside state object
-  handleDetailedEdit (property, id, subChildPropertyName, event) {
+  handleDetailedEdit (property, taskId, subChildPropertyName, event) {
     if (event.keyCode === 13) {
-      this.toggleEditTaskName(id);
+      this.toggleEditTaskName(taskId);
       return;
     }
 
-    let editedTaskIndex = this.state.tasks.findIndex(item => item.taskId === id);
+    let editedTaskIndex = this.state.tasks.findIndex(item => item.taskId === taskId);
     let payload = { [property]: event.target.value };
     if (subChildPropertyName) {
       this.setState({
@@ -135,11 +108,9 @@ class IndividualList extends React.Component {
         ]
       });
 
-      this.dbCurrentTaskCollectionRef
-      .doc(id)
-      .update({
+      updateTaskPropertiesFS(this.props.userData.userId, this.props.match.params.listId, taskId, {
         [subChildPropertyName]: payload
-      });
+      })
 
     } else {
       this.setState({
@@ -150,9 +121,7 @@ class IndividualList extends React.Component {
         ]
       });
 
-      this.dbCurrentTaskCollectionRef
-      .doc(id)
-      .update(payload)
+      updateTaskPropertiesFS(this.props.userData.userId, this.props.match.params.listId, taskId, payload)
     }
   }
 
@@ -172,9 +141,7 @@ class IndividualList extends React.Component {
     });
 
     // upload tick status to backend
-    this.dbCurrentTaskCollectionRef
-    .doc(taskId)
-    .update(payload)
+    updateTaskPropertiesFS(this.props.userData.userId, this.props.match.params.listId, taskId, payload)
   }
 
   setTasksfilter(filterValue) {
@@ -244,7 +211,7 @@ class IndividualList extends React.Component {
                         <FontAwesomeIcon icon="pen" size="sm" className='editListIcon' onClick={() => this.toggleEditTaskName(item.taskId)} />
                       </div>
                       <div className={`task-details ${this.state.editingTaskId == item.taskId ? 'active' : ''} `}>
-                        <div className='delete-task' onClick={() => this.removeTask(item)}>
+                        <div className='delete-task' onClick={() => this.removeTask(item.taskId)}>
                           <span> Delete task</span>
                           <FontAwesomeIcon className='delete-icon' icon="trash-alt"  size="sm"/>
                         </div>

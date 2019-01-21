@@ -1,6 +1,7 @@
 import React from 'react';
-import {db, authStateChange } from '../config/firestoreConfig';
+import { authStateChange } from '../api/auth';
 import { UserContext } from '../components/UserLoginSignup';
+import { getUserId } from '../api/todoFirestore';
 export class UserProvider extends React.Component {
   constructor (props) {
     super (props);
@@ -13,26 +14,14 @@ export class UserProvider extends React.Component {
   }
 
   componentDidMount() {
-    console.log("componentDidMount in UserProvider");
     authStateChange (
       // on google signIn state
-      (user) => {
-        db.collection("users").where("userDetails.name", "==", user.displayName)
-        .get()
-        .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            console.log("In PROVIDER");
-            console.log(doc.id, "===>", doc.data());
-            this.setState({
-            userName: user.displayName,
-            userPhotoUrl: user.photoURL,
-            userId: doc.id
-            })
+      async(user) => {
+        this.setState({
+          userName: user.displayName,
+          userPhotoUrl: user.photoURL,
+          userId: await getUserId(user.displayName)
         })
-        })
-        .catch((error) => {
-        console.log("Error getting documents: ", error);
-        });
       },
       // on google signOut state
       () => {

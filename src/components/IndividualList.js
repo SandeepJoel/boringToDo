@@ -51,7 +51,17 @@ class IndividualList extends React.Component {
 
   componentDidMount() {
     this.fetchTasksDataAndStoreItInState();
+    window.addEventListener('beforeunload', this.componentCleanup);
   }
+
+  componentWillUnmount() {
+    window.removeEventListener('beforeunload', this.componentCleanup);
+    this.componentCleanup();
+  }
+
+  componentCleanup() {
+    // dom cleanup or event handlers cleanup goes here..
+  }  
 
   addTask (taskName) {
     let newtaskId = generateRandomString();

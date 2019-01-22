@@ -17,6 +17,7 @@ class Listcollection extends React.Component {
     this.removeList = this.removeList.bind(this);
     this.toggleEditListName = this.toggleEditListName.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
+    this.componentCleanup = this.componentCleanup.bind(this);
     this.fetchListDataAndStoreItInState = this.fetchListDataAndStoreItInState.bind(this);
   }
 
@@ -26,8 +27,15 @@ class Listcollection extends React.Component {
       return;
     }
 
-    let listsDataArray = await getUserListsFS(this.props.userData.userId)
-    Array.isArray(listsDataArray) && this.setState({ listCollection: listsDataArray })
+    let listsDataArray;
+    if (localStorage.getItem("listCollection") && JSON.parse(localStorage.getItem("listCollection")).length > 0) {
+      listsDataArray = JSON.parse(localStorage.getItem("listCollection"));
+    } else {
+      listsDataArray = await getUserListsFS(this.props.userData.userId)
+    }
+    Array.isArray(listsDataArray) && 
+    this.setState({ listCollection: listsDataArray }) &&
+    localStorage.setItem("listCollection", JSON.stringify(listsDataArray))
   }
 
   componentDidUpdate(prevProps) {
@@ -38,6 +46,19 @@ class Listcollection extends React.Component {
 
   componentDidMount() {
     this.fetchListDataAndStoreItInState();
+    // attaching event to handle page refresh which will not trigger component unmount
+    window.addEventListener('beforeunload', this.componentCleanup);    
+  }
+
+  componentWillUnmount() {
+    // if unmount is triggered, we can then remove the custom event for cleanup
+    window.removeEventListener('beforeunload', this.componentCleanup);
+    this.componentCleanup();
+  }
+
+  componentCleanup() {
+    // dom cleanup or event handlers cleanup goes here..
+    localStorage.setItem("listCollection", JSON.stringify(this.state.listCollection))
   }
 
   // function to add new lists

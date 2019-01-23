@@ -104,10 +104,24 @@ input[type="checkbox"] {
 .todo-container {
   position: relative;
   border-radius: 3px;
-  background-color: var(--primary-background);
+  background-color: var(--primary-background);  
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+.box-container {
+  border-radius: 3px;
+  background-color: var(--white);  
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+.container-350-600 {
   height: 600px;
   flex: 0 0 350px;
-  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+.container-500-600 {
+  height: 600px;
+  flex: 0 0 500px;
 }
 
 .hide {
@@ -353,4 +367,26 @@ input {
       box-shadow: 0px 2px 3px 0.5px rgba(0, 0, 0, .06);
     }
   }
+}
+
+// settings view
+.settings-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--white); 
+  z-index: 30;
+
+  header {
+    background-color: var(--primary-background);
+    min-height: 75px;     
+  }  
+}
+
+.settings-menu-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }

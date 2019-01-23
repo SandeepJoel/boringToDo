@@ -11,7 +11,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { IndividualListWithContext as IndividualList } from './components/IndividualList';
 import { UserLoginSignup, withUserContext } from './components/UserLoginSignup';
 import { UserProvider } from './providers/UserProvider';
-import { SettingsView } from './components/SettingsView';
+import { Settings } from './components/Settings';
 import { ListcollectionWithContext as Listcollection }  from './components/ListCollection';
 library.add(fas, far);
 
@@ -34,7 +34,7 @@ const App = withUserContext(
          : 
          <React.Fragment>
            <Todo/>
-           <SettingsView/>
+           <Settings/>
          </React.Fragment>
       }                 
     </React.Fragment>

@@ -8,7 +8,7 @@ const IndividualTask = (props) => {
   });
   if (currentTask) {
     return (
-      <div className="todo-container screen-3">
+      <div className="todo-container container-350-600 screen-3">
         <header>
           <h2>{currentTask.taskName}</h2>
           <FontAwesomeIcon className="back" icon="arrow-left" size="lg" onClick={() => history.goBack() }></FontAwesomeIcon>

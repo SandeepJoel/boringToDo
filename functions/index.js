@@ -18,7 +18,39 @@ exports.createNewUserDbsetup = functions.auth.user().onCreate((user) => {
     userSettings: {
       general: {
         googleSignup: {
-          activate: false
+          activated: true 
+        },
+        theme: "light"
+      },
+      todo: {
+        disabled: false,
+        plain: {
+          active: true,
+          color: "#b1b6b6"
+        },
+        gradient: {
+          active: false,
+          colors: []
+        }
+      },
+      backgrounds: {
+        plain: {
+          active: true,
+          color: "#b1b6b6"
+        },
+        gradient: {
+          active: false,
+          colors: []
+        },
+        image: {
+          active: false,
+          imageUrl: ""
+        }
+      },
+      animationWidget: {
+        disabled: false,
+        gooeySplit: {
+          color: "#ff6347"
         }
       }
     }

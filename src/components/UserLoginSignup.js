@@ -22,8 +22,10 @@ export class UserLoginSignup extends React.Component {
       super (props);
     }
     render () {
-      return (        
-        <button onClick={googleSignIn}>Google Sign In</button>
+      return (
+        <div className="box-container container-500-600">
+          <button onClick={googleSignIn}>Google Sign In</button>
+        </div>        
       );
     }
 }

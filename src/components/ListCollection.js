@@ -124,7 +124,7 @@ class Listcollection extends React.Component {
 
   render () {
     return (
-      <div className='todo-container lists-section screen-1'>
+      <div className='todo-container container-350-600 lists-section screen-1'>
         <header>
           <h2>All lists </h2>
           <FontAwesomeIcon icon='plus-circle' size="lg" id='create-list' onClick={() => this.addList()} ></FontAwesomeIcon>

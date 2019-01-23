@@ -194,7 +194,7 @@ class IndividualList extends React.Component {
           let filteredTasks = this.getFilteredTasks();
           let donePercent = Math.round((this.state.tasks.filter(item => item.isDone === true).length/this.state.tasks.length) * 100)
           return (
-            <div className='todo-container screen-2'>
+            <div className='todo-container container-350-600 screen-2'>
               <header>
                 <h2 className="list-heading">{this.state.currentListName || '....'}</h2>
                 <div className="status">

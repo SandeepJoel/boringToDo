@@ -3,9 +3,10 @@
 :root {
   --black: #222f3e;
   --white: #ffffff;
+  --white-dirty: #F7F8FA;
   --gray: #535c68;
   --primary-background: #b1b6b6;
-  --secondary-background: #ffffff;
+  --secondary-background: var(--white);
   --debug-color:#57606f;
   --font-family: 'Roboto', sans-serif
 }
@@ -376,7 +377,7 @@ input {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--white); 
+  background-color: var(--white-dirty); 
   z-index: 30;
 
   header {
@@ -389,4 +390,41 @@ input {
   position: absolute;
   top: 10px;
   right: 10px;
+}
+
+.settings-body {
+  display: flex;
+  padding-top: 30px;
+  justify-content: center;
+}
+
+
+.settings-nav {
+  max-width: 250px;
+  width: 100%;
+  box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .09);
+
+  .nav-item {
+    background: var(--white);
+    padding: 10px 25px;
+    cursor: pointer;
+    text-transform: capitalize;
+    
+    &.active {
+      border: 1px solid var(--gray);
+    }
+  }
+}
+
+.settings-details {
+  max-width: 960px;
+  width: 100%;
+  margin-left: 40px;
+  padding: 10px 20px;
+  box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .09);
+  background: var(--white);
+}
+
+[data-icon] {
+  cursor: pointer;
 }

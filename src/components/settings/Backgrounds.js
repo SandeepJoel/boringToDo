@@ -1,10 +1,8 @@
 import React from 'react';
-const Title = () => {
+export const Backgrounds = () => {
   return (
     <div>
-      Title
+      backgrounds
     </div>
   );
 };
-
-export default Title;

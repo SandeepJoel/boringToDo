@@ -8,11 +8,11 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 // TODO: Later activate this router
 // import { MemoryRouter } from 'react-router'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import { IndividualListWithContext as IndividualList } from './components/IndividualList';
+import { IndividualList } from './components/IndividualList';
 import { UserLoginSignup, withUserContext } from './components/UserLoginSignup';
 import { UserProvider } from './providers/UserProvider';
 import { Settings } from './components/Settings';
-import { ListcollectionWithContext as Listcollection }  from './components/ListCollection';
+import { Listcollection }  from './components/ListCollection';
 library.add(fas, far);
 
 const Todo = () => (

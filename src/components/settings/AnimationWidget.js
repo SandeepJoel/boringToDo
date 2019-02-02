@@ -1,10 +1,8 @@
 import React from 'react';
-const Title = () => {
+export const AnimationWidget = () => {
   return (
     <div>
-      Title
+      animationWidget
     </div>
   );
 };
-
-export default Title;

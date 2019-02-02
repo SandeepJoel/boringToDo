@@ -1,10 +1,8 @@
 import React from 'react';
-const Title = () => {
+export const Todo = () => {
   return (
     <div>
-      Title
+      Todo
     </div>
   );
 };
-
-export default Title;

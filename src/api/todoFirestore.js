@@ -2,13 +2,16 @@ import { db } from "../config/firestoreConfig";
 
 // TODO: Need to change this function to not depend upon the user.displayName for the userId.
 // ** get user id using the google user displayName
-export function getUserId(userDisplayName) {
+export function getUserInfoAndSettings(userDisplayName) {
   return new Promise((resolve, reject) => {
     db.collection("users").where("userDetails.name", "==", userDisplayName)
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        resolve(doc.id)
+        resolve({
+          id: doc.id,
+          data: doc.data()
+        })
       })
     })
     .catch((error) => {
@@ -47,7 +50,7 @@ export function getCurrentTasksFS(userId, listId) {
   })
 }
 
-export function addTaskFS(userId, listId, newtaskId, payload) {  
+export function addTaskFS(userId, listId, newtaskId, payload) {
   db.collection(`/users/${userId}/listCollection/${listId}/taskCollection`)
   .doc(newtaskId)
   .set(payload)

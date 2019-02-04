@@ -47,6 +47,7 @@ export const Listcollection = withUserContext(
 
     componentDidMount() {
       this.fetchListDataAndStoreItInState();
+      document.documentElement.style.setProperty('--primary-background', this.props.userData.userSettings.todo.plain.color);
       // attaching event to handle page refresh which will not trigger component unmount
       window.addEventListener('beforeunload', this.componentCleanup);    
     }

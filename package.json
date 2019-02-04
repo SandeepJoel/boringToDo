@@ -45,6 +45,8 @@
     "@fortawesome/free-solid-svg-icons": "^5.5.0",
     "@fortawesome/react-fontawesome": "^0.1.3",
     "i": "^0.3.6",
-    "npm": "^6.4.1"
+    "immutability-helper": "^3.0.0",
+    "npm": "^6.4.1",
+    "react-color": "^2.17.0"
   }
 }

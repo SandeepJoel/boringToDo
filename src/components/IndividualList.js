@@ -7,7 +7,7 @@ import { generateRandomString } from '../utils/helpers';
 import { withUserContext } from './UserLoginSignup';
 
 export const IndividualList = withUserContext(
-  class IndividualList extends React.Component {
+  class extends React.Component {
     constructor (props) {
       super (props);
       this.state = {

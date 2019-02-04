@@ -5,7 +5,7 @@ import { withUserContext } from './UserLoginSignup';
 import { generateRandomString } from '../utils/helpers';
 import { SettingsItem } from '../containers/SettingsItem';
 
-const SettingsView = withUserContext(
+export const SettingsView = withUserContext(
   class extends React.Component {
     constructor (props) {
       super (props);
@@ -23,7 +23,7 @@ const SettingsView = withUserContext(
   
     componentDidMount() {
       this.setState({
-        currentNav: "general"
+        currentNav: "todo"
       })
     }
   
@@ -58,34 +58,3 @@ const SettingsView = withUserContext(
     }
   }
 );
-
-export class Settings extends React.Component {
-  constructor (props) {
-    super (props);
-    this.state = {
-      isSettingsOpened: false
-    }
-    this.toggleSettings = this.toggleSettings.bind(this);    
-  }
-
-  toggleSettings () {
-    this.setState (
-      (prevState) => ({
-          isSettingsOpened: !prevState.isSettingsOpened
-        })
-      )
-  }
-
-  render () {
-    return (
-      <React.Fragment>
-      {
-        this.state.isSettingsOpened ?
-          <SettingsView toggleSettings={this.toggleSettings} />
-           :
-          <FontAwesomeIcon className="settings-menu-icon" icon='bars' size='2x' onClick={this.toggleSettings}></FontAwesomeIcon>
-      }  
-      </React.Fragment>      
-    );
-  }
-}

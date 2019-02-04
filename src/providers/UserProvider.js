@@ -2,6 +2,9 @@ import React from 'react';
 import { authStateChange } from '../api/auth';
 import { UserContext } from '../components/UserLoginSignup';
 import { getUserInfoAndSettings } from '../api/todoFirestore';
+import update from 'immutability-helper';
+import { updateTodoColorFS } from '../api/settingsFirestore';
+
 export class UserProvider extends React.Component {
   constructor (props) {
     super (props);
@@ -12,8 +15,22 @@ export class UserProvider extends React.Component {
       userId: "",
       userSettings: {}
     }
+    
+    this.todoSettingsFunctions = {
+      setPrimaryColor: this.setPrimaryColor.bind(this)
+    }
   }
 
+  setPrimaryColor (colorVal) {    
+    this.setState({
+      userSettings: update(this.state.userSettings, {
+        todo: {plain: {color: {$set: colorVal} } }
+      })            
+    })
+
+    updateTodoColorFS(this.state.userId, colorVal);
+  }
+ 
   componentDidMount () {
     authStateChange (
       // on google signIn state
@@ -49,6 +66,7 @@ export class UserProvider extends React.Component {
     return (
       <UserContext.Provider value={{
         userData: this.state,
+        todoFunctions: this.todoSettingsFunctions
         }}>
         { this.props.children }
       </UserContext.Provider>

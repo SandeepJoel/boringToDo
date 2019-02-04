@@ -11,8 +11,9 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { IndividualList } from './components/IndividualList';
 import { UserLoginSignup, withUserContext } from './components/UserLoginSignup';
 import { UserProvider } from './providers/UserProvider';
-import { Settings } from './components/Settings';
+import { SettingsView } from './components/SettingsView';
 import { Listcollection }  from './components/ListCollection';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 library.add(fas, far);
 
 const Todo = () => (
@@ -25,20 +26,45 @@ const Todo = () => (
 );
 
 const App = withUserContext(
-  (props) => {
-  return (
-    <React.Fragment>
-      { 
-        props.userData.userName == "Guest" ?
-         <UserLoginSignup/> 
-         : 
-         <React.Fragment>
-           <Todo/>
-           <Settings/>
-         </React.Fragment>
-      }                 
-    </React.Fragment>
-    )
+  class extends React.Component {
+    constructor (props) {
+      super (props);
+      this.state = {
+        isSettingsOpened: false
+      }
+      this.toggleSettings = this.toggleSettings.bind(this);    
+    }
+  
+    toggleSettings () {
+      this.setState (
+      (prevState) => ({
+          isSettingsOpened: !prevState.isSettingsOpened
+        })
+      )
+    }
+
+    render() {
+      return (
+        <React.Fragment>
+          { 
+            this.props.userData.userName == "Guest" ?
+            <UserLoginSignup/> 
+            : 
+            <React.Fragment>
+              {
+                this.state.isSettingsOpened ?
+                <SettingsView toggleSettings={this.toggleSettings} />
+                 :
+                <React.Fragment>
+                   <Todo/>
+                  <FontAwesomeIcon className="settings-menu-icon" icon='bars' size='2x' onClick={this.toggleSettings}></FontAwesomeIcon>
+                </React.Fragment>
+              }
+            </React.Fragment>
+          }                 
+        </React.Fragment>
+      )
+    }
   }
 );
 

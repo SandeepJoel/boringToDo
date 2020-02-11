@@ -30,7 +30,7 @@ const App = withUserContext(
     constructor (props) {
       super (props);
       this.state = {
-        isSettingsOpened: false
+        isSettingsOpened: true
       }
       this.toggleSettings = this.toggleSettings.bind(this);    
     }
@@ -57,7 +57,7 @@ const App = withUserContext(
                  :
                 <React.Fragment>
                    <Todo/>
-                  <FontAwesomeIcon className="settings-menu-icon" icon='bars' size='2x' onClick={this.toggleSettings}></FontAwesomeIcon>
+                      <FontAwesomeIcon className="settings-icon" icon='cog' size='lg' onClick={this.toggleSettings}></FontAwesomeIcon>
                 </React.Fragment>
               }
             </React.Fragment>

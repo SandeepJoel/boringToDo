@@ -379,52 +379,87 @@ input {
   bottom: 0;
   background-color: var(--white-dirty); 
   z-index: 30;
+  display: flex;
 
   header {
-    background-color: var(--primary-background);
-    min-height: 75px;     
+    min-height: 75px;
+    display: flex;    
+    align-items: center;
+    justify-content: space-between;
+    padding: 25px 40px 0;
   }  
 }
 
-.settings-menu-icon {
+.settings-icon {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  bottom: 10px;
+  left: 10px;
+  z-index: 10;
 }
 
-.settings-body {
-  display: flex;
-  padding-top: 30px;
-  justify-content: center;
+.settings {
+  flex-grow: 1;
 }
 
 
-.settings-nav {
-  max-width: 250px;
+.sidebar-nav {
+  max-width: 300px;
   width: 100%;
+  padding: 60px 40px 0;
   box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .09);
 
   .nav-item {
-    background: var(--white);
-    padding: 10px 25px;
+    padding: 15px 0;
     cursor: pointer;
     text-transform: capitalize;
     
     &.active {
-      border: 1px solid var(--gray);
+      color: red
     }
   }
 }
 
-.settings-details {
-  max-width: 960px;
-  width: 100%;
-  margin-left: 40px;
-  padding: 10px 20px;
+.settings-details {  
+  margin: 40px;
   box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .09);
   background: var(--white);
 }
 
 [data-icon] {
   cursor: pointer;
+}
+
+
+.user-info {
+  display: flex;
+  margin-bottom: 25px;
+
+ .pic {
+  border-radius: 2px;
+  margin-right: 10px
+ }
+
+ .text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  h4 {
+    margin: 0;
+    margin-bottom: 5px;
+    color: black;
+  }
+  p {
+    margin: 0;
+    color: gray;
+  }
+ }
+
+ .sub-text {
+   font-size: 12px;
+ }
+
+}
+
+.logout {
+
 }

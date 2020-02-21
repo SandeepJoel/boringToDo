@@ -3,6 +3,7 @@ import firebase from 'firebase';
 // ** Authentication related api functions **
 
 export function authStateChange (signInCallback, signOutCallback) {
+  // TODO: is this necessary ?
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       console.log("User is signed in --- ASC")

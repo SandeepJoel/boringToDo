@@ -443,14 +443,15 @@ input {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  
   h4 {
     margin: 0;
     margin-bottom: 5px;
-    color: black;
+    color: var(--black);
   }
   p {
     margin: 0;
-    color: gray;
+    color:var(--gray);
   }
  }
 

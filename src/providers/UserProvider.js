@@ -2,38 +2,23 @@ import React from 'react';
 import { authStateChange } from '../api/auth';
 import { UserContext } from '../components/UserLoginSignup';
 import { getUserInfoAndSettings } from '../api/todoFirestore';
-import update from 'immutability-helper';
-import { updateTodoColorFS } from '../api/settingsFirestore';
 
 export class UserProvider extends React.Component {
   constructor (props) {
     super (props);
-
-    this.state = {
+    this.defaultState = {
       userName: "Guest",
       userPhotoUrl: "",
       userId: "",
       userSettings: {}
     }
-    
-    this.todoSettingsFunctions = {
-      setPrimaryColor: this.setPrimaryColor.bind(this)
-    }
-  }
-
-  setPrimaryColor (colorVal) {    
-    this.setState({
-      userSettings: update(this.state.userSettings, {
-        todo: {plain: {color: {$set: colorVal} } }
-      })            
-    })
-
-    updateTodoColorFS(this.state.userId, colorVal);
+    this.state = Object.assign({}, this.defaultState);
   }
  
   componentDidMount () {
     authStateChange (
       // on google signIn state
+      // TODO: could optimize here..
       async (user) => {
         let userData;
         if (localStorage.getItem("userData")) {
@@ -66,7 +51,6 @@ export class UserProvider extends React.Component {
     return (
       <UserContext.Provider value={{
         userData: this.state,
-        todoFunctions: this.todoSettingsFunctions
         }}>
         { this.props.children }
       </UserContext.Provider>

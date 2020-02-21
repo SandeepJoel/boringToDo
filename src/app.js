@@ -57,7 +57,7 @@ const App = withUserContext(
                  :
                 <React.Fragment>
                    <Todo/>
-                      <FontAwesomeIcon className="settings-icon" icon='cog' size='lg' onClick={this.toggleSettings}></FontAwesomeIcon>
+                   <FontAwesomeIcon className="settings-icon" icon='cog' size='lg' onClick={this.toggleSettings}></FontAwesomeIcon>
                 </React.Fragment>
               }
             </React.Fragment>

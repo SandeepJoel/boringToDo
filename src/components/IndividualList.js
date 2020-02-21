@@ -199,7 +199,7 @@ export const IndividualList = withUserContext(
                 <header>
                   <h2 className="list-heading">{this.state.currentListName || '....'}</h2>
                   <div className="status">
-                    <span>{ isNaN(donePercent) ? "..." : `${donePercent}% done` }</span>
+                    <span>{ isNaN(donePercent) ? "Your list is empty" : `${donePercent}% done` }</span>
                     <FontAwesomeIcon className='add-task' icon='plus-circle' size='2x' onClick={() => this.addTask("")}></FontAwesomeIcon>
                   </div>
                 </header>
@@ -224,7 +224,7 @@ export const IndividualList = withUserContext(
                         <div className={`task-details ${this.state.editingTaskId == item.taskId ? 'active' : ''} `}>
                           <div className='delete-task' onClick={() => this.removeTask(item.taskId)}>
                             <span> Delete task</span>
-                            <FontAwesomeIcon className='delete-icon' icon="trash-alt"  size="sm"/>
+                            <FontAwesomeIcon className='delete-icon' icon="trash"  size="sm"/>
                           </div>
                         </div>
                       </div>

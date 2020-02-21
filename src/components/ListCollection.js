@@ -18,7 +18,7 @@ export const Listcollection = withUserContext(
       this.removeList = this.removeList.bind(this);
       this.toggleEditListName = this.toggleEditListName.bind(this);
       this.handleEdit = this.handleEdit.bind(this);
-      this.componentCleanup = this.componentCleanup.bind(this);
+      // this.componentCleanup = this.componentCleanup.bind(this);
       this.fetchListDataAndStoreItInState = this.fetchListDataAndStoreItInState.bind(this);
     }
 
@@ -29,16 +29,17 @@ export const Listcollection = withUserContext(
       }
 
       let listsDataArray;
-      if (localStorage.getItem("listCollection") && JSON.parse(localStorage.getItem("listCollection")).length > 0) {
-        listsDataArray = JSON.parse(localStorage.getItem("listCollection"));
-      } else {
-        listsDataArray = await getUserListsFS(this.props.userData.userId)
-      }
+      // if (localStorage.getItem("listCollection") && JSON.parse(localStorage.getItem("listCollection")).length > 0) {
+      //   listsDataArray = JSON.parse(localStorage.getItem("listCollection"));
+      // } else {
+      listsDataArray = await getUserListsFS(this.props.userData.userId)
+      // }
       Array.isArray(listsDataArray) && 
-      this.setState({ listCollection: listsDataArray }) &&
-      localStorage.setItem("listCollection", JSON.stringify(listsDataArray))
+      this.setState({ listCollection: listsDataArray }) 
+      // && localStorage.setItem("listCollection", JSON.stringify(listsDataArray))
     }
 
+    // TODO: Check whether this is necessary ?
     componentDidUpdate(prevProps) {
       if (this.props.userData.userId !== prevProps.userData.userId) {
         this.fetchListDataAndStoreItInState()
@@ -47,21 +48,20 @@ export const Listcollection = withUserContext(
 
     componentDidMount() {
       this.fetchListDataAndStoreItInState();
-      document.documentElement.style.setProperty('--primary-background', this.props.userData.userSettings.todo.plain.color);
       // attaching event to handle page refresh which will not trigger component unmount
-      window.addEventListener('beforeunload', this.componentCleanup);    
+      // window.addEventListener('beforeunload', this.componentCleanup);    
     }
 
     componentWillUnmount() {
       // if unmount is triggered, we can then remove the custom event for cleanup
-      window.removeEventListener('beforeunload', this.componentCleanup);
-      this.componentCleanup();
+      // window.removeEventListener('beforeunload', this.componentCleanup);
+      // this.componentCleanup();
     }
 
-    componentCleanup() {
+    // componentCleanup() {
       // dom cleanup or event handlers cleanup goes here..
-      localStorage.setItem("listCollection", JSON.stringify(this.state.listCollection))
-    }
+      // localStorage.setItem("listCollection", JSON.stringify(this.state.listCollection))
+    // }
 
     // function to add new lists
     addList () {
@@ -150,7 +150,7 @@ export const Listcollection = withUserContext(
                       <span className='default-list-input'>
                         Set as default <input type='radio' name='default-list'></input></span>
                       <span onClick={() => this.removeList(item.listId)}>
-                        Delete List <FontAwesomeIcon icon="trash-alt"  size="sm" />
+                        Delete List <FontAwesomeIcon icon="trash"  size="sm" />
                       </span>
                     </div>
                   </div>

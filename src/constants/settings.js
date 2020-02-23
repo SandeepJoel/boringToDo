@@ -1,0 +1,1 @@
+export const SettingsNav = [ 'General', 'Background Effects'];

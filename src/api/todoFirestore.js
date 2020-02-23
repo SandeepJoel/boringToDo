@@ -1,25 +1,5 @@
 import { db } from "../config/firestoreConfig";
 
-// TODO: Need to change this function to not depend upon the user.displayName for the userId.
-// ** get user id using the google user displayName
-export function getUserInfoAndSettings(userDisplayName) {
-  return new Promise((resolve, reject) => {
-    db.collection("users").where("userDetails.name", "==", userDisplayName)
-    .get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        resolve({
-          id: doc.id,
-          data: doc.data()
-        })
-      })
-    })
-    .catch((error) => {
-      reject(Error(error));    
-    });    
-  })
-}
-
 export function getCurrentListDataFS(userId, listId) {
   return new Promise(function(resolve){
     db.collection(`/users/${userId}/listCollection`).doc(listId)

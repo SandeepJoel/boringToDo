@@ -1,20 +1,16 @@
 import React from 'react';
-import { Todo } from '../components/settings/Todo';
-import { AnimationWidget } from '../components/settings/AnimationWidget';
-import { Backgrounds } from '../components/settings/Backgrounds';
+import { BackgroundEffects } from '../components/settings/BackgroundEffects';
 import { General } from '../components/settings/General';
 import { withUserContext } from '../components/UserLoginSignup';
 
 export const SettingsItem = withUserContext(
   (props) => {
     const ComponentsNameMap = {
-      todo: Todo,
-      animationWidget: AnimationWidget,
-      backgrounds: Backgrounds,
-      general: General
+      BackgroundEffects,
+      General
     }
     // we are setting general setting as default 
-    let ComponentName = ComponentsNameMap[props.name || "general"]
+    let ComponentName = ComponentsNameMap[props.name]
     
     return (
       <ComponentName {...props} />

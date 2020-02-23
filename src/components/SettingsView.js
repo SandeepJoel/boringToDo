@@ -4,14 +4,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { withUserContext } from './UserLoginSignup';
 import { generateRandomString } from '../utils/helpers';
 import { SettingsItem } from '../containers/SettingsItem';
+import { getSettingsFS } from '../api/settingsFirestore';
+import { SettingsNav } from '../constants/settings';
 
 export const SettingsView = withUserContext(
   class extends React.Component {
     constructor (props) {
       super (props);
       this.state = {
-        currentNav: ""
-      }
+        currentNav: SettingsNav[0]
+      };
       this.selectSection = this.selectSection.bind(this);
     }
 
@@ -21,10 +23,19 @@ export const SettingsView = withUserContext(
       })
     }
   
-    componentDidMount() {
+    async componentDidMount() {
+      let settings = await getSettingsFS(this.props.userData.userId);
       this.setState({
-        currentNav: "todo"
-      })
+        settings
+      });
+      // if (!localStorage.getItem("settings")) {
+      //   Object.keys.forEach((setting) => {
+      //     if (setting === 'backgroundEffects') {
+      //       delete 
+      //     }
+      //   });
+      //   localStorage.setItem("settings", JSON.stringify(settings))
+      // }
     }
   
     render () {
@@ -39,8 +50,7 @@ export const SettingsView = withUserContext(
               </div>
             </div>            
             {
-              this.props.userData.userSettings &&
-              Object.keys(this.props.userData.userSettings).map((val) =>
+              SettingsNav.map((val) =>
                 (
                   <div key={generateRandomString()}
                     className={`nav-item ${this.state.currentNav === val ? 'active' : ''}`}
@@ -58,7 +68,10 @@ export const SettingsView = withUserContext(
               <FontAwesomeIcon className="close" icon='times' size='lg' onClick={this.props.toggleSettings}></FontAwesomeIcon>
             </header>            
             <div className="settings-details">
-              <SettingsItem name={this.state.currentNav}/>
+              {
+                (this.state.settings ? 
+                  <SettingsItem name={this.state.currentNav} config={this.state.settings[this.state.currentNav]} /> : "")
+              }
             </div>            
           </div>
         </div>    

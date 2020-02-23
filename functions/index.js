@@ -27,7 +27,7 @@ exports.createNewUserDbsetup = functions.auth.user().onCreate((user) => {
           current: 'light'
         },
         layout: {
-          options: ['left', 'right', 'blank', 'leftRight'],
+          options: ['left', 'right', 'blank', 'leftRight', 'center'],
           current: 'blank'
         },
         widgets: ['todo']

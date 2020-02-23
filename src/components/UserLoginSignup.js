@@ -5,16 +5,14 @@ export const UserContext = React.createContext();
 
 // function which wraps the PassedComponent with the UserContext.Consumer
 export function withUserContext(PassedComponent) {
-  // research on why we need the below function
-  return function what_the_fuck_is_this_function(props) {
-    return (
-      <UserContext.Consumer>
-      {(context) => (
-        <PassedComponent {...context} {...props}/>
-      )}
-      </UserContext.Consumer>  
-    );
-  } 
+  // research on why we need the below wrapper arrow function for props
+  return (props) =>  (
+    <UserContext.Consumer>
+    {(context) => (
+      <PassedComponent {...context} {...props}/>
+    )}
+    </UserContext.Consumer>  
+  );
 }
 
 export class UserLoginSignup extends React.Component {

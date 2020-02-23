@@ -1,9 +1,9 @@
 import React from 'react';
-export const General = (props) => {
+export const BackgroundEffects = (props) => {
   console.log(props)
   return (
     <div>
-      general
+      Select Effect
     </div>
   );
 };

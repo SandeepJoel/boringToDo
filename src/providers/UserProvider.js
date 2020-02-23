@@ -1,7 +1,7 @@
 import React from 'react';
 import { authStateChange } from '../api/auth';
 import { UserContext } from '../components/UserLoginSignup';
-import { getUserInfoAndSettings } from '../api/todoFirestore';
+import { getUserIdFromFS } from '../api/settingsFirestore';
 
 export class UserProvider extends React.Component {
   constructor (props) {
@@ -10,7 +10,6 @@ export class UserProvider extends React.Component {
       userName: "Guest",
       userPhotoUrl: "",
       userId: "",
-      userSettings: {}
     }
     this.state = Object.assign({}, this.defaultState);
   }
@@ -24,15 +23,14 @@ export class UserProvider extends React.Component {
         if (localStorage.getItem("userData")) {
           userData = JSON.parse(localStorage.getItem("userData"));
         } else {
-          userData = await getUserInfoAndSettings(user.displayName)
+          /* this api call is critical to get our userId to get all widget data */
+          userData = await getUserIdFromFS(user.displayName)
         }
         // the below line somehow is a hack to fix the first user sign-in non-render issue
-        console.log('setting userData in state', userData);
         this.setState({
           userName: user.displayName,
           userPhotoUrl: user.photoURL,
-          userId: userData.id,
-          userSettings: userData.data.userSettings
+          userId: userData.id
         })
         localStorage.setItem("userData", JSON.stringify(userData))
       },

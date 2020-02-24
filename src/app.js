@@ -9,9 +9,9 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 // import { MemoryRouter } from 'react-router'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { IndividualList } from './components/IndividualList';
-import { UserLoginSignup, withUserContext } from './components/UserLoginSignup';
-import { UserProvider } from './providers/UserProvider';
-import { SettingsProvider } from './providers/SettingsProvider';
+import { UserLoginSignup } from './components/UserLoginSignup';
+import { UserProvider, withUserContext } from './contexts/User';
+import { SettingsProvider } from './contexts/Settings';
 import { SettingsView } from './components/SettingsView';
 import { Listcollection }  from './components/ListCollection';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -31,7 +31,7 @@ const App = withUserContext(
     constructor (props) {
       super (props);
       this.state = {
-        isSettingsOpened: true
+        isSettingsOpened: false
       }
       this.toggleSettings = this.toggleSettings.bind(this);    
     }
@@ -48,20 +48,21 @@ const App = withUserContext(
       return (
         <React.Fragment>
           { 
-            this.props.userData.userName == "Guest" ?
+            this.props.userName == "Guest" ?
             <UserLoginSignup/> 
             : 
-            <React.Fragment>
+            <SettingsProvider>
               {
                 this.state.isSettingsOpened ?
-                <SettingsView toggleSettings={this.toggleSettings} jUserData={this.props.userData} />
+                // Look how we are passing props to SettingsView Component                
+                <SettingsView toggleSettings={this.toggleSettings}/>                
                  :
                 <React.Fragment>
                    <Todo/>
                    <FontAwesomeIcon className="settings-icon" icon='cog' size='lg' onClick={this.toggleSettings}></FontAwesomeIcon>
                 </React.Fragment>
               }
-            </React.Fragment>
+              </SettingsProvider>
           }                 
         </React.Fragment>
       )
@@ -69,11 +70,13 @@ const App = withUserContext(
   }
 );
 
+/* 
+  Think on what if a child provider
+  depends on an async data of parent provider
+*/
 ReactDOM.render(
   <UserProvider>
-    <SettingsProvider>
-      <App />
-    </SettingsProvider>    
+    <App />
   </UserProvider>,
   document.getElementById('root')
 );

@@ -1,13 +1,13 @@
 import React from 'react';
 import { googleSignOut } from '../api/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { withUserContext } from './UserLoginSignup';
+import { withUserContext } from '../contexts/User';
 import { generateRandomString } from '../utils/helpers';
 import { SettingsItem } from '../containers/SettingsItem';
 import { SettingsNav } from '../constants/settings';
-import { withSettingsContext } from '../providers/SettingsProvider';
+import { withSettingsContext } from '../contexts/Settings';
 
-export const SettingsView = withSettingsContext(
+export const SettingsView = withSettingsContext(withUserContext(
   class extends React.Component {
     constructor (props) {
       super (props);
@@ -28,9 +28,9 @@ export const SettingsView = withSettingsContext(
         <div className="settings-container">
           <section className="sidebar-nav">
             <div className="user-info">
-              <img className="pic" src={this.props.jUserData.userPhotoUrl} width="50" height="50"></img>
+              <img className="pic" src={this.props.userPhotoUrl} width="50" height="50"></img>
               <div className="text">
-                <h4>{this.props.jUserData.userName}</h4>
+                <h4>{this.props.userName}</h4>
                 <p className="sub-text">abc@freshworks.com</p>
               </div>
             </div>            
@@ -54,12 +54,12 @@ export const SettingsView = withSettingsContext(
             </header>            
             <div className="settings-details">
               {
-                (this.state.settings ? 
+                (this.props.settings ? 
                   <SettingsItem 
                     name={this.state.currentNav} 
-                    config={this.state.settings[this.state.currentNav]} 
+                    config={this.props.settings[this.state.currentNav]} 
                     /> 
-                  : 
+                  :
                   ""
                 )
               }
@@ -69,4 +69,5 @@ export const SettingsView = withSettingsContext(
       )
     }
   }
+)
 );

@@ -3,15 +3,13 @@ import { getSettingsFS } from '../api/settingsFirestore';
 import { getFromLocalStorage } from '../utils/helpers';
 
 export const SettingsContext = React.createContext();
+SettingsContext.displayName = 'SettingsContext'
 
-// function which wraps the PassedComponent with the UserContext.Consumer
+// function which wraps the PassedComponent with the SettingsContext.Consumer
 export function withSettingsContext(PassedComponent) {
-  // research on why we need the below wrapper arrow function for props
   return (props) => (
     <SettingsContext.Consumer>
       {(context) => {
-        console.log('Settings Props', props);
-        console.log('Settings context', context);
         return (
           <PassedComponent {...context} {...props} />
         )
@@ -25,18 +23,18 @@ export class SettingsProvider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      settings: {}
     };
   }
 
   async componentDidMount() {
-    let settings = await getSettingsFS(getFromLocalStorage('userData', 'id'));
+    let settings = getFromLocalStorage('settings');
+    if (!settings) {
+      settings = await getSettingsFS(getFromLocalStorage('userData', 'id'));
+      localStorage.setItem("settings", JSON.stringify(settings))
+    }
     this.setState({
       settings
     });
-    if (!localStorage.getItem("settings")) {
-      localStorage.setItem("settings", JSON.stringify(settings))
-    }
   }
 
   render() {

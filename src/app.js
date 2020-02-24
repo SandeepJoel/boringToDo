@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { IndividualList } from './components/IndividualList';
 import { UserLoginSignup, withUserContext } from './components/UserLoginSignup';
 import { UserProvider } from './providers/UserProvider';
+import { SettingsProvider } from './providers/SettingsProvider';
 import { SettingsView } from './components/SettingsView';
 import { Listcollection }  from './components/ListCollection';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -53,7 +54,7 @@ const App = withUserContext(
             <React.Fragment>
               {
                 this.state.isSettingsOpened ?
-                <SettingsView toggleSettings={this.toggleSettings} />
+                <SettingsView toggleSettings={this.toggleSettings} jUserData={this.props.userData} />
                  :
                 <React.Fragment>
                    <Todo/>
@@ -70,7 +71,9 @@ const App = withUserContext(
 
 ReactDOM.render(
   <UserProvider>
-    <App/>
+    <SettingsProvider>
+      <App />
+    </SettingsProvider>    
   </UserProvider>,
   document.getElementById('root')
 );

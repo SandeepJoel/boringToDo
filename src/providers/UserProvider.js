@@ -52,7 +52,7 @@ export class UserProvider extends React.Component {
       <UserContext.Provider value={{
         userData: this.state,
         }}>
-        { this.props.children }
+        {this.props.children}
       </UserContext.Provider>
     );
   }

@@ -1,7 +1,7 @@
 import firebase from 'firebase';
 
 // ** Authentication related api functions **
-
+// TODO: Check whether authentication happens for all the below API requests
 export function authStateChange (signInCallback, signOutCallback) {
   // TODO: is this necessary ?
   firebase.auth().onAuthStateChanged(function(user) {
@@ -19,7 +19,7 @@ export function authStateChange (signInCallback, signOutCallback) {
 export function googleSignIn () {
   // google authentication using firebase
   var provider = new firebase.auth.GoogleAuthProvider();
-  firebase.auth().signInWithPopup(provider).then(function(result) {
+  return firebase.auth().signInWithPopup(provider).then(function(result) {
     // This gives you a Google Access Token. You can use it to access the Google API.
     // var token = result.credential.accessToken;
     // The signed-in user info.

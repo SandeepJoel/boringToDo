@@ -12,7 +12,7 @@ export const SettingsView = withUserContext(
     constructor (props) {
       super (props);
       this.state = {
-        currentNav: SettingsNav[0]
+        currentNav: SettingsNav[0].key
       };
       this.selectSection = this.selectSection.bind(this);
     }
@@ -53,9 +53,9 @@ export const SettingsView = withUserContext(
               SettingsNav.map((val) =>
                 (
                   <div key={generateRandomString()}
-                    className={`nav-item ${this.state.currentNav === val ? 'active' : ''}`}
-                    onClick={() => this.selectSection(val)}>
-                    {val}
+                    className={`nav-item ${this.state.currentNav === val.key ? 'active' : ''}`}
+                    onClick={() => this.selectSection(val.key)}>
+                    {val.type}
                   </div>
                 )
               )
@@ -70,7 +70,13 @@ export const SettingsView = withUserContext(
             <div className="settings-details">
               {
                 (this.state.settings ? 
-                  <SettingsItem name={this.state.currentNav} config={this.state.settings[this.state.currentNav]} /> : "")
+                  <SettingsItem 
+                    name={this.state.currentNav} 
+                    config={this.state.settings[this.state.currentNav]} 
+                    /> 
+                  : 
+                  ""
+                )
               }
             </div>            
           </div>

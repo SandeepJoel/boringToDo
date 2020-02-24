@@ -24,10 +24,6 @@ export function getSettingsFS(userId) {
     db.collection('users').doc(userId)
       .get()
       .then((doc) => {
-        /* 
-          Investigate why we not able to select only certain
-          fields from a document in firestore 
-        */
         resolve(doc.data().settings)
       })
       .catch((error) => {

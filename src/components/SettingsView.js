@@ -57,7 +57,7 @@ export const SettingsView = withSettingsContext(withUserContext(
                 (this.props.settings ? 
                   <SettingsItem 
                     name={this.state.currentNav} 
-                    config={this.props.settings[this.state.currentNav]} 
+                    selectedConfig={this.props.settings[this.state.currentNav]} 
                     /> 
                   :
                   ""
@@ -69,5 +69,4 @@ export const SettingsView = withSettingsContext(withUserContext(
       )
     }
   }
-)
-);
+));

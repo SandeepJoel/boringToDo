@@ -124,7 +124,7 @@ exports.createNewUserDbsetup = functions.auth.user().onCreate((user) => {
   Throwed error 4: DEADLINE_EXCEEDED
 */
 exports.activateBackgroundEffect = functions.firestore
-  .document('/users/{userId}/backgroundEffectsCollection/effectId')
+  .document('/users/{userId}/backgroundEffectsCollection/{effectId}')
   .onUpdate((change, context) => {
     const newValue = change.after.data();
     const previousData = change.before.data();

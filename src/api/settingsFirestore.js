@@ -32,14 +32,22 @@ export function getSettingsFS(userId) {
   })
 }
 
-// export function updateTodoColorFS(userId, color) {
-//   db.collection(`/users`)
-//   .doc(userId)
-//   .update({
-//     "userSettings.todo.plain.color": color
-//   })
-//   .then()
-//   .catch((error) => {
-//     console.error("Error updating document: ", error);
-//   })
-// }
+export function getBackgroundEffectFS(userId, effectId) {
+  return new Promise(function (resolve, reject) {
+    db.collection(`/users/${userId}/backgroundEffectsCollection`)
+      .doc(effectId)
+      .get().then(function (doc) {
+        if (doc.exists) {
+          resolve(doc.data());
+          console.log("Background Effect data:", doc.data());
+        } else {
+          resolve({});
+          console.log("No such document!");
+        }
+      })
+      .catch((error) => {
+        reject(Error(error));
+        console.error("Error updating document: ", error);
+      })
+  });
+}

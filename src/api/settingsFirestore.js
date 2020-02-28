@@ -59,7 +59,7 @@ export function activateAndUpdateBackgroundEffectFS(userId, effectId, payload) {
     let activateDocRef = db.doc(`/users/${userId}`);
     let mainDocRef = db.doc(`/users/${userId}/backgroundEffectsCollection/${effectId}`);
     batch.update(mainDocRef, payload);
-    batch.update(activateDocRef, { settings: { activateBackground: payload }});
+    batch.update(activateDocRef, { 'settings.activeBackgroundEffect': payload });
     batch.commit()
     .then(function() {
       console.log("Success updating document");

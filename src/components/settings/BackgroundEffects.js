@@ -4,15 +4,7 @@ import Select from 'react-select'
 import { getBackgroundEffectFS } from '../../api/settingsFirestore';
 import { getFromLocalStorage } from '../../utils/helpers';
 import { PlainBackgroundSettings } from './effectsSettings/PlainBackgroundSettings';
-
-const ColorLiquidsSettings = (props) => {
-  console.log(props);
-  return (
-    <div>
-      colorLiquidsSettings
-    </div>
-  );
-};
+import { ColorLiquidsSettings } from './effectsSettings/ColorLiquidsSettings';
 
 const EffectSettingsMap = {
   colorLiquids: ColorLiquidsSettings,

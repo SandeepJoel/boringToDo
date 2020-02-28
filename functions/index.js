@@ -36,11 +36,9 @@ const defaultSettings = {
     {
       type: 'plainBackground',
       color: "#FFF",
-      activated: true
     },
     {
       type: 'colorLiquids',
-      activated: false,
       config: [
         {
           type: 'gradient',
@@ -87,7 +85,6 @@ const defaultSettings = {
 exports.createNewUserDbsetup = functions.auth.user().onCreate((user) => {
   // Assuming first element in `backgroundEffects` is active by default
   let ActiveBackgroundEffect = JSON.parse(JSON.stringify(defaultSettings.backgroundEffects[0]));
-  delete ActiveBackgroundEffect.activated;
 
   admin.firestore().collection('users').add({
     userDetails: {
@@ -99,7 +96,7 @@ exports.createNewUserDbsetup = functions.auth.user().onCreate((user) => {
       activeBackgroundEffect: ActiveBackgroundEffect,
     }
   })
-  .then((docRef) => { 
+  .then((docRef) => {
     console.log("User document written with ID: ", docRef.id);    
     var batch = admin.firestore().batch();
     defaultSettings.backgroundEffects.forEach((setting) => {
@@ -118,33 +115,3 @@ exports.createNewUserDbsetup = functions.auth.user().onCreate((user) => {
     console.error("Error adding document: ", error);
   });
 });
-
-/* 
-  Need to check why this is not running in emulator ?
-  Throwed error 4: DEADLINE_EXCEEDED
-*/
-exports.activateBackgroundEffect = functions.firestore
-  .document('/users/{userId}/backgroundEffectsCollection/{effectId}')
-  .onUpdate((change, context) => {
-    const newValue = change.after.data();
-    const previousData = change.before.data();
-    const userId = context.params.userId;
-    if (newValue.activated === previousData.activated) return null;
-    if (newValue.activated === true) {
-      const payload = JSON.parse(JSON.stringify(newValue));
-      delete payload.activated;
-      return admin.firestore().doc(`/users/${userId}`).update({
-        settings: {
-          activeBackgroundEffect: payload
-        }
-      })
-      .then((result) => {
-        console.log('Success', result)
-        return result;
-      })
-      .catch((e) => {
-        console.log('Error occurred', e)
-      });
-    }
-    return null;
-  });

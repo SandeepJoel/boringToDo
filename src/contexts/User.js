@@ -41,7 +41,6 @@ export class UserProvider extends React.Component {
       console.log('Got userId from API', userData);
       localStorage.setItem("userData", JSON.stringify(userData));
     }
-    console.log('Fixing user state', user, userId);
     this.setState({
       userName: user.displayName,
       userPhotoUrl: user.photoURL,

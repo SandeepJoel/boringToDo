@@ -70,13 +70,17 @@ button {
   margin: 5px;
   padding: 5px 15px;
   border-color: var(--black);
-  background-color: var(--white);
+  background-color: tomato;
   color: var(--black);
   border: none;
   font-size: 12px;
-  color: var(--gray);
+  cursor: pointer;  
   box-shadow: 0px 1px 3px 1.5px rgba(0, 0, 0, .1);
   border-radius: 2px;
+}
+
+button:disabled {
+ background-color: var(--gray);
 }
 
 .done {

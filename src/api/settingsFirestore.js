@@ -32,6 +32,8 @@ export function getSettingsFS(userId) {
   })
 }
 
+// background effects apis
+
 export function getBackgroundEffectFS(userId, effectId) {
   return new Promise(function (resolve, reject) {
     db.collection(`/users/${userId}/backgroundEffectsCollection`)
@@ -39,7 +41,6 @@ export function getBackgroundEffectFS(userId, effectId) {
       .get().then(function (doc) {
         if (doc.exists) {
           resolve(doc.data());
-          console.log("Background Effect data:", doc.data());
         } else {
           resolve({});
           console.log("No such document!");
@@ -49,5 +50,24 @@ export function getBackgroundEffectFS(userId, effectId) {
         reject(Error(error));
         console.error("Error updating document: ", error);
       })
+  });
+}
+
+export function activateAndUpdateBackgroundEffectFS(userId, effectId, payload) {
+  return new Promise(function (resolve, reject) {
+    let batch = db.batch();
+    let activateDocRef = db.doc(`/users/${userId}`);
+    let mainDocRef = db.doc(`/users/${userId}/backgroundEffectsCollection/${effectId}`);
+    batch.update(mainDocRef, payload);
+    batch.update(activateDocRef, { settings: { activateBackground: payload }});
+    batch.commit()
+    .then(function() {
+      console.log("Success updating document");
+      resolve();
+    })
+    .catch((error) => {
+      reject(Error(error));
+      console.error("Error updating document: ", error);
+    })
   });
 }

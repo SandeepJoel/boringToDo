@@ -3,21 +3,13 @@ import { BackgroundEffectList } from '../../constants/settings';
 import Select from 'react-select'
 import { getBackgroundEffectFS } from '../../api/settingsFirestore';
 import { getFromLocalStorage } from '../../utils/helpers';
+import { PlainBackgroundSettings } from './effectsSettings/PlainBackgroundSettings';
 
 const ColorLiquidsSettings = (props) => {
   console.log(props);
   return (
     <div>
       colorLiquidsSettings
-    </div>
-  );
-};
-
-const PlainBackgroundSettings = (props) => {
-  console.log(props);
-  return (
-    <div>
-      PlainBackgroundSettings
     </div>
   );
 };
@@ -44,9 +36,9 @@ export class BackgroundEffects extends React.Component {
       isLoaded: false
     });    
     let fetchedData = await getBackgroundEffectFS(
-      getFromLocalStorage('userData', 'id'), effectId
+      getFromLocalStorage('userData', 'id'),
+      effectId
     );
-    console.log(fetchedData);
     this.setState({
       isLoaded: true,
       currentEffectConfig: fetchedData

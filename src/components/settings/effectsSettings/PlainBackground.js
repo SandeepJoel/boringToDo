@@ -47,9 +47,6 @@ export class PlainBackground extends React.Component {
       activeBackgroundEffect: payload,
       general: getFromLocalStorage('settings', 'general')
     }));
-
-    localStorage.setItem('activeBackgroundEffect', JSON.stringify(payload));
-
   };
 
   render() {

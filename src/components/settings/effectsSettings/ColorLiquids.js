@@ -10,18 +10,18 @@ export class ColorLiquids extends React.Component {
     super(props);
     this.state = {
       applyState: 'Done',
-      waves: props.config.config,
-      selectedWave: undefined,
+      liquids: props.config.config,
+      selectedLiquid: undefined,
       isDirty: false
     };
-    this.selectWave = this.selectWave.bind(this);
+    this.selectLiquid = this.selectLiquid.bind(this);
     this.updateLiquid = this.updateLiquid.bind(this);
   }
 
-  selectWave(index) {
+  selectLiquid(index) {
     this.setState({ 
-      selectedWave: this.props.config.config[index],
-      waveIndex: index
+      selectedLiquid: this.props.config.config[index],
+      liquidIndex: index
     });
   }
 
@@ -48,31 +48,31 @@ export class ColorLiquids extends React.Component {
   };
 
   render() {
-    let { waves, selectedWave, waveIndex, applyState, isDirty } = this.state; 
-    console.log(selectedWave);
+    let { liquids, selectedLiquid, liquidIndex, applyState, isDirty } = this.state; 
+    console.log(selectedLiquid);
     return (
       <React.Fragment>
         <div className='flex'> 
-          <section className="existing-waves">
-            Existing Waves
+          <section className="existing-liquids">
+            Existing Liquids
             {
-              waves.map((waveItem, index) => {
+              liquids.map((liquidItem, index) => {
                 let btnStyle = {
-                  backgroundColor: waveItem.colors ? waveItem.colors[0] : waveItem.color
+                  backgroundColor: liquidItem.colors ? liquidItem.colors[0] : liquidItem.color
                 }
                 return (
                   <button
-                    className={waveIndex === index ? 'selected': ''}
+                    className={liquidIndex === index ? 'selected': ''}
                     style={btnStyle}
-                    onClick={this.selectWave.bind(this, index)}
+                    onClick={this.selectLiquid.bind(this, index)}
                     key={`${index}_${generateRandomString()}`}>
-                    {waveItem.wave}
+                    {liquidItem.liquid}
                   </button>
                 )
               })
             }
           </section>
-          {selectedWave ? <LiquidSetting wave={selectedWave} key={waveIndex} updateLiquid={this.updateLiquid}/> : ''}        
+          {selectedLiquid ? <LiquidSetting liquid={selectedLiquid} key={liquidIndex} updateLiquid={this.updateLiquid}/> : ''}        
         </div>
         <button onClick={this.apply} disabled={!isDirty}>
           {applyState === 'Done' ? 'Apply' : 'Apply...'}

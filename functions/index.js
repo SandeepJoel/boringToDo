@@ -41,39 +41,39 @@ const defaultSettings = {
       type: 'colorLiquids',
       config: [
         {
-          type: 'gradient',
+          fill: 'gradient',
           colors: ['#4facfe', '#00f2fe'],
-          wave: 'blob1'
+          liquid: 'blob1'
         },
         {
-          type: 'singleColor',
+          fill: 'singleColor',
           color: '#000',
-          wave: 'blob1'
+          liquid: 'blob1'
         },
         {
-          type: 'gradient',
+          fill: 'gradient',
           colors: ['#f093fb', '#f5576c'],
-          wave: 'blob2'
+          liquid: 'blob2'
         },
         {
-          type: 'singleColor',
+          fill: 'singleColor',
           color: '#FFF',
-          wave: 'blob2'
+          liquid: 'blob2'
         },
         {
-          type: 'gradient',
+          fill: 'gradient',
           colors: ['#84fab0', '#8fd3f4'],
-          wave: 'blob1'
+          liquid: 'blob1'
         },
         {
-          type: 'singleColor',
+          fill: 'singleColor',
           color: '#000',
-          wave: 'blob1'
+          liquid: 'blob1'
         },
         {
-          type: 'gradient',
+          fill: 'gradient',
           colors: ['#fa709a', '#fee140'],
-          wave: 'blob1'
+          liquid: 'blob1'
         },
       ],
     }

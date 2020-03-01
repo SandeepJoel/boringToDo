@@ -3,7 +3,7 @@ import Select from 'react-select'
 // TODO: If possible try to replace react-select with normal select
 import { ChromePicker } from 'react-color';
 
-const WavesList = [
+const LiquidsList = [
   { value: 'blob1', label: 'Blob 1' },
   { value: 'blob2', label: 'Blob 2' }
 ];
@@ -38,11 +38,11 @@ export class LiquidSetting extends React.Component {
   onSelectChange(data) {
     let { name } = this;
     switch (name) {
-      case 'waveType':
-        let colorKey = this.props.type === 'gradient' ? 'color' : 'colors';
+      case 'liquidType':
+        let colorKey = this.props.fill === 'gradient' ? 'color' : 'colors';
         this.props.updateLiquid({
-          wave: data.value,
-          type: this.props.type,
+          liquid: data.value,
+          fill: this.props.fill,
           [colorKey]: this.props[colorKey]
         });
       break;
@@ -63,16 +63,16 @@ export class LiquidSetting extends React.Component {
       bottom: '0px',
       left: '0px',
     }
-    let { wave } = this.props;
-    let isGradient = (wave.type === 'gradient'); 
-    let selectedWaveOption = WavesList.find(x => x.value === wave.wave);
-    let selectedFillOption = FillList.find(x => x.value === wave.type);
-    let colors = wave.colors ? wave.colors : [wave.color]
+    let { liquid } = this.props;
+    let isGradient = (liquid.fill === 'gradient'); 
+    let selectedLiquidOption = LiquidsList.find(x => x.value === liquid.liquid);
+    let selectedFillOption = FillList.find(x => x.value === liquid.fill);
+    let colors = liquid.colors ? liquid.colors : [liquid.color]
     return (
-      <section className='add-wave'>
+      <section className='liquid-setting'>
         <div className='field'>
-          Wave Type: 
-          <Select name='waveType' options={WavesList} value={selectedWaveOption} onChange={this.onSelectChange} />
+          Liquid Type: 
+          <Select name='liquidType' options={LiquidsList} value={selectedLiquidOption} onChange={this.onSelectChange} />
         </div>
         <div className='field'>
           Fill Type:

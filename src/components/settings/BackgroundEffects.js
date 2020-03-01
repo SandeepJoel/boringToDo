@@ -3,12 +3,12 @@ import { BackgroundEffectList } from '../../constants/settings';
 import Select from 'react-select'
 import { getBackgroundEffectFS } from '../../api/settingsFirestore';
 import { getFromLocalStorage } from '../../utils/helpers';
-import { PlainBackgroundSettings } from './effectsSettings/PlainBackgroundSettings';
-import { ColorLiquidsSettings } from './effectsSettings/ColorLiquidsSettings';
+import { PlainBackground } from './effectsSettings/PlainBackground';
+import { ColorLiquids } from './effectsSettings/ColorLiquids';
 
 const EffectSettingsMap = {
-  colorLiquids: ColorLiquidsSettings,
-  plainBackground: PlainBackgroundSettings
+  colorLiquids: ColorLiquids,
+  plainBackground: PlainBackground
 }  
 
 export class BackgroundEffects extends React.Component {
@@ -38,6 +38,7 @@ export class BackgroundEffects extends React.Component {
   }
 
   onChange(option) {
+    //TODO: fetch only for effect setting not stored in localStorage
     this.fetchBackgroundEffect(option.value);
     this.setState({
       currentEffect: BackgroundEffectList.find(x => x.value === option.value).value
@@ -48,7 +49,7 @@ export class BackgroundEffects extends React.Component {
     let selectedOption = BackgroundEffectList.find(x => x.value === this.state.currentEffect);
     let CurrentSelectedSettings = EffectSettingsMap[this.state.currentEffect];
     return (
-      <div>
+      <React.Fragment>
         Select Effect
         <Select options={BackgroundEffectList} value={selectedOption} onChange={this.onChange}/>
         { 
@@ -60,7 +61,7 @@ export class BackgroundEffects extends React.Component {
           :
           'Loading...' 
         }
-      </div>
+      </React.Fragment>
     );
   }  
 };

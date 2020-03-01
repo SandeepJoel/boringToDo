@@ -3,7 +3,7 @@ import React from 'react';
 import { activateAndUpdateBackgroundEffectFS } from '../../../api/settingsFirestore';
 import { getFromLocalStorage } from '../../../utils/helpers';
 
-export class PlainBackgroundSettings extends React.Component {
+export class PlainBackground extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

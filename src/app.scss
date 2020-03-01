@@ -465,6 +465,16 @@ input {
 
 }
 
-.logout {
+.flex {
+  display: flex;
+}
+.existing-waves {
+  flex-grow: 1;
+}
+.add-wave {
+  flex-basis: 35%;
+}
 
+.selected {
+  border: 3px solid black;
 }

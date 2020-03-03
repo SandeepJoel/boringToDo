@@ -3,6 +3,10 @@ import Select from 'react-select'
 // TODO: If possible try to replace react-select with normal select
 import { ChromePicker } from 'react-color';
 
+const DefaultValues = {
+  gradient: ['#000', '#FFF'],
+  fill: '#FF0'
+}
 const LiquidsList = [
   { value: 'blob1', label: 'Blob 1' },
   { value: 'blob2', label: 'Blob 2' }
@@ -37,16 +41,29 @@ export class LiquidSetting extends React.Component {
 
   onSelectChange(data) {
     let { name } = this;
+    let colorKey, colorVal;
+    // Is this function correct ? Am I using `selectProps` currectly ?
     switch (name) {
       case 'liquidType':
-        let colorKey = this.props.fill === 'gradient' ? 'color' : 'colors';
-        this.props.updateLiquid({
+        colorKey = this.selectProps.liquid.fill === 'gradient' ? 'colors' : 'color';
+        this.selectProps.updateLiquid({
           liquid: data.value,
-          fill: this.props.fill,
-          [colorKey]: this.props[colorKey]
+          fill: this.selectProps.liquid.fill,
+          [colorKey]: this.selectProps.liquid[colorKey],
         });
       break;
+
       case 'fillType':
+        colorKey = data.value === 'gradient' ? 'colors' : 'color';
+        colorVal = this.selectProps.initialData[colorKey];
+        if (!colorVal) {
+          colorVal = data.value === 'gradient' ? DefaultValues.gradient : DefaultValues.fill ;
+        }        
+        this.selectProps.updateLiquid({
+          liquid: this.selectProps.liquid.liquid,
+          fill: data.value,
+          [colorKey]: colorVal,
+        });     
       break;
     }
   };
@@ -72,11 +89,11 @@ export class LiquidSetting extends React.Component {
       <section className='liquid-setting'>
         <div className='field'>
           Liquid Type: 
-          <Select name='liquidType' options={LiquidsList} value={selectedLiquidOption} onChange={this.onSelectChange} />
+          <Select name='liquidType' options={LiquidsList} value={selectedLiquidOption} onChange={this.onSelectChange} selectProps={this.props} />
         </div>
         <div className='field'>
           Fill Type:
-          <Select name='fillType' options={FillList} value={selectedFillOption} onChange={this.onSelectChange} />
+          <Select name='fillType' options={FillList} value={selectedFillOption} onChange={this.onSelectChange} selectProps={this.props} />
         </div>
         {
           colors.map((color, index) => {

@@ -39,7 +39,6 @@ export class PlainBackground extends React.Component {
     // update and activate
     await activateAndUpdateBackgroundEffectFS(
       getFromLocalStorage('userData', 'id'),
-      this.props.config.type,
       payload
     );
     this.setState({ applyState: 'Done', isDirty: false });

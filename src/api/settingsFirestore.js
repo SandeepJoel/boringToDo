@@ -53,9 +53,10 @@ export function getBackgroundEffectFS(userId, effectId) {
   });
 }
 
-export function activateAndUpdateBackgroundEffectFS(userId, effectId, payload) {
+export function activateAndUpdateBackgroundEffectFS(userId, payload) {
   return new Promise(function (resolve, reject) {
     let batch = db.batch();
+    let effectId = payload.type;
     let activateDocRef = db.doc(`/users/${userId}`);
     let mainDocRef = db.doc(`/users/${userId}/backgroundEffectsCollection/${effectId}`);
     batch.update(mainDocRef, payload);

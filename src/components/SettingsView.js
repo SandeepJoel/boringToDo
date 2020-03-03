@@ -5,9 +5,8 @@ import { withUserContext } from '../contexts/User';
 import { generateRandomString } from '../utils/helpers';
 import { SettingsItem } from '../containers/SettingsItem';
 import { SettingsNav } from '../constants/settings';
-import { withSettingsContext } from '../contexts/Settings';
 
-export const SettingsView = withSettingsContext(withUserContext(
+export const SettingsView = withUserContext(
   class extends React.Component {
     constructor (props) {
       super (props);
@@ -53,20 +52,11 @@ export const SettingsView = withSettingsContext(withUserContext(
               <FontAwesomeIcon className="close" icon='times' size='lg' onClick={this.props.toggleSettings}></FontAwesomeIcon>
             </header>            
             <div className="settings-details">
-              {
-                (this.props.settings ? 
-                  <SettingsItem 
-                    name={this.state.currentNav} 
-                    selectedConfig={this.props.settings[this.state.currentNav]} 
-                    /> 
-                  :
-                  ""
-                )
-              }
+              <SettingsItem name={this.state.currentNav} />
             </div>            
           </div>
         </div>    
       )
     }
   }
-));
+);

@@ -133,9 +133,7 @@ export class IndividualList extends React.Component {
     this.setState({
       tasks: [
         ...this.state.tasks.slice(0, tickedTaskIndex),
-        Object.assign({}, this.state.tasks[tickedTaskIndex],
-        payload
-        ),
+        Object.assign({}, this.state.tasks[tickedTaskIndex], payload),
         ...this.state.tasks.slice(tickedTaskIndex + 1)
       ]
     });

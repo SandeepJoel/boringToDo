@@ -1,7 +1,8 @@
 import React from 'react';
-import Select from 'react-select'
+import Select from 'react-select';
 // TODO: If possible try to replace react-select with normal select
-import { ChromePicker } from 'react-color';
+import { BtnColorPicker } from "../../../BtnColorPicker";
+import { generateRandomString } from '../../../../utils/helpers';
 
 const DefaultValues = {
   gradient: ['#000', '#FFF'],
@@ -20,23 +21,19 @@ const FillList = [
 export class LiquidSetting extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      displayColorPicker: false,
-    };
-    this.handleClick = this.handleClick.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.colorChange = this.colorChange.bind(this);
   }
 
-  handleClick() {
-    this.setState({ displayColorPicker: !this.state.displayColorPicker });
-  };
+  colorChange(data) {
+    let colorKey = this.props.liquid.colors ? 'colors' : 'color';
+    let colorVal = JSON.parse(JSON.stringify(this.props.liquid[colorKey]));
+    colorVal[data.index] = data.color;
 
-  handleClose() {
-    this.setState({ displayColorPicker: false });
-  };
-
-  handleChange(e) {    
+    this.props.updateLiquid({
+      liquid: this.props.liquid.liquid,
+      fill: this.props.liquid.fill,
+      [colorKey]: colorVal,
+    });
   };
 
   onSelectChange(data) {
@@ -69,17 +66,6 @@ export class LiquidSetting extends React.Component {
   };
 
   render() {
-    const popover = {
-      position: 'absolute',
-      zIndex: '2',
-    }
-    const cover = {
-      position: 'fixed',
-      top: '0px',
-      right: '0px',
-      bottom: '0px',
-      left: '0px',
-    }
     let { liquid } = this.props;
     let isGradient = (liquid.fill === 'gradient'); 
     let selectedLiquidOption = LiquidsList.find(x => x.value === liquid.liquid);
@@ -99,20 +85,11 @@ export class LiquidSetting extends React.Component {
           colors.map((color, index) => {
             return (
               <div key={index}>
-                {isGradient ? `Color ${index + 1}:` : 'Color :'}
-                <button style={{ backgroundColor: color }} onClick={this.handleClick}> {color} </button>
+                { isGradient? `Color ${index + 1}:` : 'Color :'}
+                <BtnColorPicker color={color} index={index} key={`${index}_${generateRandomString()}`} colorChange={this.colorChange}/>
               </div>
             )
           })
-        }
-        {
-          // this.state.displayColorPicker ?
-          //   <div style={popover}>
-          //     <div style={cover} onClick={this.handleClose} />
-          //     <ChromePicker color={this.state.currentColor} onChange={this.handleChange} />
-          //   </div>
-          //   :
-          //   null
         }
       </section>
     )

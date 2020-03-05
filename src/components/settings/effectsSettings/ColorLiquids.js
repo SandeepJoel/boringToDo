@@ -16,7 +16,8 @@ export class ColorLiquids extends React.Component {
       isLoaded: false,
       liquidIndex: 0,
       // TODO: Check dervied state here
-      currentEffectConfig: this.props.config
+      currentEffectConfig: this.props.config,
+      initialState: JSON.parse(JSON.stringify(this.props.config))
     };
     this.fetchBackgroundEffect = this.fetchBackgroundEffect.bind(this);
     this.apply = this.apply.bind(this);

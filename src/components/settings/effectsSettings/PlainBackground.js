@@ -63,6 +63,14 @@ export class PlainBackground extends React.Component {
     const button = {
       backgroundColor: `${this.state.currentColor}`
     }
+
+    if (!this.props.config) {
+      return (
+        <React.Fragment>
+          Loading...
+        </React.Fragment>
+      );
+    }
     return (
       <div>
         Choose a plain color

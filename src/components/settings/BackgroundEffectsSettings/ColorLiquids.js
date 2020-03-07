@@ -4,8 +4,15 @@ import {
   activateAndUpdateBackgroundEffectFS 
 } from '../../../api/settingsFirestore';
 import { getFromLocalStorage, generateRandomString, deepCompare } from '../../../utils/helpers';
-import { LiquidSetting } from './ColorLiquids/Liquid';
+import { Liquid } from './ColorLiquids/Liquid';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // TODO: Need to enable Airbnb style guide to make naming conventions better
+
+const newLiquid = {
+  colors: ['#FFF', '#000'],
+  fill: "gradient",
+  liquid: "blob1"
+}
 
 export class ColorLiquids extends React.Component {
   constructor(props) {
@@ -24,11 +31,47 @@ export class ColorLiquids extends React.Component {
     this.reset = this.reset.bind(this);
     this.selectLiquid = this.selectLiquid.bind(this);
     this.updateLiquid = this.updateLiquid.bind(this);
+    this.addLiquid = this.addLiquid.bind(this);
+    this.removeLiquid = this.removeLiquid.bind(this);
   }
 
   selectLiquid(index) {
     this.setState({
       liquidIndex: index
+    });
+  }
+
+  removeLiquid() {
+    this.setState((state, props) => {
+      let nextState = {
+        type: state.currentEffectConfig.type,
+        config: [
+          ...state.currentEffectConfig.config.slice(0, state.liquidIndex),
+          ...state.currentEffectConfig.config.slice(state.liquidIndex + 1),
+        ]
+      }
+      // TODO: Can we extract out deepComparing
+      let isEqual = deepCompare(nextState, this.state.initialState);
+      return {
+        isDirty: !isEqual,
+        currentEffectConfig: nextState,
+        liquidIndex: (state.liquidIndex - 1)
+      }
+    })
+  }
+
+  addLiquid() {
+    this.setState((state, props) => {
+      let nextState = {
+        type: state.currentEffectConfig.type,
+        config: [...state.currentEffectConfig.config, newLiquid]
+      }
+      let isEqual = deepCompare(nextState, this.state.initialState);
+      return {
+        isDirty: !isEqual,
+        currentEffectConfig: nextState,
+        liquidIndex: (state.currentEffectConfig.config.length)
+      }
     });
   }
 
@@ -81,9 +124,23 @@ export class ColorLiquids extends React.Component {
   };
 
   reset() {
-    this.setState({
-      currentEffectConfig: this.state.initialState,
-      isDirty: false
+    this.setState((state) => {
+      let {
+        initialState,
+        initialState: {
+          config: initialStateConfig 
+        },
+        currentEffectConfig: {
+          config: currentConfig
+        }
+      } = state;
+      let hasLiquidIndexChanged = !(currentConfig.length === initialStateConfig.length);
+      let newLiquidIndex = hasLiquidIndexChanged ? 0 : state.liquidIndex;
+      return {
+        currentEffectConfig: initialState,
+        isDirty: false,
+        liquidIndex: newLiquidIndex
+      }
     })
   }
 
@@ -124,9 +181,15 @@ export class ColorLiquids extends React.Component {
                 )
               })
             }
+            
+            <FontAwesomeIcon icon='plus-circle' size="lg" onClick={this.addLiquid.bind(this)}></FontAwesomeIcon>
+              -----
+            <FontAwesomeIcon icon='trash' size="lg" onClick={this.removeLiquid.bind(this)}></FontAwesomeIcon>
+            
           </section>
+
           {liquidIndex !== undefined ? 
-            <LiquidSetting 
+            <Liquid
               liquid={this.state.currentEffectConfig.config[liquidIndex]} 
               key={liquidIndex}
               initialData={this.state.initialState.config[liquidIndex]}

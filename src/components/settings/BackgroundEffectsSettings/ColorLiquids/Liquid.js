@@ -18,7 +18,7 @@ const FillList = [
   { value: 'gradient', label: 'Gradient' }
 ];
 
-export class LiquidSetting extends React.Component {
+export class Liquid extends React.Component {
   constructor(props) {
     super(props);
     this.colorChange = this.colorChange.bind(this);
@@ -26,9 +26,13 @@ export class LiquidSetting extends React.Component {
 
   colorChange(data) {
     let colorKey = this.props.liquid.colors ? 'colors' : 'color';
-    let colorVal = JSON.parse(JSON.stringify(this.props.liquid[colorKey]));
-    colorVal[data.index] = data.color;
-
+    let colorVal;
+    if (colorKey === 'colors') {
+      colorVal = JSON.parse(JSON.stringify(this.props.liquid[colorKey]))
+      colorVal[data.index] = data.color;
+    } else {
+      colorVal = data.color
+    }
     this.props.updateLiquid({
       liquid: this.props.liquid.liquid,
       fill: this.props.liquid.fill,
@@ -52,9 +56,9 @@ export class LiquidSetting extends React.Component {
 
       case 'fillType':
         colorKey = data.value === 'gradient' ? 'colors' : 'color';
-        colorVal = this.selectProps.initialData[colorKey];
+        colorVal = this.selectProps.initialData && this.selectProps.initialData[colorKey];
         if (!colorVal) {
-          colorVal = data.value === 'gradient' ? DefaultValues.gradient : DefaultValues.fill ;
+          colorVal = data.value === 'gradient' ? DefaultValues.gradient : DefaultValues.fill;
         }        
         this.selectProps.updateLiquid({
           liquid: this.selectProps.liquid.liquid,
@@ -67,6 +71,13 @@ export class LiquidSetting extends React.Component {
 
   render() {
     let { liquid } = this.props;
+    if (!liquid) {
+      return (
+        <React.Fragment>
+          Loading view...
+        </React.Fragment>
+      )
+    }
     let isGradient = (liquid.fill === 'gradient'); 
     let selectedLiquidOption = LiquidsList.find(x => x.value === liquid.liquid);
     let selectedFillOption = FillList.find(x => x.value === liquid.fill);

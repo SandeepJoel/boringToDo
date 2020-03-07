@@ -100,6 +100,7 @@ export class Listcollection extends React.Component {
         </header>
         <div className='lists'>
           {
+            // TODO: why is there slice(0) below ?
             this.state.listCollection.length > 0 && this.state.listCollection.slice(0).reverse().map((item, index) => {
               return (
                 <div key={item.listId} className='list'>

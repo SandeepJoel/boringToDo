@@ -9,6 +9,7 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 // import { MemoryRouter } from 'react-router'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { IndividualList } from './components/IndividualList';
+import { Effect } from './components/Effect';
 import { UserLoginSignup } from './components/UserLoginSignup';
 import { UserProvider, withUserContext } from './contexts/User';
 import { SettingsProvider } from './contexts/Settings';
@@ -31,7 +32,7 @@ const App = withUserContext(
     constructor (props) {
       super (props);
       this.state = {
-        isSettingsOpened: true
+        isSettingsOpened: false
       }
       this.toggleSettings = this.toggleSettings.bind(this);    
     }
@@ -58,6 +59,7 @@ const App = withUserContext(
                 <SettingsView toggleSettings={this.toggleSettings}/>                
                  :
                 <React.Fragment>
+                   <Effect />
                    <Todo/>
                    <FontAwesomeIcon className="settings-icon" icon='cog' size='lg' onClick={this.toggleSettings}></FontAwesomeIcon>
                 </React.Fragment>

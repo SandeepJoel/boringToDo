@@ -396,8 +396,8 @@ input {
 
 .settings-icon {
   position: absolute;
-  bottom: 10px;
-  left: 10px;
+  top: 10px;
+  right: 10px;
   z-index: 10;
 }
 
@@ -477,4 +477,13 @@ input {
 
 .selected {
   border: 3px solid black;
+}
+
+.effect-container {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }

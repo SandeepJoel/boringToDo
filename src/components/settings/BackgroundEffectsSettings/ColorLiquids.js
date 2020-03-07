@@ -103,9 +103,8 @@ export class ColorLiquids extends React.Component {
     this.setState({
       isLoaded: true,
       currentEffectConfig: fetchedData,
-      initialState: fetchedData
+      initialState: fetchedData // TODO: Is this okay to store an initial state like this ?
     });
-    // TODO is this okay to store an initial state like this ?
   }
 
   async apply() {
@@ -116,11 +115,11 @@ export class ColorLiquids extends React.Component {
       getFromLocalStorage('userData', 'id'),
       payload
     );
-    this.setState({ applyState: 'Done', isDirty: false, initialState: payload });    
-    localStorage.setItem('settings', JSON.stringify({
-      activeBackgroundEffect: payload,
-      general: getFromLocalStorage('settings', 'general')
-    }));
+    this.setState({ applyState: 'Done', isDirty: false, initialState: payload });
+
+    // TODO: Here we need to update both context and localStorage. Think to find a better way
+    this.props.updateBackgroundContext({ activeBackgroundEffectSettings: payload });
+    localStorage.setItem('activeBackgroundEffectSettings', JSON.stringify(payload));
   };
 
   reset() {

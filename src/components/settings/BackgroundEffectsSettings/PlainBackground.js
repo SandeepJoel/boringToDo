@@ -73,11 +73,13 @@ export class PlainBackground extends React.Component {
       payload
     );
     this.setState({ applyState: 'Done', isDirty: false, initialState: payload });
-    // why are we setting state in localStorage ?
-    localStorage.setItem('settings', JSON.stringify({
-      activeBackgroundEffect: payload,
-      general: getFromLocalStorage('settings', 'general')
-    }));
+
+    /* TODO: 
+      Here we need to update both context and localStorage. Think to find a better way.
+      If we feel that localStorage is not used that much, then we will need to remove it.
+    */
+    this.props.updateBackgroundContext({ activeBackgroundEffectSettings: payload });
+    localStorage.setItem('activeBackgroundEffectSettings', JSON.stringify(payload));
   }
 
   reset() {

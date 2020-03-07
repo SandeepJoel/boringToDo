@@ -18,12 +18,13 @@ export const BackgroundEffects = withSettingsContext(
         currentEffect: undefined,
       };
       this.onChange = this.onChange.bind(this);
+      this.updateBackgroundContext = this.updateBackgroundContext.bind(this);
     }
 
     // Use this function carefully
     static getDerivedStateFromProps(nextProps, prevState) {
-      if (!prevState.currentEffect && nextProps.settings) {
-        return { currentEffect: nextProps.settings.activeBackgroundEffect.type };
+      if (!prevState.currentEffect && nextProps.activeBackgroundEffectSettings) {
+        return { currentEffect: nextProps.activeBackgroundEffectSettings.type };
       }
       else return null;
     }
@@ -34,8 +35,12 @@ export const BackgroundEffects = withSettingsContext(
       })
     }
 
+    updateBackgroundContext(data) {
+      this.props.updateSettings(data);
+    }
+
     render() {
-      if (!this.props.settings) {
+      if (!this.props.activeBackgroundEffectSettings) {
         return (
           <React.Fragment>
             Loading...
@@ -45,8 +50,8 @@ export const BackgroundEffects = withSettingsContext(
       let selectedOption = BackgroundEffectList.find(x => x.value === this.state.currentEffect);
       let CurrentSelectedSettings = EffectSettingsMap[this.state.currentEffect];
       let passProps = 
-      (this.state.currentEffect === this.props.settings.activeBackgroundEffect.type)
-         ? this.props.settings.activeBackgroundEffect
+        (this.state.currentEffect === this.props.activeBackgroundEffectSettings.type)
+          ? this.props.activeBackgroundEffectSettings
           : undefined;
       return (
         <React.Fragment>
@@ -54,7 +59,7 @@ export const BackgroundEffects = withSettingsContext(
           <Select options={BackgroundEffectList} value={selectedOption} onChange={this.onChange}/>
           {/* here if the passProps is available that means its present in context
           and if it is undefined then you need to fetch config from API */}
-          <CurrentSelectedSettings config={passProps} />
+          <CurrentSelectedSettings config={passProps} updateBackgroundContext={this.updateBackgroundContext}/>
         </React.Fragment>
       );
     }

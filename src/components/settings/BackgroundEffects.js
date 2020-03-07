@@ -1,8 +1,8 @@
 import React from 'react';
 import { BackgroundEffectList } from '../../constants/settings';
 import Select from 'react-select'
-import { PlainBackground } from './effectsSettings/PlainBackground';
-import { ColorLiquids } from './effectsSettings/ColorLiquids';
+import { PlainBackground } from './BackgroundEffectsSettings/PlainBackground';
+import { ColorLiquids } from './BackgroundEffectsSettings/ColorLiquids';
 import { withSettingsContext } from '../../contexts/Settings';
 
 const EffectSettingsMap = {

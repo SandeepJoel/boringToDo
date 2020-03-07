@@ -4,7 +4,7 @@ import {
   activateAndUpdateBackgroundEffectFS 
 } from '../../../api/settingsFirestore';
 import { getFromLocalStorage, generateRandomString, deepCompare } from '../../../utils/helpers';
-import { LiquidSetting } from './colorLiquids/liquidSetting';
+import { LiquidSetting } from './ColorLiquids/Liquid';
 // TODO: Need to enable Airbnb style guide to make naming conventions better
 
 export class ColorLiquids extends React.Component {

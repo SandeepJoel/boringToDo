@@ -1,6 +1,6 @@
 import React from 'react';
-import { BackgroundEffects } from '../components/settings/BackgroundEffects';
-import { General } from '../components/settings/General';
+import { BackgroundEffects } from '../components/Settings/BackgroundEffects';
+import { General } from '../components/Settings/General';
 
 export const SettingsItem = (props) => {
   // TODO: Late check on how to not use this map ?

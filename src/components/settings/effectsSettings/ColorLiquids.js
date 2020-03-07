@@ -13,11 +13,11 @@ export class ColorLiquids extends React.Component {
     this.state = {
       applyState: 'Done',
       isDirty: false,
-      isLoaded: false,
+      isLoaded: this.props.config ? true: false,
       liquidIndex: 0,
       // TODO: Check dervied state here
       currentEffectConfig: this.props.config,
-      initialState: JSON.parse(JSON.stringify(this.props.config))
+      initialState: this.props.config ? JSON.parse(JSON.stringify(this.props.config)) : undefined
     };
     this.fetchBackgroundEffect = this.fetchBackgroundEffect.bind(this);
     this.apply = this.apply.bind(this);
@@ -88,7 +88,7 @@ export class ColorLiquids extends React.Component {
   }
 
   componentDidMount() {
-    if (!this.state.currentEffectConfig) {
+    if (!this.state.isLoaded) {
       this.fetchBackgroundEffect('colorLiquids');
     }
   }

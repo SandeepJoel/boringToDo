@@ -1,6 +1,9 @@
 import { ChromePicker } from 'react-color';
 import React from 'react';
-import { activateAndUpdateBackgroundEffectFS } from '../../../api/settingsFirestore';
+import { 
+  getBackgroundEffectFS,
+  activateAndUpdateBackgroundEffectFS
+} from '../../../api/settingsFirestore';
 import { getFromLocalStorage } from '../../../utils/helpers';
 
 export class PlainBackground extends React.Component {
@@ -8,14 +11,18 @@ export class PlainBackground extends React.Component {
     super(props);
     this.state = {
       displayColorPicker: false,
-      currentColor: this.props.config.color,
+      currentEffectConfig: this.props.config,
       applyState: 'Done',
-      isDirty: false
+      isDirty: false,
+      isLoaded: this.props.config ? true: false,
+      initialState: this.props.config ? JSON.parse(JSON.stringify(this.props.config)): undefined
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.apply = this.apply.bind(this);
+    this.reset = this.reset.bind(this);
+    this.fetchBackgroundEffect = this.fetchBackgroundEffect.bind(this);
   }
 
   handleClick() {
@@ -27,28 +34,68 @@ export class PlainBackground extends React.Component {
   };
 
   handleChange(color) {
-    this.setState({ currentColor: color.hex, isDirty: true })
+    this.setState({
+      currentEffectConfig: {
+        color: color.hex,
+        type: this.state.currentEffectConfig.type
+      },
+      isDirty: true 
+    })
   };
 
+  async fetchBackgroundEffect(effectId) {
+    this.setState({
+      isLoaded: false
+    });
+    let fetchedData = await getBackgroundEffectFS(
+      getFromLocalStorage('userData', 'id'),
+      effectId
+    );
+    this.setState({
+      isLoaded: true,
+      currentEffectConfig: fetchedData,
+      initialState: fetchedData
+    });
+  }
+
+  componentDidMount() {
+    if (!this.state.isLoaded) {
+      this.fetchBackgroundEffect('plainBackground');
+    }
+  }
+
   async apply() {
-    let payload = {
-      color: this.state.currentColor,
-      type: this.props.config.type,
-    };
+    let payload = this.state.currentEffectConfig;
     this.setState({ applyState: 'Pending' });
     // update and activate
     await activateAndUpdateBackgroundEffectFS(
       getFromLocalStorage('userData', 'id'),
       payload
     );
-    this.setState({ applyState: 'Done', isDirty: false });
+    this.setState({ applyState: 'Done', isDirty: false, initialState: payload });
+    // why are we setting state in localStorage ?
     localStorage.setItem('settings', JSON.stringify({
       activeBackgroundEffect: payload,
       general: getFromLocalStorage('settings', 'general')
     }));
-  };
+  }
+
+  reset() {
+    this.setState({
+      currentEffectConfig: this.state.initialState,
+      isDirty: false
+    })
+  }
 
   render() {
+    if (!this.state.isLoaded) {
+      return (
+        <React.Fragment>
+          Loading...
+        </React.Fragment>
+      );
+    }
+    let { isDirty, applyState, currentEffectConfig: {color}} = this.state;
     const popover = {
       position: 'absolute',
       zIndex: '2',
@@ -61,16 +108,9 @@ export class PlainBackground extends React.Component {
       left: '0px',
     }
     const button = {
-      backgroundColor: `${this.state.currentColor}`
+      backgroundColor: `${color}`
     }
 
-    if (!this.props.config) {
-      return (
-        <React.Fragment>
-          Loading...
-        </React.Fragment>
-      );
-    }
     return (
       <div>
         Choose a plain color
@@ -80,15 +120,18 @@ export class PlainBackground extends React.Component {
             this.state.displayColorPicker ?
               <div style={popover}>
                 <div style={cover} onClick={this.handleClose} />
-                <ChromePicker color={this.state.currentColor} onChange={this.handleChange} />
+                <ChromePicker color={color} onChange={this.handleChange} />
               </div>
               :
               null
           }
-        </div>
-        <button onClick={this.apply} disabled={!this.state.isDirty}>
-          {this.state.applyState === 'Done' ? 'Apply' : 'Apply...'}
+        </div>        
+        <button onClick={this.apply} disabled={!isDirty}>
+          {applyState === 'Done' ? 'Apply' : 'Apply...'}
         </button>
+        <button onClick={this.reset} disabled={!isDirty}>
+          Reset
+        </button>        
       </div>
     )
   }

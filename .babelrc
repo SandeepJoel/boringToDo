@@ -1,6 +1,8 @@
 {
   "presets": ["react", "env"],
   "plugins": [
+    "transform-custom-element-classes",
+    "transform-es2015-classes",
     ["transform-runtime", {
       "polyfill": false,
       "regenerator": true

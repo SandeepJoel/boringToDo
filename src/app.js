@@ -60,7 +60,9 @@ const App = withUserContext(
                  :
                 <React.Fragment>
                    <Effect />
-                   <Todo/>
+                   <div className='widgets-container'>
+                      <Todo />
+                   </div>
                    <FontAwesomeIcon className="settings-icon" icon='cog' size='lg' onClick={this.toggleSettings}></FontAwesomeIcon>
                 </React.Fragment>
               }

@@ -91,20 +91,17 @@ input[type="checkbox"] {
  cursor: pointer;
 }
 
-#root {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: center;
-  box-sizing: border-box;
-  min-height: 100vh;
-}
+/* 
+  TODO: when you have free time, find out why display:flex on #root affected the
+  child web component(colorLiquids)
+*/
+#root {}
 
-// #animating-area {
-//   background-color: #464d5a;
-//   flex: 0 0 800px;
-//   height: 500px;
-// }
+.widgets-container {
+  display: flex;
+  padding: 50px 60px;
+  justify-content: center;
+}
 
 .todo-container {
   position: relative;

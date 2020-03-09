@@ -23,9 +23,9 @@ export class UserProvider extends React.Component {
   constructor (props) {
     super (props);
     this.defaultState = {
-      userName: "Guest",
-      userPhotoUrl: "",
-      userId: "",
+      userName: 'Guest',
+      userPhotoUrl: '',
+      userId: '',
     }
     this.state = JSON.parse(JSON.stringify(this.defaultState));
     this.setUserState = this.setUserState.bind(this);
@@ -39,7 +39,7 @@ export class UserProvider extends React.Component {
       let userData = await getUserIdFromFS(user.displayName);
       userId = userData.id;
       console.log('Got userId from API', userData);
-      localStorage.setItem("userData", JSON.stringify(userData));
+      localStorage.setItem('userData', JSON.stringify(userData));
     }
     this.setState({
       userName: user.displayName,
@@ -50,9 +50,11 @@ export class UserProvider extends React.Component {
 
   removeUserState () {
     this.setState(this.defaultState);
-    localStorage.removeItem("userData")
-    localStorage.removeItem("settings");
-    // localStorage.removeItem("tasks")
+    localStorage.removeItem('userData')
+    localStorage.removeItem('settings');
+    localStorage.removeItem('generalSettings');
+    localStorage.removeItem('activeBackgroundEffectSettings');
+    // localStorage.removeItem('tasks')
   }
 
   componentDidMount () {

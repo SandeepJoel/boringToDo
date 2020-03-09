@@ -72,3 +72,18 @@ export function activateAndUpdateBackgroundEffectFS(userId, payload) {
     })
   });
 }
+
+export function updateGeneralSettingsFS(userId, payload) {
+  return new Promise(function (resolve, reject) {
+    db.doc(`/users/${userId}`)
+      .update({ 'settings.general': payload })
+      .then(function () {
+        console.log("Success updated general settings");
+        resolve();
+      })
+      .catch((error) => {
+        reject(Error(error));
+        console.error("Error updating settings: ", error);
+      })
+  })
+}

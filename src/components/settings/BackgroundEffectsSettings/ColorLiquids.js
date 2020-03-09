@@ -51,7 +51,7 @@ export class ColorLiquids extends React.Component {
         ]
       }
       // TODO: Can we extract out deepComparing
-      let isEqual = deepCompare(nextState, this.state.initialState);
+      let isEqual = deepCompare(nextState, state.initialState);
       return {
         isDirty: !isEqual,
         currentEffectConfig: nextState,
@@ -66,7 +66,7 @@ export class ColorLiquids extends React.Component {
         type: state.currentEffectConfig.type,
         config: [...state.currentEffectConfig.config, newLiquid]
       }
-      let isEqual = deepCompare(nextState, this.state.initialState);
+      let isEqual = deepCompare(nextState, state.initialState);
       return {
         isDirty: !isEqual,
         currentEffectConfig: nextState,

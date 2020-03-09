@@ -1,6 +1,5 @@
 import React from 'react';
 import Select from 'react-select';
-// TODO: If possible try to replace react-select with normal select
 import { BtnColorPicker } from "../../../BtnColorPicker";
 import { generateRandomString } from '../../../../utils/helpers';
 
@@ -22,6 +21,7 @@ export class Liquid extends React.Component {
   constructor(props) {
     super(props);
     this.colorChange = this.colorChange.bind(this);
+    this.onSelectChange = this.onSelectChange.bind(this);
   }
 
   colorChange(data) {
@@ -39,29 +39,27 @@ export class Liquid extends React.Component {
       [colorKey]: colorVal,
     });
   };
-
-  onSelectChange(data) {
-    let { name } = this;
+    
+  onSelectChange(name, data) {
     let colorKey, colorVal;
-    // Is this function correct ? Am I using `selectProps` currectly ?
     switch (name) {
       case 'liquidType':
-        colorKey = this.selectProps.liquid.fill === 'gradient' ? 'colors' : 'color';
-        this.selectProps.updateLiquid({
+        colorKey = this.props.liquid.fill === 'gradient' ? 'colors' : 'color';
+        this.props.updateLiquid({
           liquid: data.value,
-          fill: this.selectProps.liquid.fill,
-          [colorKey]: this.selectProps.liquid[colorKey],
+          fill: this.props.liquid.fill,
+          [colorKey]: this.props.liquid[colorKey],
         });
       break;
 
       case 'fillType':
         colorKey = data.value === 'gradient' ? 'colors' : 'color';
-        colorVal = this.selectProps.initialData && this.selectProps.initialData[colorKey];
+        colorVal = this.props.initialData && this.props.initialData[colorKey];
         if (!colorVal) {
           colorVal = data.value === 'gradient' ? DefaultValues.gradient : DefaultValues.fill;
-        }        
-        this.selectProps.updateLiquid({
-          liquid: this.selectProps.liquid.liquid,
+        }    
+        this.props.updateLiquid({
+          liquid: this.props.liquid.liquid,
           fill: data.value,
           [colorKey]: colorVal,
         });     
@@ -86,11 +84,11 @@ export class Liquid extends React.Component {
       <section className='liquid-setting'>
         <div className='field'>
           Liquid Type: 
-          <Select name='liquidType' options={LiquidsList} value={selectedLiquidOption} onChange={this.onSelectChange} selectProps={this.props} />
+          <Select name='liquidType' options={LiquidsList} value={selectedLiquidOption} onChange={this.onSelectChange.bind(this, 'liquidType')} />
         </div>
         <div className='field'>
           Fill Type:
-          <Select name='fillType' options={FillList} value={selectedFillOption} onChange={this.onSelectChange} selectProps={this.props} />
+          <Select name='fillType' options={FillList} value={selectedFillOption} onChange={this.onSelectChange.bind(this, 'fillType')} />
         </div>
         {
           colors.map((color, index) => {

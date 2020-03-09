@@ -22,14 +22,8 @@ admin.initializeApp({
 
 const defaultSettings = {
   general: {
-    theme: {
-      options: ['light', 'dark'],
-      current: 'light'
-    },
-    layout: {
-      options: ['left', 'right', 'blank', 'leftRight', 'center'],
-      current: 'blank'
-    },
+    theme: 'light',
+    layout: 'right',
     widgets: ['todo']
   },
   backgroundEffects: [

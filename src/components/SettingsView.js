@@ -11,7 +11,7 @@ export const SettingsView = withUserContext(
     constructor (props) {
       super (props);
       this.state = {
-        currentNav: SettingsNav[1].key
+        currentNav: SettingsNav[0].key
       };
       this.selectSection = this.selectSection.bind(this);
     }

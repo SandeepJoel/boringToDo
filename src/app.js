@@ -7,32 +7,21 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 // TODO: Later activate this router
 // import { MemoryRouter } from 'react-router'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import { IndividualList } from './components/IndividualList';
 import { Effect } from './components/Effect';
 import { UserLoginSignup } from './components/UserLoginSignup';
 import { UserProvider, withUserContext } from './contexts/User';
 import { SettingsProvider } from './contexts/Settings';
 import { SettingsView } from './components/SettingsView';
-import { Listcollection }  from './components/ListCollection';
+import { Widgets } from './components/Widgets';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 library.add(fas, far);
-
-const Todo = () => (
-  <Router>    
-    <Switch>
-      <Route exact path='/' component={Listcollection} />
-      <Route path='/:listId' render={ props => <IndividualList {...props} />} />
-    </Switch>
-  </Router>
-);
 
 const App = withUserContext(
   class extends React.Component {
     constructor (props) {
       super (props);
       this.state = {
-        isSettingsOpened: true
+        isSettingsOpened: false
       }
       this.toggleSettings = this.toggleSettings.bind(this);    
     }
@@ -60,9 +49,7 @@ const App = withUserContext(
                  :
                 <React.Fragment>
                    <Effect />
-                   <div className='widgets-container'>
-                      <Todo />
-                   </div>
+                   <Widgets />
                    <FontAwesomeIcon className="settings-icon" icon='cog' size='lg' onClick={this.toggleSettings}></FontAwesomeIcon>
                 </React.Fragment>
               }

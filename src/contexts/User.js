@@ -54,7 +54,8 @@ export class UserProvider extends React.Component {
     localStorage.removeItem('settings');
     localStorage.removeItem('generalSettings');
     localStorage.removeItem('activeBackgroundEffectSettings');
-    // localStorage.removeItem('tasks')
+    localStorage.removeItem('tasks');
+    localStorage.removeItem('defaultListId')
   }
 
   componentDidMount () {

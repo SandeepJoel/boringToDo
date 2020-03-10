@@ -11,12 +11,11 @@ export class IndividualList extends React.Component {
     this.state = {
       tasks: [],
       selectedFilter: 'active',
-      currentListName: '',
+      currentListName: '', // TODO: props.location.state.currentList.listName
       editingTaskId: '',
       editing: false
     };
 
-    this.currentListId = this.props.match.params.listId;
     this.addTask = this.addTask.bind(this);
     this.removeTask = this.removeTask.bind(this);
     this.handleDetailedEdit = this.handleDetailedEdit.bind(this);
@@ -28,15 +27,28 @@ export class IndividualList extends React.Component {
   }
 
   async fetchTasksDataAndStoreItInState() {
-    // get and set current selected listname in state
-    this.setState({
-      currentListName: (await getCurrentListDataFS(getFromLocalStorage('userData', 'id'), this.props.match.params.listId)).listName
-    });
+    let data = await getCurrentListDataFS(getFromLocalStorage('userData', 'id'), this.props.match.params.listId)
     
-    // get tasks of the current list from db
+    let tasks;
+    if (getFromLocalStorage('tasks') && data.isDefault) {
+      tasks = getFromLocalStorage('tasks');
+    } else {
+      tasks = await getCurrentTasksFS(getFromLocalStorage('userData', 'id'), this.props.match.params.listId);
+    }
+    
     this.setState({
-      tasks: await getCurrentTasksFS(getFromLocalStorage('userData', 'id'), this.props.match.params.listId)
+      tasks,
+      currentListName: data.listName,
+      isDefault: data.isDefault
     });
+
+    // TODO: Need to see if we can make this better
+    if (data.isDefault && !getFromLocalStorage('tasks')) {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+    if (data.isDefault && !getFromLocalStorage('defaultListId')) {
+      localStorage.setItem('defaultListId', JSON.stringify(data.listId));
+    }
   }
 
   componentDidMount() {
@@ -51,6 +63,9 @@ export class IndividualList extends React.Component {
 
   componentCleanup() {
     // dom cleanup or event handlers cleanup goes here..
+    if (this.state.isDefault) {
+      localStorage.setItem('tasks', JSON.stringify(this.state.tasks));
+    }
   }  
 
   addTask (taskName) {
@@ -221,7 +236,12 @@ export class IndividualList extends React.Component {
               </div>
               </section>
               <footer>
-                <Link to='/'>
+                <Link to={{
+                  pathname: '/',
+                  state: {
+                    force: true
+                  }
+                }}>
                   <FontAwesomeIcon className="back" icon="arrow-left" size="sm"></FontAwesomeIcon>
                 </Link>
                 <div className="filters">

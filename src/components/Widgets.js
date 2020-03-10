@@ -1,16 +1,27 @@
 import React from 'react';
 import { withSettingsContext } from '../contexts/Settings';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import { IndividualList } from './IndividualList';
 import { Listcollection } from './ListCollection';
+import { getFromLocalStorage } from './../utils/helpers';
 
 const Todo = () => (
-  <Router>
-    <Switch>
-      <Route exact path='/' component={Listcollection} />
-      <Route path='/:listId' render={props => <IndividualList {...props} />} />
-    </Switch>
-  </Router>
+  <React.Fragment>    
+    <Router>
+      <Switch>
+        <Route exact path='/' render={props => {
+          if (getFromLocalStorage('defaultListId') && props.state && props.state.force) {
+            return (<Redirect
+              to={{
+                pathname: `/${getFromLocalStorage('defaultListId')}`,
+              }}/>)
+          }
+          return (<Listcollection {...props} />) 
+        }}/>
+        <Route path='/:listId' render={props => <IndividualList {...props} />} />
+      </Switch>
+    </Router>
+  </React.Fragment>  
 );
 
 export const Widgets = withSettingsContext(

@@ -98,3 +98,31 @@ export function updateListPropertiesFS(userId, listId, payload) {
     console.error("Error updating document: ", error);
   })
 }
+
+export function toggleListPropertiesFS(userId, listId, payload) {
+  return new Promise(function (resolve, reject) {
+    db.collection(`/users/${userId}/listCollection`).where('isDefault', '==', true).get()
+    .then(function (querySnapshot) {
+      let oldListIds = [];
+      querySnapshot.forEach(function (doc) {
+        oldListIds.push(doc.id);
+      });
+      if (oldListIds.length > 1) {
+        reject(Error('Duplicate data found'));
+      }
+      let batch = db.batch();
+      let oldRef = db.doc(`/users/${userId}/listCollection/${oldListIds[0]}`)
+      let currentRef = db.doc(`/users/${userId}/listCollection/${listId}`)
+      batch.update(oldRef, { isDefault: false })
+      batch.update(currentRef, payload)
+      return batch.commit();
+    })
+    .then(function () {
+      console.log("Success updating document");
+      resolve();
+    })
+    .catch((error) => {
+      console.error("Error updating document: ", error);
+    });    
+  });
+}

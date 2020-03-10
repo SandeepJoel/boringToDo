@@ -1,7 +1,13 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom'
-import { getUserListsFS, createNewListFS, deleteListFS, updateListPropertiesFS } from '../api/todoFirestore';
+import { 
+  getUserListsFS,
+  createNewListFS,
+  deleteListFS,
+  updateListPropertiesFS,
+  toggleListPropertiesFS
+} from '../api/todoFirestore';
 import { generateRandomString, getFromLocalStorage } from '../utils/helpers';
 
 export class Listcollection extends React.Component {
@@ -17,6 +23,7 @@ export class Listcollection extends React.Component {
     this.toggleEditListName = this.toggleEditListName.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.fetchListDataAndStoreItInState = this.fetchListDataAndStoreItInState.bind(this);
+    this.setDefaultList = this.setDefaultList.bind(this);
   }
 
   async fetchListDataAndStoreItInState() {
@@ -34,9 +41,14 @@ export class Listcollection extends React.Component {
   addList() {
     let listName = '';
     let randomId = generateRandomString();
+
+    // While creating first list, make it default
+    let isDefault = this.state.listCollection.length === 0 ? true: false;
+
     let payload = {
       listName: listName,
-      listId: randomId
+      listId: randomId,
+      isDefault
     };
 
     let newState = this.state.listCollection.concat(payload);
@@ -81,7 +93,12 @@ export class Listcollection extends React.Component {
     }
     let newListName = event.target.value;
     this.setState({
-      listCollection: this.state.listCollection.map(item => item.listId === listId ? { listId: item.listId, listName: newListName } : item)
+      listCollection: this.state.listCollection.map(item => 
+        item.listId === listId ? 
+        { listId: item.listId, listName: newListName, isDefault: item.isDefault }
+        : 
+        item
+      )
     });
 
     // update any list property values in db
@@ -89,6 +106,23 @@ export class Listcollection extends React.Component {
       "listName": newListName
     });
 
+  }
+
+  async setDefaultList() {
+    let { editingListId } = this.state;
+    this.setState({
+      listCollection: this.state.listCollection.map(item =>
+        item.listId === editingListId ?
+          { listId: editingListId, listName: item.listName, isDefault: true }
+          :
+          { listId: item.listId, listName: item.listName, isDefault: false })
+    });
+
+    await toggleListPropertiesFS(getFromLocalStorage('userData', 'id'), editingListId, {
+      'isDefault': true
+    });
+    
+    localStorage.removeItem('tasks'); // TODO: I dont know how to clear this else where
   }
 
   render() {
@@ -109,14 +143,25 @@ export class Listcollection extends React.Component {
                       (this.state.editing && this.state.editingListId == item.listId) ?
                         <input autoFocus className='list-name' type="text" value={item.listName} onChange={(e) => this.handleEdit(item.listId, e)} onKeyPress={(e) => this.handleEdit(item.listId, e)}></input>
                         :
-                        <Link className='list-name' to={`/${item.listId}`}>{item.listName}</Link>
+                        <Link className='list-name' 
+                          to={{
+                            pathname: `/${item.listId}`,
+                            // state: {
+                            //   currentList: item
+                            // }
+                          }}
+                          >{item.listName}
+                        </Link>
                     }
 
                     <FontAwesomeIcon icon="pen" size="sm" className='editListIcon' onClick={() => this.toggleEditListName(item.listId)} />
                   </div>
                   <div className={`list-details ${this.state.editingListId == item.listId ? 'active' : ''}`}>
                     <span className='default-list-input'>
-                      Set as default <input type='radio' name='default-list'></input></span>
+                      Set as default
+                      <input type='radio' name='default-list' checked={item.isDefault} onChange={this.setDefaultList}>
+                      </input>
+                    </span>
                     <span onClick={() => this.removeList(item.listId)}>
                       Delete List <FontAwesomeIcon icon="trash" size="sm" />
                     </span>

@@ -20,11 +20,11 @@ export class ColorLiquids extends React.Component {
     this.state = {
       applyState: 'Done',
       isDirty: false,
-      isLoaded: this.props.config ? true: false,
+      isLoaded: props.config ? true: false,
       liquidIndex: 0,
       // TODO: Check dervied state here
-      currentEffectConfig: this.props.config,
-      initialState: this.props.config ? JSON.parse(JSON.stringify(this.props.config)) : undefined
+      currentEffectConfig: props.config,
+      initialState: props.config ? JSON.parse(JSON.stringify(props.config)) : undefined
     };
     this.fetchBackgroundEffect = this.fetchBackgroundEffect.bind(this);
     this.apply = this.apply.bind(this);
@@ -158,7 +158,8 @@ export class ColorLiquids extends React.Component {
         </React.Fragment>
       )
     }
-    let { config: liquids } = currentEffectConfig;
+    let { type, config: liquids } = currentEffectConfig;
+    let notApplyable = this.props.activeEffect === type;
     return (
       <React.Fragment>
         <div className='flex'> 
@@ -195,7 +196,7 @@ export class ColorLiquids extends React.Component {
               updateLiquid={this.updateLiquid}
               /> : ''}        
         </div>
-        <button onClick={this.apply} disabled={!isDirty}>
+        <button onClick={this.apply} disabled={!isDirty && notApplyable}>
           {applyState === 'Done' ? 'Apply' : 'Apply...'}
         </button>
         <button onClick={this.reset} disabled={!isDirty}>

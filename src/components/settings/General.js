@@ -26,8 +26,8 @@ export const General = withSettingsContext(
     constructor(props){
       super(props);
       this.state = {
-        generalSettings: this.props.generalSettings,
-        initialState: (this.props.generalSettings ? JSON.parse(JSON.stringify(this.props.generalSettings)) : undefined),
+        generalSettings: props.generalSettings,
+        initialState: (props.generalSettings ? JSON.parse(JSON.stringify(props.generalSettings)) : undefined),
         applyState: 'Done',
         isDirty: false,
       }

@@ -11,11 +11,11 @@ export class PlainBackground extends React.Component {
     super(props);
     this.state = {
       displayColorPicker: false,
-      currentEffectConfig: this.props.config,
+      currentEffectConfig: props.config,
       applyState: 'Done',
       isDirty: false,
-      isLoaded: this.props.config ? true: false,
-      initialState: this.props.config ? JSON.parse(JSON.stringify(this.props.config)): undefined
+      isLoaded: props.config ? true: false,
+      initialState: props.config ? JSON.parse(JSON.stringify(props.config)): undefined
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -97,7 +97,8 @@ export class PlainBackground extends React.Component {
         </React.Fragment>
       );
     }
-    let { isDirty, applyState, currentEffectConfig: {color}} = this.state;
+    let { isDirty, applyState, currentEffectConfig: {type, color}} = this.state;
+    let notApplyable = this.props.activeEffect === type;
     const popover = {
       position: 'absolute',
       zIndex: '2',
@@ -128,7 +129,7 @@ export class PlainBackground extends React.Component {
               null
           }
         </div>        
-        <button onClick={this.apply} disabled={!isDirty}>
+        <button onClick={this.apply} disabled={!isDirty && notApplyable}>
           {applyState === 'Done' ? 'Apply' : 'Apply...'}
         </button>
         <button onClick={this.reset} disabled={!isDirty}>

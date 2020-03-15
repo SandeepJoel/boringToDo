@@ -15,16 +15,21 @@ export const BackgroundEffects = withSettingsContext(
     constructor (props) {
       super (props);
       this.state = {
-        currentEffect: undefined,
+        // This will available in props, because we are loading the
+        // settings context in General settings page itself
+        currentEffect: props.activeBackgroundEffectSettings.type,
+        activeEffect: props.activeBackgroundEffectSettings.type
       };
       this.onChange = this.onChange.bind(this);
       this.updateBackgroundContext = this.updateBackgroundContext.bind(this);
     }
 
-    // Use this function carefully
     static getDerivedStateFromProps(nextProps, prevState) {
-      if (!prevState.currentEffect && nextProps.activeBackgroundEffectSettings) {
-        return { currentEffect: nextProps.activeBackgroundEffectSettings.type };
+      if (prevState.activeEffect !== nextProps.activeBackgroundEffectSettings.type) {
+        return { 
+          currentEffect: nextProps.activeBackgroundEffectSettings.type,
+          activeEffect: nextProps.activeBackgroundEffectSettings.type
+         };
       }
       else return null;
     }
@@ -40,7 +45,7 @@ export const BackgroundEffects = withSettingsContext(
     }
 
     render() {
-      if (!this.props.activeBackgroundEffectSettings) {
+      if (!this.state.currentEffect) {
         return (
           <React.Fragment>
             Loading...
@@ -59,7 +64,7 @@ export const BackgroundEffects = withSettingsContext(
           <Select options={BackgroundEffectList} value={selectedOption} onChange={this.onChange}/>
           {/* here if the passProps is available that means its present in context
           and if it is undefined then you need to fetch config from API */}
-          <CurrentSelectedSettings config={passProps} updateBackgroundContext={this.updateBackgroundContext}/>
+          <CurrentSelectedSettings config={passProps} updateBackgroundContext={this.updateBackgroundContext} activeEffect={this.state.activeEffect}/>
         </React.Fragment>
       );
     }

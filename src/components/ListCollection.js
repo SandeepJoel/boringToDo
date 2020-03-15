@@ -63,6 +63,11 @@ export class Listcollection extends React.Component {
 
   // function to delete lists
   removeList(listId) {
+    let listToDelete = this.state.listCollection.find((list) => list.listId === listId);
+    if (listToDelete.isDefault) {
+      alert(`You can't delete default list`);
+      return;
+    }
     this.setState({
       listCollection: this.state.listCollection.filter((list) => list.listId != listId)
     });
@@ -146,9 +151,7 @@ export class Listcollection extends React.Component {
                         <Link className='list-name' 
                           to={{
                             pathname: `/${item.listId}`,
-                            // state: {
-                            //   currentList: item
-                            // }
+                            currentList: item
                           }}
                           >{item.listName}
                         </Link>

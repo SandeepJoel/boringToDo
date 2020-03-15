@@ -27,10 +27,13 @@ export class IndividualList extends React.Component {
   }
 
   async fetchTasksDataAndStoreItInState() {
-    let data = await getCurrentListDataFS(getFromLocalStorage('userData', 'id'), this.props.match.params.listId)
+    let { currentList } = this.props.location;
+    if (!currentList) {
+      currentList = await getCurrentListDataFS(getFromLocalStorage('userData', 'id'), this.props.match.params.listId)
+    }
     
     let tasks;
-    if (getFromLocalStorage('tasks') && data.isDefault) {
+    if (getFromLocalStorage('tasks') && currentList.isDefault) {
       tasks = getFromLocalStorage('tasks');
     } else {
       tasks = await getCurrentTasksFS(getFromLocalStorage('userData', 'id'), this.props.match.params.listId);
@@ -38,16 +41,16 @@ export class IndividualList extends React.Component {
     
     this.setState({
       tasks,
-      currentListName: data.listName,
-      isDefault: data.isDefault
+      currentListName: currentList.listName,
+      isDefault: currentList.isDefault
     });
 
     // TODO: Need to see if we can make this better
-    if (data.isDefault && !getFromLocalStorage('tasks')) {
+    if (currentList.isDefault && !getFromLocalStorage('tasks')) {
       localStorage.setItem('tasks', JSON.stringify(tasks));
     }
-    if (data.isDefault && !getFromLocalStorage('defaultListId')) {
-      localStorage.setItem('defaultListId', JSON.stringify(data.listId));
+    if (currentList.isDefault && !getFromLocalStorage('defaultListId')) {
+      localStorage.setItem('defaultListId', JSON.stringify(currentList.listId));
     }
   }
 
@@ -238,9 +241,7 @@ export class IndividualList extends React.Component {
               <footer>
                 <Link to={{
                   pathname: '/',
-                  state: {
-                    force: true
-                  }
+                  force: true
                 }}>
                   <FontAwesomeIcon className="back" icon="arrow-left" size="sm"></FontAwesomeIcon>
                 </Link>

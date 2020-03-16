@@ -24,12 +24,12 @@ export class Liquid extends React.Component {
     this.onSelectChange = this.onSelectChange.bind(this);
   }
 
-  colorChange(data) {
+  colorChange(colorIndex, data) {
     let colorKey = this.props.liquid.colors ? 'colors' : 'color';
     let colorVal;
     if (colorKey === 'colors') {
       colorVal = JSON.parse(JSON.stringify(this.props.liquid[colorKey]))
-      colorVal[data.index] = data.color;
+      colorVal[colorIndex] = data.color;
     } else {
       colorVal = data.color
     }
@@ -95,7 +95,7 @@ export class Liquid extends React.Component {
             return (
               <div key={index}>
                 { isGradient? `Color ${index + 1}:` : 'Color :'}
-                <BtnColorPicker color={color} index={index} key={`${index}_${generateRandomString()}`} colorChange={this.colorChange}/>
+                <BtnColorPicker color={color} key={`${index}_${generateRandomString()}`} colorChange={this.colorChange.bind(this, index)}/>
               </div>
             )
           })

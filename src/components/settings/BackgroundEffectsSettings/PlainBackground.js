@@ -1,42 +1,32 @@
-import { ChromePicker } from 'react-color';
 import React from 'react';
 import { 
   getBackgroundEffectFS,
   activateAndUpdateBackgroundEffectFS
 } from '../../../api/settingsFirestore';
-import { getFromLocalStorage } from '../../../utils/helpers';
+import { getFromLocalStorage, generateRandomString } from '../../../utils/helpers';
+import { BtnColorPicker } from "../../BtnColorPicker";
 
 export class PlainBackground extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayColorPicker: false,
-      currentEffectConfig: props.config,
       applyState: 'Done',
       isDirty: false,
       isLoaded: props.config ? true: false,
+      currentEffectConfig: props.config,
       initialState: props.config ? JSON.parse(JSON.stringify(props.config)): undefined
     };
-    this.handleClick = this.handleClick.bind(this);
-    this.handleClose = this.handleClose.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.apply = this.apply.bind(this);
     this.reset = this.reset.bind(this);
     this.fetchBackgroundEffect = this.fetchBackgroundEffect.bind(this);
   }
 
-  handleClick() {
-    this.setState({ displayColorPicker: !this.state.displayColorPicker });
-  };
 
-  handleClose() {
-    this.setState({ displayColorPicker: false });
-  };
-
-  handleChange(color) {
+  handleChange({color}) {
     this.setState({
       currentEffectConfig: {
-        color: color.hex,
+        color,
         type: this.state.currentEffectConfig.type
       },
       isDirty: true 
@@ -99,35 +89,13 @@ export class PlainBackground extends React.Component {
     }
     let { isDirty, applyState, currentEffectConfig: {type, color}} = this.state;
     let notApplyable = this.props.activeEffect === type;
-    const popover = {
-      position: 'absolute',
-      zIndex: '2',
-    }
-    const cover = {
-      position: 'fixed',
-      top: '0px',
-      right: '0px',
-      bottom: '0px',
-      left: '0px',
-    }
-    const button = {
-      backgroundColor: `${color}`
-    }
 
     return (
       <div>
         Choose a plain color
         <div>
-          <button style={button} onClick={this.handleClick}></button>
-          {
-            this.state.displayColorPicker ?
-              <div style={popover}>
-                <div style={cover} onClick={this.handleClose} />
-                <ChromePicker color={color} onChange={this.handleChange} />
-              </div>
-              :
-              null
-          }
+          <BtnColorPicker 
+            color={color} key={`${generateRandomString()}`} colorChange={this.handleChange} />          
         </div>        
         <button onClick={this.apply} disabled={!isDirty && notApplyable}>
           {applyState === 'Done' ? 'Apply' : 'Apply...'}

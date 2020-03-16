@@ -18,11 +18,10 @@ export class ColorLiquids extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      liquidIndex: 0,
       applyState: 'Done',
       isDirty: false,
       isLoaded: props.config ? true: false,
-      liquidIndex: 0,
-      // TODO: Check dervied state here
       currentEffectConfig: props.config,
       initialState: props.config ? JSON.parse(JSON.stringify(props.config)) : undefined
     };

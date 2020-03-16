@@ -21,7 +21,6 @@ export class BtnColorPicker extends React.Component {
   updateState() {
     this.props.colorChange({
       color: this.state.color,
-      index: this.props.index
     })
   }
 

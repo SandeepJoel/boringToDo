@@ -64,7 +64,8 @@ export const BackgroundEffects = withSettingsContext(
           <Select options={BackgroundEffectList} value={selectedOption} onChange={this.onChange}/>
           {/* here if the passProps is available that means its present in context
           and if it is undefined then you need to fetch config from API */}
-          <CurrentSelectedSettings config={passProps} updateBackgroundContext={this.updateBackgroundContext} activeEffect={this.state.activeEffect}/>
+          <CurrentSelectedSettings config={passProps} updateBackgroundContext={this.updateBackgroundContext} activeEffect={this.state.activeEffect}
+          currentEffect={this.state.currentEffect} />
         </React.Fragment>
       );
     }

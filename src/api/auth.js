@@ -1,4 +1,5 @@
-import firebase from 'firebase';
+import firebase from '@firebase/app';
+import '@firebase/auth';
 
 // ** Authentication related api functions **
 // TODO: Check whether authentication happens for all the below API requests

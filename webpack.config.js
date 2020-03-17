@@ -43,10 +43,13 @@ module.exports = {
       new HtmlWebpackPlugin({
         title: 'ToDo App',
         template: './src/index.html',
+        favicon: './assets/icons8-tick-box-50.png',
         minify: {
           collapseWhitespace: true,
         }
       }),
-      new BundleAnalyzerPlugin()
+      new BundleAnalyzerPlugin({
+        openAnalyzer: false
+      })
     ]
 }

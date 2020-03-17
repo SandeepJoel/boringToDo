@@ -10,7 +10,7 @@ export class IndividualList extends React.Component {
     super (props);
     this.state = {
       tasks: [],
-      selectedFilter: 'active',
+      selectedFilter: 'all',
       currentListName: '', // TODO: props.location.state.currentList.listName
       editingTaskId: '',
       editing: false
@@ -24,6 +24,7 @@ export class IndividualList extends React.Component {
     this.setTasksfilter = this.setTasksfilter.bind(this);
     this.getFilteredTasks = this.getFilteredTasks.bind(this);
     this.fetchTasksDataAndStoreItInState = this.fetchTasksDataAndStoreItInState.bind(this);
+    this.componentCleanup = this.componentCleanup.bind(this);
   }
 
   async fetchTasksDataAndStoreItInState() {

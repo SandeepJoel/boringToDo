@@ -1,6 +1,6 @@
 import React from 'react';
 import { withSettingsContext } from '../contexts/Settings';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import { MemoryRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import { IndividualList } from './IndividualList';
 import { Listcollection } from './ListCollection';
 import { getFromLocalStorage } from './../utils/helpers';

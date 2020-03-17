@@ -5,8 +5,6 @@ import ReactDOM from 'react-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
-// TODO: Later activate this router
-// import { MemoryRouter } from 'react-router'
 import { Effect } from './components/Effect';
 import { UserLoginSignup } from './components/UserLoginSignup';
 import { UserProvider, withUserContext } from './contexts/User';

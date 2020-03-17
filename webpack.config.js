@@ -1,6 +1,8 @@
 const path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 module.exports = {
     entry: './src/app.js',
     output: {
@@ -44,6 +46,7 @@ module.exports = {
         minify: {
           collapseWhitespace: true,
         }
-      })
+      }),
+      new BundleAnalyzerPlugin()
     ]
 }

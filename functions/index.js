@@ -80,7 +80,7 @@ exports.createNewUserDbsetup = functions.auth.user().onCreate((user) => {
   // Assuming first element in `backgroundEffects` is active by default
   let ActiveBackgroundEffect = JSON.parse(JSON.stringify(defaultSettings.backgroundEffects[0]));
 
-  admin.firestore().collection('users').add({
+  return admin.firestore().collection('users').add({
     userDetails: {
       name: user.displayName,
       email: user.email
@@ -95,17 +95,17 @@ exports.createNewUserDbsetup = functions.auth.user().onCreate((user) => {
     var batch = admin.firestore().batch();
     defaultSettings.backgroundEffects.forEach((setting) => {
       let ref = admin.firestore()
-                    .collection(`/users/${docRef.id}/backgroundEffectsCollection`)
-                    .doc(setting.type);
+                  .collection(`/users/${docRef.id}/backgroundEffectsCollection`)
+                  .doc(setting.type);
       batch.set(ref, setting);
     });
     return batch.commit();
-  }).
-  then((val) => { 
+  })
+  .then((val) => { 
     console.log("Final value: ", val);    
     return val;
   })
   .catch((error) => {
-    console.error("Error adding document: ", error);
+    console.error("Error in createNewUserDbsetup: ", error);
   });
 });

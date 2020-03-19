@@ -132,23 +132,34 @@ export class Listcollection extends React.Component {
 
   render() {
     return (
-      <div className='todo-container container-350-600 lists-section screen-1'>
+      <div className='todo-container container-350'>
         <header>
           <h2>All lists </h2>
-          <FontAwesomeIcon icon='plus-circle' size="lg" id='create-list' onClick={() => this.addList()} ></FontAwesomeIcon>
+          <div className='add'>
+            <FontAwesomeIcon icon='plus' 
+              size="1x" 
+              onClick={() => this.addList()} >
+            </FontAwesomeIcon>
+          </div>
         </header>
-        <div className='lists'>
+        <section className='main-body'>
           {
-            // TODO: why is there slice(0) below ?
-            this.state.listCollection.length > 0 && this.state.listCollection.slice(0).reverse().map((item, index) => {
+            this.state.listCollection.length > 0 && 
+            this.state.listCollection.slice(0).reverse().map((item, index) => {
               return (
-                <div key={item.listId} className='list'>
-                  <div className='list-initial-view'>
+                <div key={item.listId} className='todo-item'>
+                  <div className='todo-item-initial-view'>
                     {
                       (this.state.editing && this.state.editingListId == item.listId) ?
-                        <input autoFocus className='list-name' type="text" value={item.listName} onChange={(e) => this.handleEdit(item.listId, e)} onKeyPress={(e) => this.handleEdit(item.listId, e)}></input>
+                        <input autoFocus 
+                          className='todo-item-name' 
+                          type="text" 
+                          value={item.listName} 
+                          onChange={(e) => this.handleEdit(item.listId, e)} 
+                          onKeyPress={(e) => this.handleEdit(item.listId, e)}>  
+                        </input>
                         :
-                        <Link className='list-name' 
+                        <Link className='todo-item-name text-ellipsis' 
                           to={{
                             pathname: `/${item.listId}`,
                             currentList: item
@@ -157,12 +168,17 @@ export class Listcollection extends React.Component {
                         </Link>
                     }
 
-                    <FontAwesomeIcon icon="pen" size="sm" className='editListIcon' onClick={() => this.toggleEditListName(item.listId)} />
+                    <FontAwesomeIcon icon="pen" 
+                      size="sm"
+                      onClick={() => this.toggleEditListName(item.listId)} />
                   </div>
-                  <div className={`list-details ${this.state.editingListId == item.listId ? 'active' : ''}`}>
+                  <div className={`todo-item-details ${this.state.editingListId == item.listId ? 'active' : ''}`}>
                     <span className='default-list-input'>
                       Set as default
-                      <input type='radio' name='default-list' checked={item.isDefault} onChange={this.setDefaultList}>
+                      <input type='radio' 
+                        name='default-list' 
+                        checked={item.isDefault} 
+                        onChange={this.setDefaultList}>
                       </input>
                     </span>
                     <span onClick={() => this.removeList(item.listId)}>
@@ -173,7 +189,7 @@ export class Listcollection extends React.Component {
               );
             })
           }
-        </div>
+        </section>
       </div>
     )
   }

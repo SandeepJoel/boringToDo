@@ -8,17 +8,28 @@ const IndividualTask = (props) => {
   });
   if (currentTask) {
     return (
-      <div className="todo-container container-350-600 screen-3">
+      <div className="todo-container container-350 screen-3">
         <header>
-          <h2>{currentTask.taskName}</h2>
-          <FontAwesomeIcon className="back" icon="arrow-left" size="lg" onClick={() => history.goBack() }></FontAwesomeIcon>
+          <h2 className='mt-15 text-ellipsis'>{currentTask.taskName}</h2>
         </header>
         <section className="main-body">
             <label>Task Name</label>
-            <input type="text" value={currentTask.taskName} onChange={(e) => handleDetailedEdit('taskName',currentTask.taskId, false, e)}></input>
+            <input type="text" 
+              value={currentTask.taskName} 
+              onChange={(e) => handleDetailedEdit('taskName',currentTask.taskId, false, e)}>  
+            </input>
             <label>Task Description</label>
-            <textarea rows='10' value={currentTask.details.description} onChange={(e) => handleDetailedEdit('description', currentTask.taskId, 'details', e)}></textarea>
+            <textarea rows='10' 
+              value={currentTask.details.description} 
+              onChange={(e) => handleDetailedEdit('description', currentTask.taskId, 'details', e)}>
+            </textarea>
         </section>
+        <footer>
+          <FontAwesomeIcon icon="arrow-left" 
+            size="1x" 
+            onClick={() => history.goBack()}>
+          </FontAwesomeIcon>
+        </footer>
       </div>
     );
   } else {

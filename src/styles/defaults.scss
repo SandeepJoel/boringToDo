@@ -1,0 +1,72 @@
+
+* {
+  font-family: var(--font-family);
+  box-sizing: border-box;
+}
+
+html {
+  height: 100vh;
+}
+
+body {
+  background: black;
+  margin: 0;
+}
+
+input{
+  padding: 0;
+  border: 0;
+  margin: 0;
+  background: transparent;
+}
+
+input,
+button,
+textarea {
+  &:focus {
+    outline: none
+  }
+}
+
+textarea {
+  border: none;
+  resize: none;
+}
+
+label {
+  padding: 0 0 10px;
+  font-size: 12px;
+  color: var(--primary-foreground);
+}
+
+span, p {
+  color: var(--primary-foreground);
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--primary-foreground);
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-weight: 400;
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-foreground);
+}
+
+
+input {  
+  font-size: 14px;
+}
+
+.svg-inline--fa {
+  color: var(--primary-foreground);
+  cursor: pointer;
+}

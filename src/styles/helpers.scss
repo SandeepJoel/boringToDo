@@ -1,0 +1,90 @@
+
+/* 
+Spacings
+
+This loop will create "margin helpers" and "padding helpers" for use in your web projects.
+It will generate several classes such as:
+.mp-10 which gives padding-right 10 pixels.
+.mr-15 gives MARGIN to the RIGHT 15 pixels.
+*/
+
+$spaceamounts: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50);
+$sides: (top, bottom, left, right);
+
+@each $space in $spaceamounts {
+  @each $side in $sides {    
+    .m#{str-slice($side, 0, 1)}-#{$space} {
+      margin-#{$side}: #{$space}px;
+    }
+  
+    .p#{str-slice($side, 0, 1)}-#{$space} {
+      padding-#{$side}: #{$space}px;
+    }
+  }
+
+  .m-#{$space} {
+    margin: #{$space}px;
+  }
+
+  .p-#{$space} {
+    padding: #{$space}px;
+  }  
+}
+
+
+.flex {
+  display: flex;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.justify-content-start {
+  justify-content: flex-start;
+}
+
+.justify-content-end {
+  justify-content: flex-end;
+}
+
+button {
+  margin: 5px;
+  padding: 10px 15px;
+  background-color: var(--secondary-background);
+  color: var(--primary-foreground);
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: var(--box-shadow-200);
+  border-radius: 2px;
+
+  &.small {
+    padding: 7px 10px;
+    font-size: 10px;
+    font-weight: 500;
+  }
+
+  &.primary {
+    background-color: var(--primary-color);
+    color: var(--primary-color);
+  }
+
+  &:disabled {
+    background-color: var(--primary-foreground); 
+  }
+}
+
+.primary {
+  color: var(--primary-color);
+}
+
+.text-ellipsis {
+  white-space: nowrap;  
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
+
+.done {
+  opacity: 0.7;
+}

@@ -201,36 +201,54 @@ export class IndividualList extends React.Component {
           let filteredTasks = this.getFilteredTasks();
           let donePercent = Math.round((this.state.tasks.filter(item => item.isDone === true).length/this.state.tasks.length) * 100)
           return (
-            <div className='todo-container container-350-600 screen-2'>
-              <header>
-                <h2 className="list-heading">{this.state.currentListName || '....'}</h2>
-                <div className="status">
-                  <span>{ isNaN(donePercent) ? "Your list is empty" : `${donePercent}% done` }</span>
-                  <FontAwesomeIcon className='add-task' icon='plus-circle' size='2x' onClick={() => this.addTask("")}></FontAwesomeIcon>
+            <div className='todo-container container-350'>
+              <header>                
+                <div>
+                  <h2 className="text-ellipsis mb-0">{this.state.currentListName || '....'}</h2>
+                  <span className='status' >{ isNaN(donePercent) ? "Your list is empty" : `${donePercent}% done` }</span>                  
+                </div>
+                <div className='add'>
+                  <FontAwesomeIcon icon='plus' size='1x' onClick={() => this.addTask("")}></FontAwesomeIcon>
                 </div>
               </header>
               <section className='main-body'>
-              <div className='tasks'>
+              <div>
                 {
                   filteredTasks.length > 0 && filteredTasks.slice(0).reverse().map((item, index) => {
                     return (
-                    <div key={item.taskId} className={ "task " + (item.isDone ? 'done': '') }>
-                      <div className='task-initial-view'>
-                        <input type='checkbox' name={item.taskName} defaultChecked={item.isDone} onChange={() => this.tickCheckbox(item.taskId)}></input>
-                        <div className='task-name'>
+                    <div key={item.taskId} className={ "todo-item " + (item.isDone ? 'done': '') }>
+                      <div className='todo-item-initial-view'>
+                        <input type='checkbox' 
+                          name={item.taskName} 
+                          defaultChecked={item.isDone} 
+                          onChange={() => this.tickCheckbox(item.taskId)}
+                          >  
+                        </input>
+                          <div className='todo-item-name  text-ellipsis'>
                           {
                             (this.state.editing && this.state.editingTaskId == item.taskId) ?
-                            <input  autoFocus type="text" defaultValue={item.taskName} onKeyUp={(e) => this.handleDetailedEdit('taskName',item.taskId, false, e)} ></input>
+                            <input autoFocus 
+                              type="text" 
+                              defaultValue={item.taskName} onKeyUp={(e) => this.handleDetailedEdit('taskName',item.taskId, false, e)}>
+                            </input>
                             :
                             <Link to={`${this.props.match.url}/${item.taskId}`}>{item.taskName}</Link>
                           }
                         </div>
-                        <FontAwesomeIcon icon="pen" size="sm" className='editListIcon' onClick={() => this.toggleEditTaskName(item.taskId)} />
+                        <FontAwesomeIcon icon="pen" 
+                          size="sm" 
+                          onClick={() => this.toggleEditTaskName(item.taskId)} 
+                        />
                       </div>
-                      <div className={`task-details ${this.state.editingTaskId == item.taskId ? 'active' : ''} `}>
-                        <div className='delete-task' onClick={() => this.removeTask(item.taskId)}>
-                          <span> Delete task</span>
-                          <FontAwesomeIcon className='delete-icon' icon="trash"  size="sm"/>
+                      <div className={`todo-item-details ${this.state.editingTaskId == item.taskId ? 'active' : ''} `}>
+                        <div className='delete-task' 
+                          onClick={() => this.removeTask(item.taskId)}
+                        >
+                          <span> Delete Task</span>
+                          <FontAwesomeIcon className='ml-10' 
+                            icon="trash"
+                            size="sm"
+                          />
                         </div>
                       </div>
                     </div>
@@ -244,12 +262,22 @@ export class IndividualList extends React.Component {
                   pathname: '/',
                   force: true
                 }}>
-                  <FontAwesomeIcon className="back" icon="arrow-left" size="sm"></FontAwesomeIcon>
+                  <FontAwesomeIcon icon="arrow-left" size="1x"></FontAwesomeIcon>
                 </Link>
                 <div className="filters">
-                  <button className={ this.state.selectedFilter === 'all' ? 'selected' : '' } onClick={() => this.setTasksfilter('all')}> All </button>
-                  <button className={ this.state.selectedFilter === 'active' ? 'selected' : '' } onClick={() => this.setTasksfilter('active')}> Active </button>
-                  <button className={ this.state.selectedFilter === 'completed' ? 'selected' : '' } onClick={() => this.setTasksfilter('completed')}> Completed </button>
+                  <button 
+                    className={`small ${this.state.selectedFilter === 'all' ? 'selected' : ''}`}
+                    onClick={() => this.setTasksfilter('all')}> 
+                      All 
+                  </button>
+                  <button 
+                    className={`small ${this.state.selectedFilter === 'active' ? 'selected' : ''}` } onClick={() => this.setTasksfilter('active')}>
+                      Active 
+                  </button>
+                  <button 
+                    className={`small ${this.state.selectedFilter === 'completed' ? 'selected' : ''}`}onClick={() => this.setTasksfilter('completed')}>
+                      Completed
+                  </button>
                 </div>
               </footer>
             </div>
@@ -259,7 +287,9 @@ export class IndividualList extends React.Component {
         <Route exact path={`${this.props.match.url}/:taskId`} 
           render = {
             (props) => 
-              <IndividualTask {...props} tasks={this.state.tasks} handleDetailedEdit={this.handleDetailedEdit} /> 
+              <IndividualTask {...props} 
+                tasks={this.state.tasks} 
+                handleDetailedEdit={this.handleDetailedEdit} /> 
           }
         />
       </Switch>

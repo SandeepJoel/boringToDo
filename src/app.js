@@ -1,5 +1,5 @@
 // main styles
-import styles from './app.scss';
+import styles from './styles/app.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';

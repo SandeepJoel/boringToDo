@@ -1,0 +1,123 @@
+
+.todo-container {
+  position: relative;
+  border-radius: 3px;
+  background-color: var(--primary-background);  
+  box-shadow: var(--box-shadow-100);
+
+  header {
+    margin: 20px 25px 15px;;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  h2 {
+    max-width: 250px;
+  }
+}
+
+
+.main-body {
+  height: 450px;
+  overflow-y: auto;
+  padding: 10px 25px 0px;  
+}
+
+// Todo component
+.todo-item {
+  margin-bottom: 20px;
+  width: 100%;
+  font-size: 14px;
+  padding: 0 15px;
+  max-width: 300px;
+}
+
+.todo-item-initial-view {
+  position: relative;
+  background-color: var(--secondary-background);
+  padding: 15px 20px;
+  border-radius: 3px;
+  box-shadow: var(--box-shadow-s200);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .task-name {
+    flex: 0 0 80%;
+  }
+
+  input[type="checkbox"] {
+    margin-right: 10px;
+  }
+}
+
+.todo-item-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  position: relative;
+  width: 90%;
+  margin: -40px auto 0;
+  background-color: var(--secondary-background);
+  box-shadow: var(--box-shadow-s300);
+  z-index: 10;
+  padding: 15px 20px;
+  transition: margin-top 0.15s ease-in;
+
+  &.active {
+    margin-top: 0px;
+  }
+
+}
+
+.todo-item-name {
+  flex-grow: 1;
+  input[type=text] {
+    width: 100%;
+  }
+}
+
+.status {
+  font-size: 12px;
+  padding-left: 3px;
+  color: var(--primary-foreground)
+}
+
+.add {
+  background-color: var(--secondary-background);
+  padding: 7px 10px;
+  color: var(--primary-color);
+  align-self: center;
+  box-shadow: var(--box-shadow-200);
+  border-radius: 50%;
+}
+
+footer {
+  display: flex;
+  padding: 10px 25px;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 50px;
+}
+
+.screen-3 {
+  .main-body {
+    display: flex;
+    flex-direction: column;
+  
+    textarea,
+    input[type="text"] {
+      background-color: var(--white);
+      padding: 10px;
+      font-size: 14px;
+      box-shadow: var(--box-shadow-s200);
+      margin-bottom: 20px;
+    }
+  }
+}

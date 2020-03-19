@@ -8,7 +8,7 @@ export class UserLoginSignup extends React.Component {
 
     render () {
       return (
-        <div className="box-container container-500-600">
+        <div>
           <button onClick={googleSignIn}>Google Sign In</button>
         </div>        
       );

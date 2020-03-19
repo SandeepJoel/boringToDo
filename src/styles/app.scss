@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
+@import './variables.scss';
+@import './defaults.scss';
+@import './helpers.scss';
+@import './todo.scss';
+@import './settings.scss';
+
+input[type="checkbox"] {
+ cursor: pointer;
+}
+
+/* 
+  TODO: when you have free time, find out why display:flex on #root affected the
+  child web component(colorLiquids)
+*/
+
+.widgets-container {
+  display: flex;
+  padding: 50px 60px;
+  justify-content: center;
+  z-index: 10;
+  position: relative;
+}
+
+.container-350 {  
+  flex: 0 0 350px;
+}
+
+// Favicons
+.fa-trash {
+  color: var(--red-color);
+}
+
+[data-icon] {
+  cursor: pointer;
+}
+
+
+.selected {
+  box-shadow: var(--box-shadow-200);
+  transform: scale(1.2);
+}
+
+
+// Customize browser scrollbar
+
+/* Width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--primary-background);
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--primary-foreground);  
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-foreground); 
+}
+

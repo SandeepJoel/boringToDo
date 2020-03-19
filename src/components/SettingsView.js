@@ -48,12 +48,12 @@ export const SettingsView = withUserContext(
           </section>
           <div className="settings">
             <header>
-              <img src='https://via.placeholder.com/200x50?text=Newtab.com'></img>
+              <h1>Creative New Tab</h1>
               <FontAwesomeIcon className="close" icon='times' size='lg' onClick={this.props.toggleSettings}></FontAwesomeIcon>
             </header>            
-            <div className="settings-details">
+            <div className="mt-15 mb-15 ml-20 mr-20">
               <SettingsItem name={this.state.currentNav} />
-            </div>            
+            </div>          
           </div>
         </div>    
       )

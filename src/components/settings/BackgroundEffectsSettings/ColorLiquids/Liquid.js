@@ -2,6 +2,7 @@ import React from 'react';
 import Select from 'react-select';
 import { BtnColorPicker } from "../../../BtnColorPicker";
 import { generateRandomString } from '../../../../utils/helpers';
+import { customSelectStyles } from '../../../../constants/styles';
 
 const DefaultValues = {
   gradient: ['#000', '#FFF'],
@@ -81,22 +82,27 @@ export class Liquid extends React.Component {
     let selectedFillOption = FillList.find(x => x.value === liquid.fill);
     let colors = liquid.colors ? liquid.colors : [liquid.color]
     return (
-      <section className='liquid-setting'>
-        <div className='field'>
-          Liquid Type: 
-          <Select name='liquidType' options={LiquidsList} value={selectedLiquidOption} onChange={this.onSelectChange.bind(this, 'liquidType')} />
+      <section className='liquid-setting p-10'>
+        <div className='space-between-center mb-10'>
+          <label> Liquid Type </label>
+          <Select name='liquidType'
+            options={LiquidsList}
+            value={selectedLiquidOption}
+            onChange={this.onSelectChange.bind(this, 'liquidType')}
+            styles={customSelectStyles} />
         </div>
-        <div className='field'>
-          Fill Type:
-          <Select name='fillType' options={FillList} value={selectedFillOption} onChange={this.onSelectChange.bind(this, 'fillType')} />
+        <div className='space-between-center mb-10'>
+          <label> Fill Type </label>
+          <Select name='fillType'
+            options={FillList}
+            value={selectedFillOption}
+            onChange={this.onSelectChange.bind(this, 'fillType')}
+            styles={customSelectStyles} />
         </div>
         {
           colors.map((color, index) => {
             return (
-              <div key={index}>
-                { isGradient? `Color ${index + 1}:` : 'Color :'}
-                <BtnColorPicker color={color} key={`${index}_${generateRandomString()}`} colorChange={this.colorChange.bind(this, index)}/>
-              </div>
+              <BtnColorPicker color={color} key={`${index}_${generateRandomString()}`} colorChange={this.colorChange.bind(this, index)}/>
             )
           })
         }

@@ -119,7 +119,7 @@ export const ColorLiquids = BgsActionsWrapper(
 
     render() {
       let { liquidIndex } = this.state;
-      let { currentEffectConfig, initialState, isDirty } = this.props;
+      let { currentEffectConfig, initialState, isDirty, applyBtn } = this.props;
       if (!currentEffectConfig) {
         return (
           <React.Fragment>
@@ -127,47 +127,53 @@ export const ColorLiquids = BgsActionsWrapper(
           </React.Fragment>
         )
       }
-      let { config: liquids } = currentEffectConfig;    
+      let { config: liquids } = currentEffectConfig;
       return (
-        <React.Fragment>
-          <div className='flex'> 
-            <section className="existing-liquids">
-              Existing Liquids
+        <div className='setting-fluid flex-wrap clearfix m-30'> 
+          <section className="existing-liquids p-10">
+            <h3 className='inline-block'>Existing Liquids</h3>
+            <button className='float-right' onClick={this.addLiquid.bind(this)}>New</button>
+            <button className='float-right' onClick={this.removeLiquid.bind(this)}>Delete</button>
+            <div className='flex-wrap'>
               {
                 liquids.map((liquidItem, index) => {
-                  let btnStyle = {
-                    backgroundColor: liquidItem.colors ? liquidItem.colors[0] : liquidItem.color
+                  let isGradient = liquidItem.colors ? true: false;
+                  let btnStyle;
+                  if(isGradient) {
+                    btnStyle = {
+                      backgroundImage: `linear-gradient(to right, ${liquidItem.colors[0]}, ${liquidItem.colors[1]})`
+                    }
+                  } else {
+                    btnStyle = {
+                      backgroundColor: liquidItem.color
+                    }
                   }
                   return (
-                    <button
-                      className={liquidIndex === index ? 'selected': ''}
+                    <div
+                      className={`liquid-box ${liquidIndex === index ? 'selected': ''}`}
                       style={btnStyle}
                       onClick={this.selectLiquid.bind(this, index)}
                       key={`${index}_${generateRandomString()}`}>
-                      {liquidItem.liquid}
-                    </button>
+                    </div>
                   )
                 })
               }
-              
-              <FontAwesomeIcon icon='plus-circle' size="lg" onClick={this.addLiquid.bind(this)}></FontAwesomeIcon>
-                -----
-              <FontAwesomeIcon icon='trash' size="lg" onClick={this.removeLiquid.bind(this)}></FontAwesomeIcon>
-              
-            </section>
-
-            {liquidIndex !== undefined ? 
-              <Liquid
-                liquid={currentEffectConfig.config[liquidIndex]} 
-                key={liquidIndex}
-                initialData={initialState.config[liquidIndex]}
-                updateLiquid={this.updateLiquid}
-                /> : ''}        
-          </div>
-          <button onClick={this.reset} disabled={!isDirty}>
-            Reset
-          </button>
-        </React.Fragment>
+            </div>          
+          </section>
+          {liquidIndex !== undefined ? 
+            <Liquid
+              liquid={currentEffectConfig.config[liquidIndex]} 
+              key={liquidIndex}
+              initialData={initialState.config[liquidIndex]}
+              updateLiquid={this.updateLiquid}
+              /> : ''}
+          <section className='margin-center'>
+            <button onClick={this.reset} disabled={!isDirty}>
+              Reset
+            </button>
+            {applyBtn}
+          </section>
+        </div>
       )
     }
   }

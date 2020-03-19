@@ -123,3 +123,8 @@ export function deepCompare() {
 
   return true;
 }
+
+export function getCSSVar(variable) {
+  return getComputedStyle(document.documentElement)
+    .getPropertyValue(variable);
+}

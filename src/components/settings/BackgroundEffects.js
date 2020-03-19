@@ -4,6 +4,7 @@ import Select from 'react-select'
 import { PlainBackground } from './BackgroundEffectsSettings/PlainBackground';
 import { ColorLiquids } from './BackgroundEffectsSettings/ColorLiquids';
 import { withSettingsContext } from '../../contexts/Settings';
+import { customSelectStyles } from '../../constants/styles'
 
 const EffectSettingsMap = {
   colorLiquids: ColorLiquids,
@@ -60,12 +61,23 @@ export const BackgroundEffects = withSettingsContext(
           : undefined;
       return (
         <React.Fragment>
-          Select Effect
-          <Select options={BackgroundEffectList} value={selectedOption} onChange={this.onChange}/>
+        <div className='setting-500'>
+          <div className='space-between-center'>
+            <label>Select Effect</label>
+            <Select 
+              options={BackgroundEffectList}
+              value={selectedOption}
+              onChange={this.onChange} 
+              styles={customSelectStyles} />
+          </div>
+        </div>
           {/* here if the passProps is available that means its present in context
           and if it is undefined then you need to fetch config from API */}
-          <CurrentSelectedSettings config={passProps} updateBackgroundContext={this.updateBackgroundContext} activeEffect={this.state.activeEffect}
-          currentEffect={this.state.currentEffect} />
+          <CurrentSelectedSettings
+            config={passProps}
+            updateBackgroundContext={this.updateBackgroundContext}
+            activeEffect={this.state.activeEffect}
+            currentEffect={this.state.currentEffect} /> 
         </React.Fragment>
       );
     }

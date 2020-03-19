@@ -36,17 +36,21 @@ export const PlainBackground = BgsActionsWrapper(
           </React.Fragment>
         );
       }
-      let { isDirty, currentEffectConfig: {color}} = this.props;
+      let { isDirty, currentEffectConfig: { color }, applyBtn} = this.props;
       return (
-        <React.Fragment>
-          Choose a plain color          
-          <BtnColorPicker 
-            color={color} key={`${generateRandomString()}`} colorChange={this.handleChange} />
-          <br />
-          <button onClick={this.reset} disabled={!isDirty}>
-            Reset
-          </button>        
-        </React.Fragment>
+        <div className='setting-500 clearfix mt-30'>
+          <div className='space-between-center mb-20'>
+            <label> Choose a plain color for background </label>
+            <BtnColorPicker 
+              color={color} key={`${generateRandomString()}`} colorChange={this.handleChange} />
+          </div>
+          <section className="float-right">
+            <button onClick={this.reset} disabled={!isDirty}>
+              Reset
+            </button>
+            {applyBtn}
+          </section>
+        </div>
       )
     }
   }

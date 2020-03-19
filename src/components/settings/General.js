@@ -5,6 +5,7 @@ import { deepCompare, getFromLocalStorage } from '../../utils/helpers';
 import {
   updateGeneralSettingsFS
 } from '../../api/settingsFirestore';
+import { customSelectStyles } from '../../constants/styles';
 
 const LayoutOptions = [
   { value: 'left', label: 'Left Side' },
@@ -110,21 +111,42 @@ export const General = withSettingsContext(
       let selectedLayout = LayoutOptions.find(x => x.value === layout);
       let selectedWidget = WidgetOptions.find(x => x.value === widgets[0]);
       return (
-        <React.Fragment>
-          Select Theme:
-          <Select isDisabled={true} options={ThemeOptions} value={selectedTheme} onChange={this.onSelectChange} />
-          Select Layout:
-          <Select name='layout' options={LayoutOptions} value={selectedLayout} onChange={this.onSelectChange.bind(this, 'layout')}/>
-          -------
-          {selectedLayout.label} :
-          <Select name='widget' isClearable={true} options={WidgetOptions} value={selectedWidget} onChange={this.onSelectChange.bind(this, 'widget')} />
-          <button onClick={this.apply} disabled={!isDirty}>
-            {applyState === 'Done' ? 'Apply' : 'Apply...'}
-          </button>
-          <button onClick={this.reset} disabled={!isDirty}>
-            Reset
-          </button>
-        </React.Fragment>
+        <div className='setting-500 clearfix'>
+          <div className='mb-25 space-between-center'>
+            <label> Select Theme </label>
+            <Select 
+              options={ThemeOptions} 
+              value={selectedTheme} 
+              onChange={this.onSelectChange}
+              styles={customSelectStyles}
+            />
+          </div>
+          <div className='mb-25 space-between-center'>
+            <label> Select Layout </label>
+            <Select name='layout' 
+              options={LayoutOptions}
+              value={selectedLayout}
+              onChange={this.onSelectChange.bind(this, 'layout')} 
+              styles={customSelectStyles} />
+          </div>
+          <div className='mb-25 space-between-center'>
+            <label> {selectedLayout.label} </label>
+            <Select name='widget'
+             isClearable={true}
+             options={WidgetOptions}
+             value={selectedWidget}
+             onChange={this.onSelectChange.bind(this, 'widget')}
+             styles={customSelectStyles} />
+          </div>
+          <section className='float-right' >
+            <button onClick={this.apply} disabled={!isDirty}>
+              {applyState === 'Done' ? 'Apply' : 'Apply...'}
+            </button>
+            <button onClick={this.reset} disabled={!isDirty}>
+              Reset
+            </button>
+          </section>
+        </div>
       );
     }
   }

@@ -74,12 +74,12 @@ export const BgsActionsWrapper = (PassedComponent) => {
       }
       let { type } = currentEffectConfig;
       let notApplyable = this.props.activeEffect === type;
+      let applyBtn = <button onClick={this.apply} disabled={!isDirty && notApplyable}>
+        {applyState === 'Done' ? 'Apply' : 'Apply...'}
+      </button>;
       return (
         <React.Fragment>
-          <PassedComponent ourSetState={this.ourSetState} {...this.state} {...this.props}/>
-          <button onClick={this.apply} disabled={!isDirty && notApplyable}>
-            {applyState === 'Done' ? 'Apply' : 'Apply...'}
-          </button>
+          <PassedComponent ourSetState={this.ourSetState} applyBtn={applyBtn} {...this.state} {...this.props}/>
         </React.Fragment>
       )
     }

@@ -31,10 +31,6 @@ $sides: (top, bottom, left, right);
   }  
 }
 
-.inline-block {
-  display: inline-block;
-}
-
 .flex {
   display: flex;
 }
@@ -112,12 +108,13 @@ button {
   flex-wrap: wrap;
 }
 
-.margin-center {
+.margin-left-auto {
   margin-left: auto;
-  margin-right: auto;
 }
 
-
+.margin-right-auto {
+  margin-left: auto;
+}
 
 .float-right {
   float: right;

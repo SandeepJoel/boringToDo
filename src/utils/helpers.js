@@ -125,6 +125,6 @@ export function deepCompare() {
 }
 
 export function getCSSVar(variable) {
-  return getComputedStyle(document.documentElement)
+  return getComputedStyle(document.getElementById('root'))
     .getPropertyValue(variable);
 }

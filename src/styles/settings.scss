@@ -41,9 +41,10 @@
     padding: 15px 0;
     cursor: pointer;
     text-transform: capitalize;
+    color: var(--primary-foreground);
     
     &.active {
-      color: red
+      box-shadow: var(--box-shadow-200);
     }
   }
 }
@@ -107,7 +108,10 @@
 
 
 .existing-liquids {
+  display: flex;
   flex-basis: 60%;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 .liquid-setting {
   flex-basis: 40%;
@@ -116,6 +120,7 @@
 .liquid-box {
   width: 85px;
   height: 75px;
+  margin: 20px;
   border-radius: 4px;
   box-shadow: var(--box-shadow-200);
 

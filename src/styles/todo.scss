@@ -2,8 +2,14 @@
 .todo-container {
   position: relative;
   border-radius: 3px;
-  background-color: var(--primary-background);  
+  background-color: var(--primary-background);
   box-shadow: var(--box-shadow-100);
+
+  input,
+  textarea {
+    background-color: var(--secondary-background);
+    color: var(--primary-foreground);
+  }
 
   header {
     margin: 20px 25px 15px;;
@@ -113,7 +119,6 @@ footer {
   
     textarea,
     input[type="text"] {
-      background-color: var(--white);
       padding: 10px;
       font-size: 14px;
       box-shadow: var(--box-shadow-s200);

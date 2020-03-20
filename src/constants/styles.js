@@ -8,12 +8,28 @@ export const customSelectStyles = {
     width: 250,
     border: 'none'
   }),
-  control: (provided, state) => ({
+  control: (provided, state) => {
+    return ({
+      ...provided,
+      // borderRadius: 3,
+      backgroundColor: getCSSVar('--primary-background'),
+      border: 'none',
+      boxShadow: 'none'
+    })
+  }, 
+  option: (provided, state) => {
+    return ({
+      ...provided,
+    })
+  },
+  menu: (provided, state) => ({
     ...provided,
-    borderRadius: 3,
     backgroundColor: getCSSVar('--primary-background'),
-    border: 'none',
-    boxShadow: 'none'
+    color: getCSSVar('--primary-foreground'),
+  }),
+  singleValue: (provided, state) => ({
+    ...provided,
+    color: getCSSVar('--primary-foreground'),
   }),
   clearIndicator: (provided, state) => ({
     ...provided,
@@ -25,12 +41,12 @@ export const customSelectStyles = {
   }),
 }
 
-export const customTheme = theme => ({
+export const customSelectTheme = theme => ({
   ...theme,
-  // borderRadius: 0,
-  // colors: {
-  //   ...theme.colors,
-  //   primary: getCSSVar('--primary-color'),
-  //   primary25: getCSSVar('--secondary-foreground'),
-  // },
+  borderRadius: 3,
+  colors: {
+    ...theme.colors,
+    primary: getCSSVar('--primary-color'),
+    primary25: getCSSVar('--primary-color'),
+  },
 })

@@ -5,7 +5,7 @@ import { deepCompare, getFromLocalStorage } from '../../utils/helpers';
 import {
   updateGeneralSettingsFS
 } from '../../api/settingsFirestore';
-import { customSelectStyles } from '../../constants/styles';
+import { customSelectStyles, customSelectTheme } from '../../constants/styles';
 
 const LayoutOptions = [
   { value: 'left', label: 'Left Side' },
@@ -119,6 +119,7 @@ export const General = withSettingsContext(
               value={selectedTheme} 
               onChange={this.onSelectChange}
               styles={customSelectStyles}
+              theme={customSelectTheme}
             />
           </div>
           <div className='mb-25 space-between-center'>
@@ -127,7 +128,8 @@ export const General = withSettingsContext(
               options={LayoutOptions}
               value={selectedLayout}
               onChange={this.onSelectChange.bind(this, 'layout')} 
-              styles={customSelectStyles} />
+              styles={customSelectStyles}
+              theme={customSelectTheme} />
           </div>
           <div className='mb-25 space-between-center'>
             <label> {selectedLayout.label} </label>
@@ -136,7 +138,8 @@ export const General = withSettingsContext(
              options={WidgetOptions}
              value={selectedWidget}
              onChange={this.onSelectChange.bind(this, 'widget')}
-             styles={customSelectStyles} />
+             styles={customSelectStyles}
+            theme={customSelectTheme} />
           </div>
           <section className='float-right' >
             <button onClick={this.apply} disabled={!isDirty}>

@@ -27,7 +27,7 @@ export class BtnColorPicker extends React.Component {
 
   render() {
     let { color } = this.state;
-    let colorBtn = <button style={{ backgroundColor: color }}> {color} </button>;
+    let colorBtn = <button className='liquid-box' style={{ backgroundColor: color }}> {color} </button>;
     return (
       <Popup trigger={colorBtn} position="right center" arrow={false} onClose={this.updateState}>
         <ChromePicker color={color} onChange={this.change} />

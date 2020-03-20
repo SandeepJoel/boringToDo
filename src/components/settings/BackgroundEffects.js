@@ -4,7 +4,7 @@ import Select from 'react-select'
 import { PlainBackground } from './BackgroundEffectsSettings/PlainBackground';
 import { ColorLiquids } from './BackgroundEffectsSettings/ColorLiquids';
 import { withSettingsContext } from '../../contexts/Settings';
-import { customSelectStyles } from '../../constants/styles'
+import { customSelectStyles, customSelectTheme } from '../../constants/styles'
 
 const EffectSettingsMap = {
   colorLiquids: ColorLiquids,
@@ -68,7 +68,8 @@ export const BackgroundEffects = withSettingsContext(
               options={BackgroundEffectList}
               value={selectedOption}
               onChange={this.onChange} 
-              styles={customSelectStyles} />
+              styles={customSelectStyles}
+              theme={customSelectTheme} />
           </div>
         </div>
           {/* here if the passProps is available that means its present in context

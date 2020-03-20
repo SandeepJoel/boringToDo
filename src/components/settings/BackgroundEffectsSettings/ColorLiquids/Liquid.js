@@ -2,7 +2,7 @@ import React from 'react';
 import Select from 'react-select';
 import { BtnColorPicker } from "../../../BtnColorPicker";
 import { generateRandomString } from '../../../../utils/helpers';
-import { customSelectStyles } from '../../../../constants/styles';
+import { customSelectStyles, customSelectTheme } from '../../../../constants/styles';
 
 const DefaultValues = {
   gradient: ['#000', '#FFF'],
@@ -82,23 +82,26 @@ export class Liquid extends React.Component {
     let selectedFillOption = FillList.find(x => x.value === liquid.fill);
     let colors = liquid.colors ? liquid.colors : [liquid.color]
     return (
-      <section className='liquid-setting p-10'>
-        <div className='space-between-center mb-10'>
+      <section className='liquid-setting pt-20 pl-20 pr-20'>
+        <div className='space-between-center mb-20'>
           <label> Liquid Type </label>
           <Select name='liquidType'
             options={LiquidsList}
             value={selectedLiquidOption}
             onChange={this.onSelectChange.bind(this, 'liquidType')}
-            styles={customSelectStyles} />
+            styles={customSelectStyles}
+            theme={customSelectTheme} />
         </div>
-        <div className='space-between-center mb-10'>
+        <div className='space-between-center mb-20'>
           <label> Fill Type </label>
           <Select name='fillType'
             options={FillList}
             value={selectedFillOption}
             onChange={this.onSelectChange.bind(this, 'fillType')}
-            styles={customSelectStyles} />
+            styles={customSelectStyles}
+            theme={customSelectTheme} />
         </div>
+        <span className='flex justify-content-center mt-20'>
         {
           colors.map((color, index) => {
             return (
@@ -106,6 +109,7 @@ export class Liquid extends React.Component {
             )
           })
         }
+        </span>
       </section>
     )
   }

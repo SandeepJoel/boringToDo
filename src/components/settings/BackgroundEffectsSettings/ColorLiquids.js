@@ -130,11 +130,13 @@ export const ColorLiquids = BgsActionsWrapper(
       let { config: liquids } = currentEffectConfig;
       return (
         <div className='setting-fluid flex-wrap clearfix m-30'> 
-          <section className="existing-liquids p-10">
-            <h3 className='inline-block'>Existing Liquids</h3>
-            <button className='float-right' onClick={this.addLiquid.bind(this)}>New</button>
-            <button className='float-right' onClick={this.removeLiquid.bind(this)}>Delete</button>
-            <div className='flex-wrap'>
+          <section className="existing-liquids pt-20 pl-20 pr-20">
+            <h2>Existing Liquids</h2>
+            <span>
+              <button onClick={this.addLiquid.bind(this)}>New</button>
+              <button onClick={this.removeLiquid.bind(this)}>Delete</button>
+            </span>
+            <div className='flex-wrap justify-content-center mt-15'>
               {
                 liquids.map((liquidItem, index) => {
                   let isGradient = liquidItem.colors ? true: false;
@@ -167,7 +169,7 @@ export const ColorLiquids = BgsActionsWrapper(
               initialData={initialState.config[liquidIndex]}
               updateLiquid={this.updateLiquid}
               /> : ''}
-          <section className='margin-center'>
+          <section className='margin-left-auto mb-20 mr-20'>
             <button onClick={this.reset} disabled={!isDirty}>
               Reset
             </button>

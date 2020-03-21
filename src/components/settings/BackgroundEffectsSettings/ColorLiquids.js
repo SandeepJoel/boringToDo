@@ -41,7 +41,7 @@ export const ColorLiquids = BgsActionsWrapper(
           ...config.slice(liquidIndex + 1),
         ]
       }
-      // TODO: Can we extract out deepComparing
+
       let isEqual = deepCompare(nextState, initialState);
       this.props.ourSetState({
         isDirty: !isEqual,

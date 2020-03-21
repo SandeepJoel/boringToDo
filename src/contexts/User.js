@@ -54,7 +54,6 @@ export class UserProvider extends React.Component {
 
   componentDidMount () {
     authStateChange (
-      // TODO: could optimize here..
       this.setUserState,
       this.removeUserState
     )

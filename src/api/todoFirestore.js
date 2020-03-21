@@ -1,5 +1,4 @@
 import { db } from "../config/firestoreConfig";
-// TODO: Check whether authentication happens for all the below API requests
 export function getCurrentListDataFS(userId, listId) {
   return new Promise(function(resolve){
     db.collection(`/users/${userId}/listCollection`).doc(listId)

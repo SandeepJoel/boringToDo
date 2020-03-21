@@ -34,7 +34,7 @@ export const BgsActionsWrapper = (PassedComponent) => {
       this.setState({
         isLoaded: true,
         currentEffectConfig: fetchedData,
-        initialState: fetchedData // TODO: Is this okay to store an initial state like this ?
+        initialState: fetchedData
       });
     }
 

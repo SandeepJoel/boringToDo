@@ -11,7 +11,7 @@ export class IndividualList extends React.Component {
     this.state = {
       tasks: [],
       selectedFilter: 'all',
-      currentListName: '', // TODO: props.location.state.currentList.listName
+      currentListName: '',
       editingTaskId: '',
       editing: false
     };
@@ -50,8 +50,8 @@ export class IndividualList extends React.Component {
     if (currentList.isDefault && !getFromLocalStorage('tasks')) {
       localStorage.setItem('tasks', JSON.stringify(tasks));
     }
-    if (currentList.isDefault && !getFromLocalStorage('defaultListId')) {
-      localStorage.setItem('defaultListId', JSON.stringify(currentList.listId));
+    if (currentList.isDefault && !getFromLocalStorage('defaultListId', 'id')) {
+      localStorage.setItem('defaultListId', JSON.stringify({id: currentList.listId}));
     }
   }
 

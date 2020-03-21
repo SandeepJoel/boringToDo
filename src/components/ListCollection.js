@@ -126,7 +126,7 @@ export class Listcollection extends React.Component {
     await toggleListPropertiesFS(getFromLocalStorage('userData', 'id'), editingListId, {
       'isDefault': true
     });
-    
+    localStorage.setItem('defaultListId', JSON.stringify({ id: editingListId }));
     localStorage.removeItem('tasks'); // TODO: I dont know how to clear this else where
   }
 

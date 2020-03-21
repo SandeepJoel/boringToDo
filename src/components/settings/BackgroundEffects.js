@@ -1,14 +1,23 @@
 import React from 'react';
 import { BackgroundEffectList } from '../../constants/settings';
 import Select from 'react-select'
-import { PlainBackground } from './BackgroundEffectsSettings/PlainBackground';
-import { ColorLiquids } from './BackgroundEffectsSettings/ColorLiquids';
 import { withSettingsContext } from '../../contexts/Settings';
 import { customSelectStyles, customSelectTheme } from '../../constants/styles'
+import { Loader } from '../../components/Loader';
+import Loadable from 'react-loadable';
+
 
 const EffectSettingsMap = {
-  colorLiquids: ColorLiquids,
-  plainBackground: PlainBackground
+  colorLiquids: Loadable({
+    loader: () => import('./BackgroundEffectsSettings/ColorLiquids'),
+    loading: Loader,
+    delay: 500,
+  }),
+  plainBackground: Loadable({
+    loader: () => import('./BackgroundEffectsSettings/PlainBackground'),
+    loading: Loader,
+    delay: 500,
+  })
 }  
 
 export const BackgroundEffects = withSettingsContext(
@@ -46,13 +55,6 @@ export const BackgroundEffects = withSettingsContext(
     }
 
     render() {
-      if (!this.state.currentEffect) {
-        return (
-          <React.Fragment>
-            Loading...
-          </React.Fragment>
-          );
-      }
       let selectedOption = BackgroundEffectList.find(x => x.value === this.state.currentEffect);
       let CurrentSelectedSettings = EffectSettingsMap[this.state.currentEffect];
       let passProps = 

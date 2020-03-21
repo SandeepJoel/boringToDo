@@ -1,11 +1,19 @@
 import React from 'react';
 import { withSettingsContext } from '../contexts/Settings';
-import { ColorLiquids } from './Effects/ColorLiquids';
-import { PlainBackground } from './Effects/PlainBackground';
+import { Loader } from '../components/Loader';
+import Loadable from 'react-loadable';
 
 const EffectsMap = {
-  colorLiquids: ColorLiquids,
-  plainBackground: PlainBackground
+  colorLiquids: Loadable({
+    loader: () => import('./Effects/ColorLiquids'),
+    loading: Loader,
+    delay: 500,
+  }),
+  plainBackground: Loadable({
+    loader: () => import('./Effects/PlainBackground'),
+    loading: Loader,
+    delay: 500,
+  })
 }  
 
 export const Effect = withSettingsContext(
@@ -17,9 +25,7 @@ export const Effect = withSettingsContext(
     render() {
       if (!this.props.activeBackgroundEffectSettings) {
         return (
-          <React.Fragment>
-            "Loading...."
-          </React.Fragment>
+          <Loader type='simple'/>
         )
       }
       let { 

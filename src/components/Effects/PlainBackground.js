@@ -6,3 +6,5 @@ export const PlainBackground = (props) => {
     </div>
   );
 };
+
+export default PlainBackground;

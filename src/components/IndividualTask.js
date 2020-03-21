@@ -32,14 +32,6 @@ const IndividualTask = (props) => {
         </footer>
       </div>
     );
-  } else {
-    return (
-      <div className="screen-3">
-        <header>
-          <h2>Loading...</h2>
-        </header>
-      </div>
-    );
   }
 };
 

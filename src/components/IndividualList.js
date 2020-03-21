@@ -4,6 +4,7 @@ import { getCurrentListDataFS, getCurrentTasksFS, addTaskFS, removeTaskFS, updat
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import IndividualTask from './IndividualTask';
 import { generateRandomString, getFromLocalStorage } from '../utils/helpers';
+import { Loader } from '../components/Loader';
 
 export class IndividualList extends React.Component {
   constructor (props) {
@@ -210,6 +211,7 @@ export class IndividualList extends React.Component {
       <Switch>
         <Route exact path={this.props.match.url} render = { () => {
           let filteredTasks = this.getFilteredTasks();
+          let showLoader = filteredTasks.length === 0;
           let donePercent = Math.round((this.state.tasks.filter(item => item.isDone === true).length/this.state.tasks.length) * 100)
           return (
             <div className='todo-container container-350'>
@@ -224,6 +226,7 @@ export class IndividualList extends React.Component {
               </header>
               <section className='main-body'>
               <div>
+                  {showLoader ? <Loader type='simple' /> : ''}
                 {
                   filteredTasks.length > 0 && filteredTasks.slice(0).reverse().map((item, index) => {
                     return (

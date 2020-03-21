@@ -11,7 +11,7 @@ const newLiquid = {
   liquid: "blob1"
 }
 
-export const ColorLiquids = BgsActionsWrapper(
+const ColorLiquids = BgsActionsWrapper(
   class extends React.Component {
     constructor(props) {
       super(props);
@@ -120,13 +120,6 @@ export const ColorLiquids = BgsActionsWrapper(
     render() {
       let { liquidIndex } = this.state;
       let { currentEffectConfig, initialState, isDirty, applyBtn } = this.props;
-      if (!currentEffectConfig) {
-        return (
-          <React.Fragment>
-            Loading liquids...
-          </React.Fragment>
-        )
-      }
       let { config: liquids } = currentEffectConfig;
       return (
         <div className='setting-fluid flex-wrap clearfix m-30'> 
@@ -180,3 +173,6 @@ export const ColorLiquids = BgsActionsWrapper(
     }
   }
 );
+
+
+export default ColorLiquids;

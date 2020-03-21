@@ -9,6 +9,7 @@ import {
   toggleListPropertiesFS
 } from '../api/todoFirestore';
 import { generateRandomString, getFromLocalStorage } from '../utils/helpers';
+import { Loader } from '../components/Loader';
 
 export class Listcollection extends React.Component {
   constructor(props) {
@@ -140,6 +141,7 @@ export class Listcollection extends React.Component {
   }
 
   render() {
+    let showLoader = this.state.listCollection.length === 0;
     return (
       <div className='todo-container container-350'>
         <header>
@@ -152,6 +154,7 @@ export class Listcollection extends React.Component {
           </div>
         </header>
         <section className='main-body'>
+          {showLoader ? <Loader type='simple' /> : ''}
           {
             this.state.listCollection.length > 0 && 
             this.state.listCollection.slice(0).reverse().map((item, index) => {

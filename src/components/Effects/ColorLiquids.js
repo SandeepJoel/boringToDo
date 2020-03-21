@@ -127,10 +127,12 @@ class ColorLiquidsWebComponent extends HTMLElement {
 
 customElements.define('color-liquids', ColorLiquidsWebComponent);
 
-export const ColorLiquids = (props) => {
+const ColorLiquids = (props) => {
   let { config } = props.settings;
   let configStr = JSON.stringify(config);
   return (
     <color-liquids config={configStr}></color-liquids>
   );
 };
+
+export default ColorLiquids;

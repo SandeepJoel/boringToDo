@@ -3,7 +3,7 @@ import { generateRandomString } from '../../../utils/helpers';
 import { BtnColorPicker } from "../../BtnColorPicker";
 import { BgsActionsWrapper } from '../../../containers/BgsActionsWrapper';
 
-export const PlainBackground = BgsActionsWrapper(
+const PlainBackground = BgsActionsWrapper(
   class extends React.Component {
     constructor(props) {
       super(props);
@@ -29,13 +29,6 @@ export const PlainBackground = BgsActionsWrapper(
     }
 
     render() {
-      if (!this.props.isLoaded) {
-        return (
-          <React.Fragment>
-            Loading...
-          </React.Fragment>
-        );
-      }
       let { isDirty, currentEffectConfig: { color }, applyBtn} = this.props;
       return (
         <div className='setting-500 clearfix mt-30'>
@@ -55,3 +48,5 @@ export const PlainBackground = BgsActionsWrapper(
     }
   }
 );
+
+export default PlainBackground;

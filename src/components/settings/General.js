@@ -6,6 +6,7 @@ import {
   updateGeneralSettingsFS
 } from '../../api/settingsFirestore';
 import { customSelectStyles, customSelectTheme } from '../../constants/styles';
+import { Loader } from '../../components/Loader';
 
 const LayoutOptions = [
   { value: 'left', label: 'Left Side' },
@@ -100,9 +101,7 @@ export const General = withSettingsContext(
     render() {
       if (!this.state.generalSettings) {
         return (
-          <React.Fragment>
-            Loading...
-          </React.Fragment>
+          <Loader type='simple' />
         );
       }
       let { layout, theme, widgets } = this.state.generalSettings;

@@ -4,6 +4,7 @@ import {
   activateAndUpdateBackgroundEffectFS
 } from '../api/settingsFirestore';
 import { getFromLocalStorage } from '../utils/helpers';
+import { Loader } from '../components/Loader';
 
 // TODO: Need to enable Airbnb style guide to make naming conventions better
 
@@ -67,9 +68,7 @@ export const BgsActionsWrapper = (PassedComponent) => {
       let { applyState, isDirty, currentEffectConfig } = this.state;
       if (!currentEffectConfig) {
         return (
-          <React.Fragment>
-            Loading wrapper...
-        </React.Fragment>
+          <Loader type='simple' />
         )
       }
       let { type } = currentEffectConfig;

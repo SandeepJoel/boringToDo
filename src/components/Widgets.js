@@ -4,6 +4,7 @@ import { MemoryRouter as Router, Switch, Route, Redirect } from 'react-router-do
 import { IndividualList } from './IndividualList';
 import { Listcollection } from './ListCollection';
 import { getFromLocalStorage } from './../utils/helpers';
+import { Loader } from '../components/Loader';
 
 const Todo = () => (
   <React.Fragment>    
@@ -32,12 +33,10 @@ export const Widgets = withSettingsContext(
     }
 
     render() {
+      /* Because during this phase both widgets and effect component will
+         both be in loading state */
       if (!this.props.generalSettings) {
-        return (
-          <React.Fragment>
-            "Loading...."
-          </React.Fragment>
-        )
+        return null;
       }
       let { layout, widgets } = this.props.generalSettings;
       let isTodoPresent = widgets[0] ? true: false

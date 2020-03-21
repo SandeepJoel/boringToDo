@@ -71,11 +71,7 @@ export class Liquid extends React.Component {
   render() {
     let { liquid } = this.props;
     if (!liquid) {
-      return (
-        <React.Fragment>
-          Loading view...
-        </React.Fragment>
-      )
+      return null;
     }
     let isGradient = (liquid.fill === 'gradient'); 
     let selectedLiquidOption = LiquidsList.find(x => x.value === liquid.liquid);

@@ -29,15 +29,22 @@ export class IndividualList extends React.Component {
 
   async fetchTasksDataAndStoreItInState() {
     let { currentList } = this.props.location;
+    let { listId: routeListId } = this.props.match.params;
+    let localDefaultList = getFromLocalStorage('defaultList')
     if (!currentList) {
-      currentList = await getCurrentListDataFS(getFromLocalStorage('userData', 'id'), this.props.match.params.listId)
+      currentList = localDefaultList.id === routeListId ? localDefaultList : undefined;
+    }
+    // TODO: Ugly data fallback
+    // routeData -> localStorage -> API
+    if(!currentList) {
+      currentList = await getCurrentListDataFS(getFromLocalStorage('userData', 'id'), routeListId);
     }
     
     let tasks;
     if (getFromLocalStorage('tasks') && currentList.isDefault) {
       tasks = getFromLocalStorage('tasks');
     } else {
-      tasks = await getCurrentTasksFS(getFromLocalStorage('userData', 'id'), this.props.match.params.listId);
+      tasks = await getCurrentTasksFS(getFromLocalStorage('userData', 'id'), routeListId);
     }
     
     this.setState({
@@ -50,8 +57,12 @@ export class IndividualList extends React.Component {
     if (currentList.isDefault && !getFromLocalStorage('tasks')) {
       localStorage.setItem('tasks', JSON.stringify(tasks));
     }
-    if (currentList.isDefault && !getFromLocalStorage('defaultListId', 'id')) {
-      localStorage.setItem('defaultListId', JSON.stringify({id: currentList.listId}));
+    if (currentList.isDefault && !getFromLocalStorage('defaultList', 'id')) {
+      localStorage.setItem('defaultList', JSON.stringify({
+        id: routeListId,
+        listName: currentList.listName,
+        isDefault: true
+      }));
     }
   }
 

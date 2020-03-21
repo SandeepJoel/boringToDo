@@ -44,11 +44,10 @@ export class UserProvider extends React.Component {
 
   removeUserState () {
     localStorage.removeItem('userData')
-    localStorage.removeItem('settings');
     localStorage.removeItem('generalSettings');
     localStorage.removeItem('activeBackgroundEffectSettings');
     localStorage.removeItem('tasks');
-    localStorage.removeItem('defaultListId')
+    localStorage.removeItem('defaultList')
     this.setState(this.defaultState);
   }
 

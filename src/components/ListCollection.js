@@ -111,6 +111,15 @@ export class Listcollection extends React.Component {
       "listName": newListName
     });
 
+    // Need to update the localStorage if it is a default list
+    if (listId === getFromLocalStorage('defaultList', 'id')) {
+      localStorage.setItem('defaultList', JSON.stringify({
+        id: listId,
+        listName: newListName,
+        isDefault: true
+      }))
+    }    
+
   }
 
   async setDefaultList() {
@@ -126,7 +135,7 @@ export class Listcollection extends React.Component {
     await toggleListPropertiesFS(getFromLocalStorage('userData', 'id'), editingListId, {
       'isDefault': true
     });
-    localStorage.setItem('defaultListId', JSON.stringify({ id: editingListId }));
+    localStorage.removeItem('defaultList');
     localStorage.removeItem('tasks'); // TODO: I dont know how to clear this else where
   }
 

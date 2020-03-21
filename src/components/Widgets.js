@@ -11,12 +11,12 @@ const Todo = () => (
       <Switch>
         <Route exact path='/' render={props => {
           let { force } = props.location;
-          if ((!getFromLocalStorage('defaultListId', 'id')) || (force)) {
+          if ((!getFromLocalStorage('defaultList', 'id')) || (force)) {
             return (<Listcollection {...props} />) 
           }
           return (<Redirect
             to={{
-              pathname: `/${getFromLocalStorage('defaultListId', 'id')}`,
+              pathname: `/${getFromLocalStorage('defaultList', 'id')}`,
             }} />)
         }}/>
         <Route path='/:listId' render={props => <IndividualList {...props} />} />

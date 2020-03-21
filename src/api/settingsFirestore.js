@@ -1,24 +1,5 @@
 import { db } from "../config/firestoreConfig";
 
-// TODO: Need to change this function to not depend upon the user.displayName for the userId.
-// ** get user id using the google user displayName
-export function getUserIdFromFS(userDisplayName) {
-  return new Promise((resolve, reject) => {
-    db.collection("users").where("userDetails.name", "==", userDisplayName)
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          resolve({
-            id: doc.id
-          })
-        })
-      })
-      .catch((error) => {
-        reject(Error(error));
-      });
-  })
-}
-
 export function getSettingsFS(userId) {
   return new Promise(function (resolve, reject) {
     db.collection('users').doc(userId)
@@ -43,7 +24,6 @@ export function getBackgroundEffectFS(userId, effectId) {
           resolve(doc.data());
         } else {
           resolve({});
-          console.log("No such document!");
         }
       })
       .catch((error) => {
@@ -63,7 +43,6 @@ export function activateAndUpdateBackgroundEffectFS(userId, payload) {
     batch.update(activateDocRef, { 'settings.activeBackgroundEffect': payload });
     batch.commit()
     .then(function() {
-      console.log("Success updating document");
       resolve();
     })
     .catch((error) => {
@@ -78,7 +57,6 @@ export function updateGeneralSettingsFS(userId, payload) {
     db.doc(`/users/${userId}`)
       .update({ 'settings.general': payload })
       .then(function () {
-        console.log("Success updated general settings");
         resolve();
       })
       .catch((error) => {

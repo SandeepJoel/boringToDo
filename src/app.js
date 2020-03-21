@@ -12,6 +12,7 @@ import { SettingsProvider } from './contexts/Settings';
 import { SettingsView } from './components/SettingsView';
 import { Widgets } from './components/Widgets';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { getFromLocalStorage } from './utils/helpers';
 library.add(fas, far);
 
 const App = withUserContext(
@@ -35,15 +36,15 @@ const App = withUserContext(
     render() {
       return (
         <React.Fragment>
-          { 
-            this.props.userName == "Guest" ?
-            <UserLoginSignup/> 
+          {
+            this.props.userName == "Guest" && !getFromLocalStorage('userData', 'id') ?
+            <UserLoginSignup/>
             : 
             <SettingsProvider>
               {
                 this.state.isSettingsOpened ?
-                // Look how we are passing props to SettingsView Component                
-                <SettingsView toggleSettings={this.toggleSettings}/>                
+                // Look how we are passing props to SettingsView Component
+                <SettingsView toggleSettings={this.toggleSettings}/>
                  :
                 <React.Fragment>
                    <Effect />

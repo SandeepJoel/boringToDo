@@ -118,7 +118,6 @@ export function toggleListPropertiesFS(userId, listId, payload) {
       return batch.commit();
     })
     .then(function () {
-      console.log("Success updating document");
       resolve();
     })
     .catch((error) => {

@@ -53,6 +53,21 @@ $sides: (top, bottom, left, right);
   justify-content: flex-end;
 }
 
+// overriding colorpicker styless
+.colorpicker-container {
+  box-shadow: none !important;
+  background: transparent !important;
+  padding: 10px;
+  
+  input {
+    color: var(--primary-foreground) !important;
+  }
+
+  svg {
+    fill: var(--primary-foreground) !important
+  }
+}
+
 button {
   margin: 5px;
   padding: 10px 15px;

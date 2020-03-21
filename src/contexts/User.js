@@ -33,29 +33,23 @@ export class UserProvider extends React.Component {
   }
  
   async setUserState(user) {
-    let userId = getFromLocalStorage('userData', 'id');    
-    if (!userId) {
-      /* this api call is critical to get our userId to get all widget data */
-      let userData = await getUserIdFromFS(user.displayName);
-      userId = userData.id;
-      console.log('Got userId from API', userData);
-      localStorage.setItem('userData', JSON.stringify(userData));
-    }
+    // TODO: This is the only way ?
+    localStorage.setItem('userData', JSON.stringify({ id: user.uid }));
     this.setState({
       userName: user.displayName,
       userPhotoUrl: user.photoURL,
-      userId: userId
-    })
+      userId: user.uid
+    });    
   }
 
   removeUserState () {
-    this.setState(this.defaultState);
     localStorage.removeItem('userData')
     localStorage.removeItem('settings');
     localStorage.removeItem('generalSettings');
     localStorage.removeItem('activeBackgroundEffectSettings');
     localStorage.removeItem('tasks');
     localStorage.removeItem('defaultListId')
+    this.setState(this.defaultState);
   }
 
   componentDidMount () {

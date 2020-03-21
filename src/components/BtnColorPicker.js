@@ -1,6 +1,15 @@
 import React from 'react';
 import Popup from "reactjs-popup";
 import { ChromePicker } from 'react-color';
+import { getCSSVar } from '../utils/helpers';
+
+const PopupStyle = {
+  background: getCSSVar('--secondary-background'),
+  border: 'none',
+  boxShadow: getCSSVar('--box-shadow-200'),
+  borderRadius: 4,
+  width: 'auto'
+};
 
 export class BtnColorPicker extends React.Component {
   constructor(props) {
@@ -24,13 +33,17 @@ export class BtnColorPicker extends React.Component {
     })
   }
 
-
   render() {
     let { color } = this.state;
     let colorBtn = <button className='liquid-box' style={{ backgroundColor: color }}> {color} </button>;
     return (
-      <Popup trigger={colorBtn} position="right center" arrow={false} onClose={this.updateState}>
-        <ChromePicker color={color} onChange={this.change} />
+      <Popup 
+        trigger={colorBtn} 
+        position="right center"
+        arrow={false}
+        onClose={this.updateState}
+        contentStyle={PopupStyle} >
+        <ChromePicker color={color} className='colorpicker-container' onChange={this.change} />
       </Popup>
     )
   }

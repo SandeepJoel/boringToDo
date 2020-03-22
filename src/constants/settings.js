@@ -30,27 +30,27 @@ export const defaultSettings = {
         {
           fill: 'singleColor',
           color: '#000',
-          liquid: 'blob1'
+          liquid: 'blob2'
         },
         {
           fill: 'gradient',
           colors: ['#f093fb', '#f5576c'],
-          liquid: 'blob2'
+          liquid: 'blob3'
         },
         {
           fill: 'singleColor',
           color: '#FFF',
-          liquid: 'blob2'
+          liquid: 'blob4'
         },
         {
           fill: 'gradient',
           colors: ['#84fab0', '#8fd3f4'],
-          liquid: 'blob1'
+          liquid: 'blob5'
         },
         {
           fill: 'singleColor',
           color: '#000',
-          liquid: 'blob1'
+          liquid: 'blob6'
         },
         {
           fill: 'gradient',
@@ -58,6 +58,22 @@ export const defaultSettings = {
           liquid: 'blob1'
         },
       ],
+    },
+    {
+      type: 'gooeySubstance',
+      config: {
+        randomize: true,
+        position: 'left'
+      }
+    },
+    {
+      type: 'spawningShapes',
+      config: {
+        particleColor: '#C70039',
+        backgroundColor: '#000000',
+        spread: 'medium',
+        position: 'right'
+      }
     }
   ],
 }

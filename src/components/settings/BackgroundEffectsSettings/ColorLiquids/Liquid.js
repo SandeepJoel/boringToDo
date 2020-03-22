@@ -10,7 +10,11 @@ const DefaultValues = {
 }
 const LiquidsList = [
   { value: 'blob1', label: 'Blob 1' },
-  { value: 'blob2', label: 'Blob 2' }
+  { value: 'blob2', label: 'Blob 2' },
+  { value: 'blob3', label: 'Blob 3' },
+  { value: 'blob4', label: 'Blob 4' },
+  { value: 'blob5', label: 'Blob 5' },
+  { value: 'blob6', label: 'Blob 6' },
 ];
 
 const FillList = [

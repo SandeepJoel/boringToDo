@@ -5,7 +5,8 @@ export const SettingsNav = [
 
 export const BackgroundEffectList = [
   { value: 'plainBackground', label: 'Plain Background' },
-  { value: 'colorLiquids', label: 'Color Liquids' }
+  { value: 'colorLiquids', label: 'Color Liquids' },
+  { value: 'gooeySubstance', label: 'Gooey Substance' }
 ];
 
 export const defaultSettings = {
@@ -17,7 +18,7 @@ export const defaultSettings = {
   backgroundEffects: [
     {
       type: 'plainBackground',
-      color: "#FFF",
+      color: "#1abc9c",
     },
     {
       type: 'colorLiquids',
@@ -63,7 +64,9 @@ export const defaultSettings = {
       type: 'gooeySubstance',
       config: {
         randomize: true,
-        position: 'left'
+        position: 'left',
+        backgroundColor: '#181818',
+        blobColor: '#ff6347'
       }
     },
     {

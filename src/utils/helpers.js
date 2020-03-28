@@ -1,6 +1,12 @@
 
 export const generateRandomString = () => Math.random().toString(36).slice(2)
 
+// function to get random whole number between a range 
+//  Note: It is inclusive of the range elements
+export function getRandomNumbersBetween(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 export const getFromLocalStorage = (name, key) => {
   return (localStorage.getItem(name) && key) ?
     JSON.parse(localStorage.getItem(name))[key]
@@ -127,4 +133,8 @@ export function deepCompare() {
 export function getCSSVar(variable) {
   return getComputedStyle(document.getElementById('root'))
     .getPropertyValue(variable);
+}
+
+export function deepClone(val) {
+  return JSON.parse(JSON.stringify(val));
 }

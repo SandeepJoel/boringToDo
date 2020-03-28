@@ -13,7 +13,12 @@ const EffectsMap = {
     loader: () => import('./Effects/PlainBackground'),
     loading: Loader,
     delay: 500,
-  })
+  }),  
+  gooeySubstance: Loadable({
+    loader: () => import('./Effects/GooeySubstance'),
+    loading: Loader,
+    delay: 500,
+  })  
 }  
 
 export const Effect = withSettingsContext(

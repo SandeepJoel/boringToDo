@@ -17,6 +17,11 @@ const EffectSettingsMap = {
     loader: () => import('./BackgroundEffectsSettings/PlainBackground'),
     loading: Loader,
     delay: 500,
+  }),
+  gooeySubstance: Loadable({
+    loader: () => import('./BackgroundEffectsSettings/GooeySubstance'),
+    loading: Loader,
+    delay: 500,
   })
 }  
 

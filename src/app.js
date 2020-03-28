@@ -20,7 +20,7 @@ const App = withUserContext(
     constructor (props) {
       super (props);
       this.state = {
-        isSettingsOpened: false
+        isSettingsOpened: true
       }
       this.toggleSettings = this.toggleSettings.bind(this);    
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { generateRandomString } from '../../utils/helpers';
-import { colorLiquidHTML } from '../../constants/effects';
+import colorLiquidHTML from '../../html/ColorLiquid';
 class ColorLiquidsWebComponent extends HTMLElement {
   constructor() {
     super();
@@ -10,7 +10,12 @@ class ColorLiquidsWebComponent extends HTMLElement {
   connectedCallback() {
     this._shadowRoot.innerHTML = colorLiquidHTML;
     this.index = 1;
-    this.init(this._shadowRoot, JSON.parse(this.getAttribute('config')));
+    this.config = JSON.parse(this.getAttribute('config'));
+    this.animateConfig = {
+      last: Date.now(),
+      noOfSeconds: 10,
+    }
+    this.init();    
   }
 
   disconnectedCallback() {
@@ -28,6 +33,8 @@ class ColorLiquidsWebComponent extends HTMLElement {
     }
   }
  
+  // Following are effect specific functions 
+
   // This function returns svg dom object of the liquid based
   // of the passed config object
   generateWaveHtml(config, svgClasses) {
@@ -60,12 +67,12 @@ class ColorLiquidsWebComponent extends HTMLElement {
     ).firstChild;
   }
 
-  waveAnimate(document, colorsConfig, svgRoot) {
-    this.index = this.index % colorsConfig.length;
-    let currentPrimary = document.querySelector('.primary');
-    svgRoot.appendChild(this.generateWaveHtml(colorsConfig[this.index], 'primary'));
+  waveAnimate() {
+    this.index = this.index % this.config.length;
+    let currentPrimary = this._shadowRoot.querySelector('.primary');
+    this.svgRoot.appendChild(this.generateWaveHtml(this.config[this.index], 'primary'));
 
-    let currentSecondary = document.querySelector('.secondary');
+    let currentSecondary = this._shadowRoot.querySelector('.secondary');
     if (currentSecondary) {
       currentSecondary.remove();
     }
@@ -73,24 +80,21 @@ class ColorLiquidsWebComponent extends HTMLElement {
     currentPrimary.classList.add('secondary');
     this.index++;
   }
-  
-  
-  init(document, colorsConfig) {
-    const svgRoot = document.querySelector('.svg-list');
-    svgRoot.appendChild(this.generateWaveHtml(colorsConfig[0], 'primary'));
 
-    let noOfSeconds = 10;
-    let last = 0.01;
-    function animate(now) {
-      // for every 10 seconds call the inner function
-      // TODO: Fix double wave render issue
-      if (now - last >= noOfSeconds * 1000) {
-        last = now;
-        this.waveAnimate(document, colorsConfig, svgRoot);
-      }
-      this.intervalState = requestAnimationFrame(animate.bind(this));
-    };
-    animate.call(this);
+  startAnimate() {
+    // for every 10 seconds call the inner function
+    this.currentTime = Date.now();
+    if (this.currentTime - this.animateConfig.last >= this.animateConfig.noOfSeconds * 1000) {
+      this.animateConfig.last = this.currentTime;
+      this.waveAnimate();
+    }
+    this.intervalState = requestAnimationFrame(this.startAnimate.bind(this));
+  };
+  
+  init() {
+    this.svgRoot = this._shadowRoot.querySelector('.svg-list');
+    this.svgRoot.appendChild(this.generateWaveHtml(this.config[0], 'primary'));
+    this.intervalState = requestAnimationFrame(this.startAnimate.bind(this));
   }
 }
 

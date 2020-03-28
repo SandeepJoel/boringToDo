@@ -1,4 +1,4 @@
-export const colorLiquidHTML = `
+const colorLiquidHTML = `
   <style> 
     svg {
       width: 100%;
@@ -66,4 +66,5 @@ export const colorLiquidHTML = `
   </style>
   <div class="svg-list">
   </div>
-`
+`;
+export default colorLiquidHTML;

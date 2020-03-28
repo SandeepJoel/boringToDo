@@ -6,7 +6,8 @@ export const SettingsNav = [
 export const BackgroundEffectList = [
   { value: 'plainBackground', label: 'Plain Background' },
   { value: 'colorLiquids', label: 'Color Liquids' },
-  { value: 'gooeySubstance', label: 'Gooey Substance' }
+  { value: 'gooeySubstance', label: 'Gooey Substance' },
+  { value: 'spawningShapes', label: 'Spawning Shapes' }
 ];
 
 export const defaultSettings = {
@@ -75,7 +76,7 @@ export const defaultSettings = {
         particleColor: '#C70039',
         backgroundColor: '#000000',
         spread: 'medium',
-        position: 'right'
+        position: 'left'
       }
     }
   ],

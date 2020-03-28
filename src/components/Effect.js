@@ -18,6 +18,11 @@ const EffectsMap = {
     loader: () => import('./Effects/GooeySubstance'),
     loading: Loader,
     delay: 500,
+  }),
+  spawningShapes: Loadable({
+    loader: () => import('./Effects/spawningShapes'),
+    loading: Loader,
+    delay: 500,
   })  
 }  
 

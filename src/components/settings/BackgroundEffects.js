@@ -22,6 +22,11 @@ const EffectSettingsMap = {
     loader: () => import('./BackgroundEffectsSettings/GooeySubstance'),
     loading: Loader,
     delay: 500,
+  }),
+  spawningShapes: Loadable({
+    loader: () => import('./BackgroundEffectsSettings/spawningShapes'),
+    loading: Loader,
+    delay: 500,
   })
 }  
 

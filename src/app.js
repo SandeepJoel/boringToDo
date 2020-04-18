@@ -8,14 +8,14 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { Effect } from './components/Effect';
 import { UserLoginSignup } from './components/UserLoginSignup';
 import { UserProvider, withUserContext } from './contexts/User';
-import { SettingsProvider } from './contexts/Settings';
+import { SettingsProvider, withSettingsContext } from './contexts/Settings';
 import { SettingsView } from './components/SettingsView';
 import { Widgets } from './components/Widgets';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getFromLocalStorage } from './utils/helpers';
 library.add(fas, far);
 
-const App = withUserContext(
+const App = withSettingsContext(withUserContext(
   class extends React.Component {
     constructor (props) {
       super (props);
@@ -34,13 +34,14 @@ const App = withUserContext(
     }
 
     render() {
+      let { theme = 'light' } = this.props.generalSettings || {};
       return (
         <React.Fragment>
           {
             this.props.userName == "Guest" && !getFromLocalStorage('userData', 'id') ?
             <UserLoginSignup/>
             : 
-            <SettingsProvider>
+              <div id='theme-container' data-theme={theme}>
               {
                 this.state.isSettingsOpened ?
                 // Look how we are passing props to SettingsView Component
@@ -52,13 +53,13 @@ const App = withUserContext(
                    <FontAwesomeIcon className="settings-icon" icon='cog' size='lg' onClick={this.toggleSettings}></FontAwesomeIcon>
                 </React.Fragment>
               }
-              </SettingsProvider>
+            </div> 
           }                 
         </React.Fragment>
       )
     }
   }
-);
+));
 
 /* 
   Think on what if a child provider
@@ -66,7 +67,9 @@ const App = withUserContext(
 */
 ReactDOM.render(
   <UserProvider>
-    <App />
+    <SettingsProvider>
+      <App />
+    </SettingsProvider>
   </UserProvider>,
   document.getElementById('root')
 );

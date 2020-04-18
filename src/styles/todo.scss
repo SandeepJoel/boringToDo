@@ -74,7 +74,8 @@
   box-shadow: var(--box-shadow-s300);
   z-index: 10;
   padding: 15px 20px;
-  transition: margin-top 0.15s ease-in;
+  // TODO: This transition becomes slow when combined with confetti animation
+  // transition: margin-top 0.15s ease-in;
 
   &.active {
     margin-top: 0px;

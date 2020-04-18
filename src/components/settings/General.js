@@ -60,6 +60,9 @@ export const General = withSettingsContext(
         case 'widget':
           this.updateInternalState('widgets', data ? [data.value] : []);
           break;
+        case 'theme':
+          this.updateInternalState('theme', data.value);
+          break;
       }
     }
 
@@ -116,7 +119,7 @@ export const General = withSettingsContext(
             <Select 
               options={ThemeOptions} 
               value={selectedTheme} 
-              onChange={this.onSelectChange}
+              onChange={this.onSelectChange.bind(this, 'theme')}
               styles={customSelectStyles}
               theme={customSelectTheme}
             />

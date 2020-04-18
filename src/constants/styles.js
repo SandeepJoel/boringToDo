@@ -46,7 +46,8 @@ export const customSelectTheme = theme => ({
   borderRadius: 3,
   colors: {
     ...theme.colors,
-    primary: getCSSVar('--primary-color'),
-    primary25: getCSSVar('--primary-color'),
+    primary: getCSSVar('--primary-background'),
+    primary25: getCSSVar('--primary-background'),
+    neutral0: getCSSVar('--primary-color')
   },
 })

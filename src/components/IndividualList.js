@@ -14,7 +14,8 @@ export class IndividualList extends React.Component {
       selectedFilter: 'all',
       currentListName: '',
       editingTaskId: '',
-      editing: false
+      editing: false,
+      loading: false
     };
 
     this.addTask = this.addTask.bind(this);
@@ -39,16 +40,20 @@ export class IndividualList extends React.Component {
     // routeData -> localStorage -> API
     if(!currentList) {
       currentList = await getCurrentListDataFS(getFromLocalStorage('userData', 'id'), routeListId);
-    }
+     }
     
-    let tasks;
+    let tasks;    
     if (getFromLocalStorage('tasks') && currentList.isDefault) {
       tasks = getFromLocalStorage('tasks');
     } else {
+      this.setState({
+        loading: true
+      });
       tasks = await getCurrentTasksFS(getFromLocalStorage('userData', 'id'), routeListId);
     }
     
     this.setState({
+      loading: false,
       tasks,
       currentListName: currentList.listName,
       isDefault: currentList.isDefault
@@ -211,7 +216,7 @@ export class IndividualList extends React.Component {
       <Switch>
         <Route exact path={this.props.match.url} render = { () => {
           let filteredTasks = this.getFilteredTasks();
-          let showLoader = filteredTasks.length === 0;
+          let showLoader = this.state.loading;
           let donePercent = Math.round((this.state.tasks.filter(item => item.isDone === true).length/this.state.tasks.length) * 100)
           return (
             <div className='todo-container container-350'>

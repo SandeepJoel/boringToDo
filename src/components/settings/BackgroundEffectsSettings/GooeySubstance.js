@@ -17,7 +17,7 @@ const GooeySubstance = BgsActionsWrapper(
       super(props);
       this.reset = this.reset.bind(this);
       this.handleChange = this.handleChange.bind(this);
-      this.tickRandomize = this.tickRandomize.bind(this);
+      // this.tickRandomize = this.tickRandomize.bind(this);
     }
 
     onSelectChange(name, data) {
@@ -49,19 +49,19 @@ const GooeySubstance = BgsActionsWrapper(
     };
 
     // TODO: Need to reduce duplicate code on all three functions
-    tickRandomize(value) {
-      let { config, type } = deepClone(this.props.currentEffectConfig);
-      config['randomize'] = value;
-      let nextState = {
-        config,
-        type
-      };
-      let isEqual = deepCompare(nextState, this.props.initialState);
-      this.props.ourSetState({
-        isDirty: !isEqual,
-        currentEffectConfig: nextState
-      })
-    }
+    // tickRandomize(value) {
+    //   let { config, type } = deepClone(this.props.currentEffectConfig);
+    //   config['randomize'] = value;
+    //   let nextState = {
+    //     config,
+    //     type
+    //   };
+    //   let isEqual = deepCompare(nextState, this.props.initialState);
+    //   this.props.ourSetState({
+    //     isDirty: !isEqual,
+    //     currentEffectConfig: nextState
+    //   })
+    // }
 
     reset() {
       this.props.ourSetState({
@@ -95,13 +95,13 @@ const GooeySubstance = BgsActionsWrapper(
               styles={customSelectStyles}
               theme={customSelectTheme} />
           </div>
-          <div className='space-between-center mb-20'>
+          {/* <div className='space-between-center mb-20'>
             <label> Randomize </label>
             <input type='checkbox'
               defaultChecked={randomize}
               onChange={this.tickRandomize.bind(this, !randomize)}
             />
-          </div>                
+          </div>                 */}
           <section className="float-right">
             <button onClick={this.reset} disabled={!isDirty}>
               Reset

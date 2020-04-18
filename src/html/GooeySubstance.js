@@ -1,6 +1,7 @@
 // TODO: Check why roll animation is slowing down
-const GooeySubstanceHTML = `
+export const GooeySubstanceHTML = (config) => `
   <style>  
+  
   .blob-container {
     position: absolute;
     width: 50vw;
@@ -9,9 +10,7 @@ const GooeySubstanceHTML = `
     overflow: hidden;
     left: 50%;
     transform: translate(-50%, -50%) rotate(0deg);
-    filter: url("#goo-square");
-    // animation: roll 45s steps(3, end) infinite 2s; 
-  }
+    filter: url("#goo-square"); }
 
   .box {
     width: 150px;
@@ -23,6 +22,7 @@ const GooeySubstanceHTML = `
     left: -99999px;
     right: -99999px;
     border-radius: 50%;
+    background-color: var(--blob-color);
     animation: shrink 15s infinite 2s;
     transition: background-color 4s linear; }
 
@@ -36,16 +36,17 @@ const GooeySubstanceHTML = `
     left: -99999px;
     right: -99999px;
     border-radius: 50%;
+    background-color: var(--blob-color);
     animation: ani-1 15s infinite 2s;
     transition: background-color 4s linear; }
 
   @keyframes ani-1 {
     0% {
-      transform: rotate(351.06108deg) translate(0px) scale(1); }
+      transform: rotate(222.65514deg) translate(0px) scale(1); }
     50% {
-      transform: rotate(351.06108deg) translate(242.7704px) scale(0.15); }
+      transform: rotate(222.65514deg) translate(165.20818px) scale(0.15); }
     100% {
-      transform: rotate(351.06108deg) translate(0px) scale(1); } }
+      transform: rotate(222.65514deg) translate(0px) scale(1); } }
   .piece:nth-child(2) {
     width: 100px;
     height: 100px;
@@ -56,16 +57,17 @@ const GooeySubstanceHTML = `
     left: -99999px;
     right: -99999px;
     border-radius: 50%;
+    background-color: var(--blob-color);
     animation: ani-2 15s infinite 2s;
     transition: background-color 4s linear; }
 
   @keyframes ani-2 {
     0% {
-      transform: rotate(2.43849deg) translate(0px) scale(1); }
+      transform: rotate(227.96072deg) translate(0px) scale(1); }
     50% {
-      transform: rotate(2.43849deg) translate(155.07157px) scale(0.15); }
+      transform: rotate(227.96072deg) translate(208.25278px) scale(0.15); }
     100% {
-      transform: rotate(2.43849deg) translate(0px) scale(1); } }
+      transform: rotate(227.96072deg) translate(0px) scale(1); } }
   .piece:nth-child(3) {
     width: 100px;
     height: 100px;
@@ -76,16 +78,17 @@ const GooeySubstanceHTML = `
     left: -99999px;
     right: -99999px;
     border-radius: 50%;
+    background-color: var(--blob-color);
     animation: ani-3 15s infinite 2s;
     transition: background-color 4s linear; }
 
   @keyframes ani-3 {
     0% {
-      transform: rotate(212.88332deg) translate(0px) scale(1); }
+      transform: rotate(320.60325deg) translate(0px) scale(1); }
     50% {
-      transform: rotate(212.88332deg) translate(178.57458px) scale(0.15); }
+      transform: rotate(320.60325deg) translate(218.75381px) scale(0.15); }
     100% {
-      transform: rotate(212.88332deg) translate(0px) scale(1); } }
+      transform: rotate(320.60325deg) translate(0px) scale(1); } }
   .piece:nth-child(4) {
     width: 100px;
     height: 100px;
@@ -96,16 +99,17 @@ const GooeySubstanceHTML = `
     left: -99999px;
     right: -99999px;
     border-radius: 50%;
+    background-color: var(--blob-color);
     animation: ani-4 15s infinite 2s;
     transition: background-color 4s linear; }
 
   @keyframes ani-4 {
     0% {
-      transform: rotate(275.44005deg) translate(0px) scale(1); }
+      transform: rotate(109.79603deg) translate(0px) scale(1); }
     50% {
-      transform: rotate(275.44005deg) translate(248.96127px) scale(0.15); }
+      transform: rotate(109.79603deg) translate(154.67458px) scale(0.15); }
     100% {
-      transform: rotate(275.44005deg) translate(0px) scale(1); } }
+      transform: rotate(109.79603deg) translate(0px) scale(1); } }
   .piece:nth-child(5) {
     width: 100px;
     height: 100px;
@@ -116,16 +120,17 @@ const GooeySubstanceHTML = `
     left: -99999px;
     right: -99999px;
     border-radius: 50%;
+    background-color: var(--blob-color);
     animation: ani-5 15s infinite 2s;
     transition: background-color 4s linear; }
 
   @keyframes ani-5 {
     0% {
-      transform: rotate(265.05239deg) translate(0px) scale(1); }
+      transform: rotate(348.85433deg) translate(0px) scale(1); }
     50% {
-      transform: rotate(265.05239deg) translate(195.62603px) scale(0.15); }
+      transform: rotate(348.85433deg) translate(230.2103px) scale(0.15); }
     100% {
-      transform: rotate(265.05239deg) translate(0px) scale(1); } }
+      transform: rotate(348.85433deg) translate(0px) scale(1); } }
   .piece:nth-child(6) {
     width: 100px;
     height: 100px;
@@ -136,16 +141,17 @@ const GooeySubstanceHTML = `
     left: -99999px;
     right: -99999px;
     border-radius: 50%;
+    background-color: var(--blob-color);
     animation: ani-6 15s infinite 2s;
     transition: background-color 4s linear; }
 
   @keyframes ani-6 {
     0% {
-      transform: rotate(183.04365deg) translate(0px) scale(1); }
+      transform: rotate(307.31676deg) translate(0px) scale(1); }
     50% {
-      transform: rotate(183.04365deg) translate(228.50204px) scale(0.15); }
+      transform: rotate(307.31676deg) translate(152.02206px) scale(0.15); }
     100% {
-      transform: rotate(183.04365deg) translate(0px) scale(1); } }
+      transform: rotate(307.31676deg) translate(0px) scale(1); } }
   .piece:nth-child(7) {
     width: 100px;
     height: 100px;
@@ -156,16 +162,17 @@ const GooeySubstanceHTML = `
     left: -99999px;
     right: -99999px;
     border-radius: 50%;
+    background-color: var(--blob-color);
     animation: ani-7 15s infinite 2s;
     transition: background-color 4s linear; }
 
   @keyframes ani-7 {
     0% {
-      transform: rotate(291.62758deg) translate(0px) scale(1); }
+      transform: rotate(85.21106deg) translate(0px) scale(1); }
     50% {
-      transform: rotate(291.62758deg) translate(197.90256px) scale(0.15); }
+      transform: rotate(85.21106deg) translate(206.7023px) scale(0.15); }
     100% {
-      transform: rotate(291.62758deg) translate(0px) scale(1); } }
+      transform: rotate(85.21106deg) translate(0px) scale(1); } }
   .piece:nth-child(8) {
     width: 100px;
     height: 100px;
@@ -176,16 +183,17 @@ const GooeySubstanceHTML = `
     left: -99999px;
     right: -99999px;
     border-radius: 50%;
+    background-color: var(--blob-color);
     animation: ani-8 15s infinite 2s;
     transition: background-color 4s linear; }
 
   @keyframes ani-8 {
     0% {
-      transform: rotate(347.34013deg) translate(0px) scale(1); }
+      transform: rotate(5.87689deg) translate(0px) scale(1); }
     50% {
-      transform: rotate(347.34013deg) translate(170.12988px) scale(0.15); }
+      transform: rotate(5.87689deg) translate(218.35731px) scale(0.15); }
     100% {
-      transform: rotate(347.34013deg) translate(0px) scale(1); } }
+      transform: rotate(5.87689deg) translate(0px) scale(1); } }
   .piece:nth-child(9) {
     width: 100px;
     height: 100px;
@@ -196,16 +204,17 @@ const GooeySubstanceHTML = `
     left: -99999px;
     right: -99999px;
     border-radius: 50%;
+    background-color: var(--blob-color);
     animation: ani-9 15s infinite 2s;
     transition: background-color 4s linear; }
 
   @keyframes ani-9 {
     0% {
-      transform: rotate(344.59313deg) translate(0px) scale(1); }
+      transform: rotate(45.75913deg) translate(0px) scale(1); }
     50% {
-      transform: rotate(344.59313deg) translate(207.89518px) scale(0.15); }
+      transform: rotate(45.75913deg) translate(210.82526px) scale(0.15); }
     100% {
-      transform: rotate(344.59313deg) translate(0px) scale(1); } }
+      transform: rotate(45.75913deg) translate(0px) scale(1); } }
   .piece:nth-child(10) {
     width: 100px;
     height: 100px;
@@ -216,16 +225,17 @@ const GooeySubstanceHTML = `
     left: -99999px;
     right: -99999px;
     border-radius: 50%;
+    background-color: var(--blob-color);
     animation: ani-10 15s infinite 2s;
     transition: background-color 4s linear; }
 
   @keyframes ani-10 {
     0% {
-      transform: rotate(8.18862deg) translate(0px) scale(1); }
+      transform: rotate(222.41326deg) translate(0px) scale(1); }
     50% {
-      transform: rotate(8.18862deg) translate(188.64477px) scale(0.15); }
+      transform: rotate(222.41326deg) translate(155.39923px) scale(0.15); }
     100% {
-      transform: rotate(8.18862deg) translate(0px) scale(1); } }
+      transform: rotate(222.41326deg) translate(0px) scale(1); } }
   .piece:nth-child(11) {
     width: 100px;
     height: 100px;
@@ -236,16 +246,17 @@ const GooeySubstanceHTML = `
     left: -99999px;
     right: -99999px;
     border-radius: 50%;
+    background-color: var(--blob-color);
     animation: ani-11 15s infinite 2s;
     transition: background-color 4s linear; }
 
   @keyframes ani-11 {
     0% {
-      transform: rotate(239.96122deg) translate(0px) scale(1); }
+      transform: rotate(54.79377deg) translate(0px) scale(1); }
     50% {
-      transform: rotate(239.96122deg) translate(235.50488px) scale(0.15); }
+      transform: rotate(54.79377deg) translate(151.91223px) scale(0.15); }
     100% {
-      transform: rotate(239.96122deg) translate(0px) scale(1); } }
+      transform: rotate(54.79377deg) translate(0px) scale(1); } }
   .piece:nth-child(12) {
     width: 100px;
     height: 100px;
@@ -256,16 +267,17 @@ const GooeySubstanceHTML = `
     left: -99999px;
     right: -99999px;
     border-radius: 50%;
+    background-color: var(--blob-color);
     animation: ani-12 15s infinite 2s;
     transition: background-color 4s linear; }
 
   @keyframes ani-12 {
     0% {
-      transform: rotate(10.67063deg) translate(0px) scale(1); }
+      transform: rotate(193.14058deg) translate(0px) scale(1); }
     50% {
-      transform: rotate(10.67063deg) translate(157.71049px) scale(0.15); }
+      transform: rotate(193.14058deg) translate(219.22602px) scale(0.15); }
     100% {
-      transform: rotate(10.67063deg) translate(0px) scale(1); } }
+      transform: rotate(193.14058deg) translate(0px) scale(1); } }
   .piece:nth-child(13) {
     width: 100px;
     height: 100px;
@@ -276,16 +288,17 @@ const GooeySubstanceHTML = `
     left: -99999px;
     right: -99999px;
     border-radius: 50%;
+    background-color: var(--blob-color);
     animation: ani-13 15s infinite 2s;
     transition: background-color 4s linear; }
 
   @keyframes ani-13 {
     0% {
-      transform: rotate(101.28404deg) translate(0px) scale(1); }
+      transform: rotate(238.74258deg) translate(0px) scale(1); }
     50% {
-      transform: rotate(101.28404deg) translate(229.4695px) scale(0.15); }
+      transform: rotate(238.74258deg) translate(150.92328px) scale(0.15); }
     100% {
-      transform: rotate(101.28404deg) translate(0px) scale(1); } }
+      transform: rotate(238.74258deg) translate(0px) scale(1); } }
   .piece:nth-child(14) {
     width: 100px;
     height: 100px;
@@ -296,16 +309,17 @@ const GooeySubstanceHTML = `
     left: -99999px;
     right: -99999px;
     border-radius: 50%;
+    background-color: var(--blob-color);
     animation: ani-14 15s infinite 2s;
     transition: background-color 4s linear; }
 
   @keyframes ani-14 {
     0% {
-      transform: rotate(338.87301deg) translate(0px) scale(1); }
+      transform: rotate(213.08676deg) translate(0px) scale(1); }
     50% {
-      transform: rotate(338.87301deg) translate(235.80531px) scale(0.15); }
+      transform: rotate(213.08676deg) translate(228.88614px) scale(0.15); }
     100% {
-      transform: rotate(338.87301deg) translate(0px) scale(1); } }
+      transform: rotate(213.08676deg) translate(0px) scale(1); } }
   .piece:nth-child(15) {
     width: 100px;
     height: 100px;
@@ -316,16 +330,17 @@ const GooeySubstanceHTML = `
     left: -99999px;
     right: -99999px;
     border-radius: 50%;
+    background-color: var(--blob-color);
     animation: ani-15 15s infinite 2s;
     transition: background-color 4s linear; }
 
   @keyframes ani-15 {
     0% {
-      transform: rotate(101.63104deg) translate(0px) scale(1); }
+      transform: rotate(79.30656deg) translate(0px) scale(1); }
     50% {
-      transform: rotate(101.63104deg) translate(221.1837px) scale(0.15); }
+      transform: rotate(79.30656deg) translate(174.11889px) scale(0.15); }
     100% {
-      transform: rotate(101.63104deg) translate(0px) scale(1); } }
+      transform: rotate(79.30656deg) translate(0px) scale(1); } }
   .piece:nth-child(16) {
     width: 100px;
     height: 100px;
@@ -336,16 +351,17 @@ const GooeySubstanceHTML = `
     left: -99999px;
     right: -99999px;
     border-radius: 50%;
+    background-color: var(--blob-color);
     animation: ani-16 15s infinite 2s;
     transition: background-color 4s linear; }
 
   @keyframes ani-16 {
     0% {
-      transform: rotate(79.26962deg) translate(0px) scale(1); }
+      transform: rotate(289.54331deg) translate(0px) scale(1); }
     50% {
-      transform: rotate(79.26962deg) translate(172.57817px) scale(0.15); }
+      transform: rotate(289.54331deg) translate(193.44225px) scale(0.15); }
     100% {
-      transform: rotate(79.26962deg) translate(0px) scale(1); } }
+      transform: rotate(289.54331deg) translate(0px) scale(1); } }
   .piece:nth-child(17) {
     width: 100px;
     height: 100px;
@@ -356,16 +372,17 @@ const GooeySubstanceHTML = `
     left: -99999px;
     right: -99999px;
     border-radius: 50%;
+    background-color: var(--blob-color);
     animation: ani-17 15s infinite 2s;
     transition: background-color 4s linear; }
 
   @keyframes ani-17 {
     0% {
-      transform: rotate(196.53701deg) translate(0px) scale(1); }
+      transform: rotate(100.16648deg) translate(0px) scale(1); }
     50% {
-      transform: rotate(196.53701deg) translate(222.12919px) scale(0.15); }
+      transform: rotate(100.16648deg) translate(200.05491px) scale(0.15); }
     100% {
-      transform: rotate(196.53701deg) translate(0px) scale(1); } }
+      transform: rotate(100.16648deg) translate(0px) scale(1); } }
   .piece:nth-child(18) {
     width: 100px;
     height: 100px;
@@ -376,16 +393,17 @@ const GooeySubstanceHTML = `
     left: -99999px;
     right: -99999px;
     border-radius: 50%;
+    background-color: var(--blob-color);
     animation: ani-18 15s infinite 2s;
     transition: background-color 4s linear; }
 
   @keyframes ani-18 {
     0% {
-      transform: rotate(289.91822deg) translate(0px) scale(1); }
+      transform: rotate(208.31294deg) translate(0px) scale(1); }
     50% {
-      transform: rotate(289.91822deg) translate(205.37231px) scale(0.15); }
+      transform: rotate(208.31294deg) translate(223.02387px) scale(0.15); }
     100% {
-      transform: rotate(289.91822deg) translate(0px) scale(1); } }
+      transform: rotate(208.31294deg) translate(0px) scale(1); } }
   .piece:nth-child(19) {
     width: 100px;
     height: 100px;
@@ -396,16 +414,17 @@ const GooeySubstanceHTML = `
     left: -99999px;
     right: -99999px;
     border-radius: 50%;
+    background-color: var(--blob-color);
     animation: ani-19 15s infinite 2s;
     transition: background-color 4s linear; }
 
   @keyframes ani-19 {
     0% {
-      transform: rotate(66.53334deg) translate(0px) scale(1); }
+      transform: rotate(139.60661deg) translate(0px) scale(1); }
     50% {
-      transform: rotate(66.53334deg) translate(195.93611px) scale(0.15); }
+      transform: rotate(139.60661deg) translate(160.98304px) scale(0.15); }
     100% {
-      transform: rotate(66.53334deg) translate(0px) scale(1); } }
+      transform: rotate(139.60661deg) translate(0px) scale(1); } }
   .piece:nth-child(20) {
     width: 100px;
     height: 100px;
@@ -416,16 +435,17 @@ const GooeySubstanceHTML = `
     left: -99999px;
     right: -99999px;
     border-radius: 50%;
+    background-color: var(--blob-color);
     animation: ani-20 15s infinite 2s;
     transition: background-color 4s linear; }
 
   @keyframes ani-20 {
     0% {
-      transform: rotate(82.77556deg) translate(0px) scale(1); }
+      transform: rotate(21.74939deg) translate(0px) scale(1); }
     50% {
-      transform: rotate(82.77556deg) translate(187.24786px) scale(0.15); }
+      transform: rotate(21.74939deg) translate(205.45678px) scale(0.15); }
     100% {
-      transform: rotate(82.77556deg) translate(0px) scale(1); } }
+      transform: rotate(21.74939deg) translate(0px) scale(1); } }
   @keyframes roll {
     0% {
       transform: translate(-50%, -50%) rotate(0deg); }

@@ -7,6 +7,8 @@
   --primary-foreground: #676767;
   --secondary-foreground: #333333;
 
+  --blob-color: #181818; 
+
   --font-family: 'Roboto', sans-serif;
   --red-color: #e74c3c;
   --box-shadow-100: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
@@ -16,7 +18,8 @@
   --box-shadow-s300: 0 1px 2px 0.5px rgba(0, 0, 0, .09);
 }
 
-#root[data-theme="dark"] {
+
+#theme-container[data-theme="dark"] {
   --primary-background: #151C24;
   --secondary-background: #28313A;
   --primary-foreground: #F1F1F1;

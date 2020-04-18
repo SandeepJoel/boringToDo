@@ -17,7 +17,8 @@ export class Listcollection extends React.Component {
     this.state = {
       listCollection: [],
       editingListId: '',
-      editing: false
+      editing: false,
+      loading: false
     };
     this.addList = this.addList.bind(this);
     this.removeList = this.removeList.bind(this);
@@ -29,9 +30,15 @@ export class Listcollection extends React.Component {
 
   async fetchListDataAndStoreItInState() {
     let listsDataArray;
+    this.setState({
+      loading: true,
+    });
     listsDataArray = await getUserListsFS(getFromLocalStorage('userData', 'id'))
     Array.isArray(listsDataArray) &&
-      this.setState({ listCollection: listsDataArray })
+      this.setState({
+        loading: false,
+        listCollection: listsDataArray
+      })
   }
 
   componentDidMount() {
@@ -141,7 +148,7 @@ export class Listcollection extends React.Component {
   }
 
   render() {
-    let showLoader = this.state.listCollection.length === 0;
+    let showLoader = this.state.loading;
     return (
       <div className='todo-container container-350'>
         <header>

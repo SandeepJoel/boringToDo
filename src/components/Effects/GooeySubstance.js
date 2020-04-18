@@ -11,8 +11,10 @@ class GooeySubstanceWebComponent extends HTMLElement {
   }
 
   connectedCallback() {
-    this._shadowRoot.innerHTML = GooeySubstanceHTML;
     this.config = JSON.parse(this.getAttribute('config'));
+    this._shadowRoot.innerHTML = GooeySubstanceHTML(this.config);
+    this.primaryColor = new CssVariableColor('--blob-color');
+
     this.animateConfig = {
       last: Date.now(),
       noOfSeconds: 6,
@@ -38,24 +40,16 @@ class GooeySubstanceWebComponent extends HTMLElement {
 
   // Following are effect specific functions 
 
-  randomizeColors() {
-    this.currentTime = Date.now();
-    if (this.currentTime - this.animateConfig.last >= this.animateConfig.noOfSeconds * 1000) {
-      this.animateConfig.last = this.currentTime;
+  // randomizeColors() {
+  //   this.currentTime = Date.now();
+  //   if (this.currentTime - this.animateConfig.last >= this.animateConfig.noOfSeconds * 1000) {
+  //     this.animateConfig.last = this.currentTime;
 
-      // our work
-      this.config.blobColor = flatColors[getRandomNumbersBetween(0, flatColors.length - 1)];
-      this.setColors();
-    }
-    this.timerId = requestAnimationFrame(this.randomizeColors.bind(this));
-  }
-
-  setColors() {
-    this._shadowRoot.querySelector('.box').style.backgroundColor = this.config.blobColor;
-    [].forEach.call(this._shadowRoot.querySelectorAll('.piece'), (div) => {
-      div.style.backgroundColor = this.config.blobColor;
-    });
-  }
+  //     // our work
+  //     this.primaryColor.value = (flatColors[getRandomNumbersBetween(0, flatColors.length - 1)]);
+  //   }
+  //   this.timerId = requestAnimationFrame(this.randomizeColors.bind(this));
+  // }
 
   init() {
     switch (this.config.position) {
@@ -69,10 +63,11 @@ class GooeySubstanceWebComponent extends HTMLElement {
     if (this.left) {
       this._shadowRoot.querySelector('.blob-container').style.left = this.left;
     }
-    if (this.config.randomize) {
-      this.randomizeColors();
-    }
-    this.setColors();
+    // TODO: Need to debug why this code ignites the GPU
+    // if (this.config.randomize) {
+    //   this.randomizeColors();
+    // }
+    this.primaryColor.value = this.config.blobColor;
   }
 
 }
@@ -89,5 +84,18 @@ const GooeySubstance = (props) => {
     </div>
   );
 };
+
+class CssVariableColor {
+  constructor(prop) {
+    this.prop = prop;
+  }
+  get value() {
+    return getComputedStyle(document.documentElement).getPropertyValue(this.prop).trim();
+  }
+  set value(hexString) {
+    document.documentElement.style.setProperty(this.prop, hexString);
+  }
+}
+
 
 export default GooeySubstance;

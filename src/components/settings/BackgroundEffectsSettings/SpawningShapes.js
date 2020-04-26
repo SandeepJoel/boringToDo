@@ -82,7 +82,7 @@ const SpawningShapes = BgsActionsWrapper(
               theme={customSelectTheme} />
           </div>
           <section className="float-right">
-            <button onClick={this.reset} disabled={!isDirty}>
+            <button className='danger' onClick={this.reset} disabled={!isDirty}>
               Reset
             </button>
             {applyBtn}

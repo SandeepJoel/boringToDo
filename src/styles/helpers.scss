@@ -87,12 +87,20 @@ button {
 
   &.primary {
     background-color: var(--primary-color);
-    color: var(--primary-color);
+    color: var(--secondary-background)
   }
+
+  &.danger {
+    background-color: var(--danger-color);
+    color: var(--secondary-background)
+  }
+
 
   &:disabled {
     opacity: 0.7;
     cursor: not-allowed;
+    background-color: var(--primary-foreground);
+    color: var(--secondary-background);
   }
 }
 
@@ -137,4 +145,8 @@ button {
 
 .float-left {
   float: left;
+}
+
+.pointer {
+  cursor: pointer;
 }

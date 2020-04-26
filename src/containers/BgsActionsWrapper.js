@@ -73,7 +73,7 @@ export const BgsActionsWrapper = (PassedComponent) => {
       }
       let { type } = currentEffectConfig;
       let notApplyable = this.props.activeEffect === type;
-      let applyBtn = <button onClick={this.apply} disabled={!isDirty && notApplyable}>
+      let applyBtn = <button className='primary' onClick={this.apply} disabled={!isDirty && notApplyable}>
         {applyState === 'Done' ? 'Apply' : 'Apply...'}
       </button>;
       return (

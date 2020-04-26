@@ -225,8 +225,8 @@ export class IndividualList extends React.Component {
                   <h2 className="text-ellipsis mb-0">{this.state.currentListName || '....'}</h2>
                   <span className='status' >{ isNaN(donePercent) ? "Your list is empty" : `${donePercent}% done` }</span>                  
                 </div>
-                <div className='add'>
-                  <FontAwesomeIcon icon='plus' size='1x' onClick={() => this.addTask("")}></FontAwesomeIcon>
+                <div className='add' onClick={() => this.addTask("")}>
+                  <FontAwesomeIcon icon='plus' size='1x'></FontAwesomeIcon>
                 </div>
               </header>
               <section className='main-body'>
@@ -260,10 +260,10 @@ export class IndividualList extends React.Component {
                         />
                       </div>
                       <div className={`todo-item-details ${this.state.editingTaskId == item.taskId ? 'active' : ''} `}>
-                        <div className='delete-task' 
+                          <div className='pointer space-between-center' 
                           onClick={() => this.removeTask(item.taskId)}
                         >
-                          <span> Delete Task</span>
+                          <span> Delete task</span>
                           <FontAwesomeIcon className='ml-10' 
                             icon="trash"
                             size="sm"
@@ -281,7 +281,7 @@ export class IndividualList extends React.Component {
                   pathname: '/',
                   force: true
                 }}>
-                  <FontAwesomeIcon icon="arrow-left" size="1x"></FontAwesomeIcon>
+                  <FontAwesomeIcon icon="arrow-left" size="lg"></FontAwesomeIcon>
                 </Link>
                 <div className="filters">
                   <button 

@@ -21,7 +21,8 @@
   top: 10px;
   right: 10px;
   z-index: 10;
-  color: var(--primary-foreground);
+  color: hsl(0, 0%, 40%);
+  mix-blend-mode: difference;
 }
 
 .settings {
@@ -38,7 +39,8 @@
   z-index: 10;
 
   .nav-item {
-    padding: 15px 0;
+    padding: 20px 0;
+    font-size: 18px;   
     cursor: pointer;
     text-transform: capitalize;
     color: var(--primary-foreground);
@@ -80,8 +82,9 @@
   margin-bottom: 25px;
 
  .pic {
-  border-radius: 2px;
-  margin-right: 10px
+    border-radius: 2px;
+    margin-right: 10px;
+    border-radius: 50%;
  }
 
  .text {
@@ -126,7 +129,7 @@
   box-shadow: var(--box-shadow-200);
 
   &.selected {
-    box-shadow: var(--box-shadow-100);
+   
   }
 }
 

@@ -2,6 +2,8 @@
 // react select styles
 [class^=" css-"][class$="-control"]{
   background-color: var(--primary-background);
+  box-shadow: var(--box-shadow-300);
+  border-radius: 2px;
 }
 
 [class^=" css-"][class$="-menu"]{
@@ -14,6 +16,7 @@
 }
 
 [class^=" css-"][class$="-MenuList"]{
+  box-shadow: var(--box-shadow-300);
   border: none;
 }
 

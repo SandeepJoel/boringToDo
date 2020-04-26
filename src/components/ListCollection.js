@@ -193,7 +193,7 @@ export class Listcollection extends React.Component {
                   </div>
                   <div className={`todo-item-details ${this.state.editingListId == item.listId ? 'active' : ''}`}>
                     <span className='default-list-input'>
-                      Set as default
+                      <span className='mr-5'> Set default </span>
                       <input type='radio' 
                         name='default-list' 
                         checked={item.isDefault} 
@@ -201,7 +201,8 @@ export class Listcollection extends React.Component {
                       </input>
                     </span>
                     <span onClick={() => this.removeList(item.listId)}>
-                      Delete List <FontAwesomeIcon icon="trash" size="sm" />
+                      <span className='mr-5'> Delete list </span>
+                      <FontAwesomeIcon icon="trash" size="sm" />
                     </span>
                   </div>
                 </div>

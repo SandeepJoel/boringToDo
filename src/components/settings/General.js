@@ -146,12 +146,12 @@ export const General = withSettingsContext(
             theme={customSelectTheme} />
           </div>
           <section className='float-right' >
-            <button onClick={this.apply} disabled={!isDirty}>
-              {applyState === 'Done' ? 'Apply' : 'Apply...'}
-            </button>
-            <button onClick={this.reset} disabled={!isDirty}>
+            <button className='danger' onClick={this.reset} disabled={!isDirty}>
               Reset
             </button>
+            <button className='primary' onClick={this.apply} disabled={!isDirty}>
+              {applyState === 'Done' ? 'Apply' : 'Apply...'}
+            </button>            
           </section>
         </div>
       );

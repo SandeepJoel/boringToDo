@@ -24,9 +24,9 @@ const IndividualTask = (props) => {
               onChange={(e) => handleDetailedEdit('description', currentTask.taskId, 'details', e)}>
             </textarea>
         </section>
-        <footer>
+        <footer className='pb-20'>
           <FontAwesomeIcon icon="arrow-left" 
-            size="1x" 
+            size="lg" 
             onClick={() => history.goBack()}>
           </FontAwesomeIcon>
         </footer>

@@ -44,12 +44,12 @@ export const SettingsView = withUserContext(
                 )
               )
             }
-            <div className='nav-item' onClick={googleSignOut}>Logout <FontAwesomeIcon className='logout' icon='sign-out-alt' size='lg'></FontAwesomeIcon></div>
+            <div className='nav-item' onClick={googleSignOut}><FontAwesomeIcon className='logout mr-10' icon='sign-out-alt' size='lg'></FontAwesomeIcon>Logout</div>
           </section>
           <div className="settings">
             <header>
               <h1>Creative New Tab</h1>
-              <FontAwesomeIcon className="close" icon='times' size='lg' onClick={this.props.toggleSettings}></FontAwesomeIcon>
+              <FontAwesomeIcon className="close" icon='times' size='2x' onClick={this.props.toggleSettings}></FontAwesomeIcon>
             </header>            
             <div className="mt-15 mb-15 ml-20 mr-20">
               <SettingsItem name={this.state.currentNav} />

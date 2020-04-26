@@ -163,7 +163,7 @@ const ColorLiquids = BgsActionsWrapper(
               updateLiquid={this.updateLiquid}
               /> : ''}
           <section className='margin-left-auto mb-20 mr-20'>
-            <button onClick={this.reset} disabled={!isDirty}>
+            <button className='danger' onClick={this.reset} disabled={!isDirty}>
               Reset
             </button>
             {applyBtn}

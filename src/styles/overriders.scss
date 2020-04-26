@@ -1,0 +1,36 @@
+
+// react select styles
+[class^=" css-"][class$="-control"]{
+  background-color: var(--primary-background);
+}
+
+[class^=" css-"][class$="-menu"]{
+  background-color: var(--primary-background);
+  color: var(--primary-foreground);  
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  margin-top: 2px;
+}
+
+[class^=" css-"][class$="-MenuList"]{
+  border: none;
+}
+
+[class^=" css-"][class$="-singleValue"]{ 
+  color: var(--primary-foreground);
+}
+
+[class^=" css-"][class$="-indicatorContainer"]{ 
+  color: var(--primary-foreground);
+}
+
+[class^=" css-"][class$="-option"]{ 
+  color: var(--primary-foreground);
+  background-color: var(--primary-background);
+
+  &:active, &:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+  }
+}

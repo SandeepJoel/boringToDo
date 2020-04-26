@@ -1,27 +1,30 @@
 :root {
-  --black: #000000;
-  --white: #ffffff;
-  --primary-color: #1abc9c;
-  --primary-background: #F1F1F1;
-  --secondary-background: var(--white);
-  --primary-foreground: #676767;
-  --secondary-foreground: #333333;
+  --black: hsl(0, 0%, 0%);
+  --white: hsl(0, 0%, 100%);
+  --primary-color: hsl(168, 76%, 42%);
+  --primary-background: hsl(0, 0%, 95%);
+  --secondary-background: hsl(0, 0%, 100%);
+  --primary-foreground: hsl(0, 0%, 40%);
+  --secondary-foreground: hsl(0, 0%, 20%);
 
-  --blob-color: #181818; 
+  --blob-color: hsl(0, 0%, 9%); 
 
   --font-family: 'Roboto', sans-serif;
   --red-color: #e74c3c;
   --box-shadow-100: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
   --box-shadow-200: 0 12px 12px 1px rgba(0, 0, 0, 0.1);
-  
+
   --box-shadow-s200: 0 18px 30px -15px rgba(0, 0, 0, .19);
   --box-shadow-s300: 0 1px 2px 0.5px rgba(0, 0, 0, .09);
+
+  --box-shadow-n200:10px 10px 20px rgba(255, 255, 255, 0.12), -10px -10px 20px rgba(0, 0, 0, .1);
+
 }
 
 
 #theme-container[data-theme="dark"] {
-  --primary-background: #151C24;
-  --secondary-background: #28313A;
-  --primary-foreground: #F1F1F1;
+  --primary-background: hsl(212, 26%, 11%);
+  --secondary-background: hsl(210, 18%, 19%);
+  --primary-foreground: hsl(0, 0%, 95%);
   --secondary-foreground: var(--white);
 }

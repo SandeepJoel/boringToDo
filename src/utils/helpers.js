@@ -131,7 +131,7 @@ export function deepCompare() {
 }
 
 export function getCSSVar(variable) {
-  return getComputedStyle(document.getElementById('root'))
+  return getComputedStyle(document.getElementById('theme-container'))
     .getPropertyValue(variable);
 }
 

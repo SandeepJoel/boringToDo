@@ -1,7 +1,7 @@
 import React from 'react';
 import Select from 'react-select'
 import { withSettingsContext } from '../../contexts/Settings';
-import { deepCompare, getFromLocalStorage } from '../../utils/helpers';
+import { deepCompare, getFromLocalStorage, deepClone } from '../../utils/helpers';
 import {
   updateGeneralSettingsFS
 } from '../../api/settingsFirestore';
@@ -39,17 +39,19 @@ export const General = withSettingsContext(
       this.reset = this.reset.bind(this);
     }
 
-    // Use this function carefully
+    // Use this function carefully, because it will run before all render calls.
     static getDerivedStateFromProps(nextProps, prevState) {
-      if (!prevState.generalSettings && nextProps.generalSettings) {
+      if (!deepCompare(prevState.initialState, nextProps.generalSettings)) {
         return {
           // TODO: How to make this better
           generalSettings: nextProps.generalSettings,
           initialState: (nextProps.generalSettings ? JSON.parse(JSON.stringify(nextProps.generalSettings)) : undefined),
-          isDirty: false
-        };
+          isDirty: false,
+          applyState: 'Done'
+        }
+      } else {
+        return null;
       }
-      else return null;
     }
 
     onSelectChange(name, data) {
@@ -67,7 +69,7 @@ export const General = withSettingsContext(
     }
 
     updateInternalState(key, value) {
-      let nextState = Object.assign({}, this.state.generalSettings);
+      let nextState = deepClone(this.state.generalSettings);
       nextState[key] = value;
       this.setState((state, props) => {
         let isEqual = deepCompare(nextState, state.initialState);
@@ -86,7 +88,7 @@ export const General = withSettingsContext(
         getFromLocalStorage('userData', 'id'),
         payload
       );
-      this.setState({ applyState: 'Done', isDirty: false, initialState: payload });
+      // this.setState({ applyState: 'Done', isDirty: false, initialState: payload });
 
       // TODO: Here we need to update both context and localStorage. Think to find a better way
       this.props.updateSettings({ generalSettings: payload });

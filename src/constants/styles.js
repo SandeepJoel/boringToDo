@@ -1,5 +1,3 @@
-import { getCSSVar } from '../utils/helpers';
-
 export const customSelectStyles = {
   indicatorSeparator: (provided, state) => ({}),
   container: (provided, state) => ({
@@ -12,42 +10,43 @@ export const customSelectStyles = {
     return ({
       ...provided,
       // borderRadius: 3,
-      backgroundColor: getCSSVar('--primary-background'),
       border: 'none',
-      boxShadow: 'none'
+      boxShadow: 'none',
+      cursor: 'pointer'
     })
   }, 
   option: (provided, state) => {
     return ({
       ...provided,
+      cursor: 'pointer'
     })
   },
   menu: (provided, state) => ({
     ...provided,
-    backgroundColor: getCSSVar('--primary-background'),
-    color: getCSSVar('--primary-foreground'),
+    border: 'none',
   }),
   singleValue: (provided, state) => ({
     ...provided,
-    color: getCSSVar('--primary-foreground'),
+    cursor: 'pointer'
   }),
   clearIndicator: (provided, state) => ({
     ...provided,
     padding: 0,
+    cursor: 'pointer'
   }),
   dropdownIndicator: (provided, state) => ({
     ...provided,
-    color: getCSSVar('--primary-foreground'),
+    cursor: 'pointer'
   }),
 }
 
 export const customSelectTheme = theme => ({
   ...theme,
   borderRadius: 3,
-  colors: {
-    ...theme.colors,
-    primary: getCSSVar('--primary-background'),
-    primary25: getCSSVar('--primary-background'),
-    neutral0: getCSSVar('--primary-color')
-  },
+  // colors: {
+    // ...theme.colors,
+    // primary: getCSSVar('--primary-background'),
+    // primary25: getCSSVar('--primary-background'),
+    // neutral0: getCSSVar('--primary-color')
+  // },
 })

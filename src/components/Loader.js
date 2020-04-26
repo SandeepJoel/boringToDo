@@ -2,7 +2,11 @@ import React from 'react';
 
 export const Loader = (props) => {
   let { size, type } = props;
-  let loaderHtml = <div className="loader"></div>;
+  let loaderHtml = 
+    <div className="spinner">
+      <div className="double-bounce1"></div>
+      <div className="double-bounce2"></div>
+    </div>;
   if (type == 'simple') {
     return loaderHtml;
   }

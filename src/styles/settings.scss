@@ -44,7 +44,7 @@
     color: var(--primary-foreground);
     
     &.active {
-      box-shadow: var(--box-shadow-200);
+      color: var(--primary-color);
     }
   }
 }

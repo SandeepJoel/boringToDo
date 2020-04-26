@@ -3,6 +3,7 @@ import Popup from "reactjs-popup";
 import { ChromePicker } from 'react-color';
 import { getCSSVar } from '../utils/helpers';
 
+// TODO: Need to move color styles to purely css
 const PopupStyle = {
   background: getCSSVar('--secondary-background'),
   border: 'none',

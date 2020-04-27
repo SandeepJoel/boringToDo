@@ -60,24 +60,30 @@ $sides: (top, bottom, left, right);
   padding: 10px;
   
   input {
-    color: var(--primary-foreground) !important;
+    color: var(--primary-foreground-color) !important;
   }
 
   svg {
-    fill: var(--primary-foreground) !important
+    fill: var(--primary-foreground-color) !important
   }
 }
 
 button {
   margin: 5px;
   padding: 10px 15px;
-  background-color: var(--secondary-background);
-  color: var(--primary-foreground);
+  background-color: var(--secondary-background-color);
+  color: var(--primary-foreground-color);
   border: none;
   font-size: 16px;
   cursor: pointer;
-  box-shadow: var(--box-shadow-200);
   border-radius: 2px;
+  box-shadow: var(--box-shadow-n200);
+
+  &:active {
+    box-shadow: var(--box-shadow-n100);
+  }
+
+  
 
   &.small {
     padding: 7px 10px;

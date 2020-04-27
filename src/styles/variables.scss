@@ -1,30 +1,45 @@
-:root {
-  --black: hsl(0, 0%, 0%);
-  --white: hsl(0, 0%, 100%);
-  --primary-color: hsl(168, 76%, 42%);
-  --primary-background: hsl(0, 0%, 95%);
-  --secondary-background: hsl(0, 0%, 100%);
-  --primary-foreground: hsl(0, 0%, 40%);
-  --secondary-foreground: hsl(0, 0%, 20%);
+// TODO: Need to think about styling login page
+#theme-container {
+  --black: 0, 0%; --black-l: 0%;
+  --white: 0, 0%, 100%; --white-l: 100%;
+  --red: 6, 78%, 57%;
 
-  --blob-color: hsl(0, 0%, 9%); 
+  --red-color: hsl(6, 78%, 57%);
+  --black-color: hsl(var(--black), var(--black-l));
+  --white-color: hsl(var(--white), var(--white-l));
+  --blob-color: hsl(0, 0%, 9%);
+
+  --primary: 168, 76%; --primary-l: 42%;
+  --primary-background: 0, 0%; --primary-background-l: 95%;
+  --secondary-background: 0, 0%; --secondary-background-l: 100%;
+  --primary-foreground: 0, 0%; --primary-foreground-l: 40%;
+  --secondary-foreground: 0, 0%; --secondary-foreground-l: 20%;
+  
+  --primary-color: hsl(var(--primary), var(--primary-l));
+  --primary-background-color: hsl(var(--primary-background), var(--primary-background-l));
+  --secondary-background-color: hsl(var(--secondary-background), var(--secondary-background-l));
+  --primary-foreground-color: hsl(var(--primary-foreground), var(--primary-foreground-l));
+  --secondary-foreground-color: hsl(var(--secondary-foreground), var(--secondary-foreground-l));
 
   --font-family: 'Roboto', sans-serif;
-  --red-color: #e74c3c;
   --box-shadow-100: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
   --box-shadow-200: 0 12px 12px 1px rgba(0, 0, 0, 0.1);
 
   --box-shadow-s200: 0 18px 30px -15px rgba(0, 0, 0, .19);
   --box-shadow-s300: 0 1px 2px 0.5px rgba(0, 0, 0, .09);
 
-  --box-shadow-n200:10px 10px 20px rgba(255, 255, 255, 0.12), -10px -10px 20px rgba(0, 0, 0, .1);
+  
+
+  --box-shadow-n100: 2px 2px 4px hsl(var(--primary-background), calc(var(--primary-background-l) - 15%)),-2px -2px 4px hsl(var(--primary-background), calc(var(--primary-background-l) + 15%));
+
+  --box-shadow-n200: 4px 4px 8px hsl(var(--primary-background), calc(var(--primary-background-l) - 20%)),-4px -4px 8px hsl(var(--primary-background), calc(var(--primary-background-l) + 20%));
 
 }
 
 
 #theme-container[data-theme="dark"] {
-  --primary-background: hsl(212, 26%, 11%);
-  --secondary-background: hsl(210, 18%, 19%);
-  --primary-foreground: hsl(0, 0%, 95%);
-  --secondary-foreground: var(--white);
+  --primary-background: 212, 26%; --primary-background-l: 11%;
+  --secondary-background: 210, 18%; --secondary-background-l: 23%;
+  --primary-foreground: 0, 0%; --primary-foreground-l: 95%;
+  --secondary-foreground: 0, 0%; --secondary-foreground-l: 100%;
 }

@@ -5,7 +5,7 @@ import { getCSSVar } from '../utils/helpers';
 
 // TODO: Need to move color styles to purely css
 const PopupStyle = {
-  background: getCSSVar('--secondary-background'),
+  background: getCSSVar('--secondary-background-color'),
   border: 'none',
   boxShadow: getCSSVar('--box-shadow-200'),
   borderRadius: 4,

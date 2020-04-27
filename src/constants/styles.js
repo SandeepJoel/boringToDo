@@ -42,11 +42,5 @@ export const customSelectStyles = {
 
 export const customSelectTheme = theme => ({
   ...theme,
-  borderRadius: 3,
-  // colors: {
-    // ...theme.colors,
-    // primary: getCSSVar('--primary-background'),
-    // primary25: getCSSVar('--primary-background'),
-    // neutral0: getCSSVar('--primary-color')
-  // },
+  borderRadius: 3
 })

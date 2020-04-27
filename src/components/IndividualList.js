@@ -277,12 +277,14 @@ export class IndividualList extends React.Component {
               </div>
               </section>
               <footer>
+                <button>
                 <Link to={{
                   pathname: '/',
                   force: true
                 }}>
                   <FontAwesomeIcon icon="arrow-left" size="1x"></FontAwesomeIcon>
                 </Link>
+                </button>
                 <div className="filters">
                   <button 
                     className={`small ${this.state.selectedFilter === 'all' ? 'selected' : ''}`}

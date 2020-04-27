@@ -21,19 +21,19 @@
   top: 10px;
   right: 10px;
   z-index: 10;
-  color: var(--primary-foreground);
+  color: var(--primary-foreground-color);
 }
 
 .settings {
   flex-grow: 1;
-  background-color: var(--primary-background);
+  background-color: var(--primary-background-color);
 }
 
 .sidebar-nav {
   max-width: 300px;
   width: 100%;
   padding: 60px 40px 0;
-  background-color: var(--secondary-background);
+  background-color: var(--secondary-background-color);
   box-shadow: var(--box-shadow-200);
   z-index: 10;
 
@@ -41,7 +41,7 @@
     padding: 15px 0;
     cursor: pointer;
     text-transform: capitalize;
-    color: var(--primary-foreground);
+    color: var(--primary-foreground-color);
     
     &.active {
       color: var(--primary-color);
@@ -70,7 +70,7 @@
 .setting-500,
 .setting-fluid {
   border-radius: 4px;
-  background-color: var(--secondary-background);  
+  background-color: var(--secondary-background-color);  
   box-shadow: var(--box-shadow-200);
 }
 
@@ -92,11 +92,11 @@
   h4 {
     margin: 0;
     margin-bottom: 5px;
-    color: var(--primary-foreground);
+    color: var(--primary-foreground-color);
   }
   p {
     margin: 0;
-    color:var(--secondary-foreground);
+    color:var(--secondary-foreground-color);
   }
  }
 

@@ -2,13 +2,13 @@
 .todo-container {
   position: relative;
   border-radius: 3px;
-  background-color: var(--primary-background);
+  background-color: var(--primary-background-color);
   box-shadow: var(--box-shadow-100);
 
   input,
   textarea {
-    background-color: var(--secondary-background);
-    color: var(--primary-foreground);
+    background-color: var(--secondary-background-color);
+    color: var(--primary-foreground-color);
   }
 
   header {
@@ -41,10 +41,10 @@
 
 .todo-item-initial-view {
   position: relative;
-  background-color: var(--secondary-background);
+  background-color: var(--secondary-background-color);
   padding: 15px 20px;
   border-radius: 3px;
-  box-shadow: var(--box-shadow-s200);
+  box-shadow: var(--box-shadow-n200);
   z-index: 20;
   display: flex;
   align-items: center;
@@ -70,8 +70,8 @@
   position: relative;
   width: 90%;
   margin: -40px auto 0;
-  background-color: var(--secondary-background);
-  box-shadow: var(--box-shadow-s300);
+  background-color: var(--secondary-background-color);
+  box-shadow: var(--box-shadow-n200);
   z-index: 10;
   padding: 15px 20px;
   // TODO: This transition becomes slow when combined with confetti animation
@@ -93,16 +93,21 @@
 .status {
   font-size: 12px;
   padding-left: 3px;
-  color: var(--primary-foreground)
+  color: var(--primary-foreground-color)
 }
 
 .add {
-  background-color: var(--secondary-background);
+  background-color: var(--primary-background-color);
   padding: 7px 10px;
   color: var(--primary-color);
   align-self: center;
-  box-shadow: var(--box-shadow-200);
+  cursor: pointer;
+  box-shadow: var(--box-shadow-n200);
   border-radius: 50%;
+
+  &:active {
+    box-shadow: var(--box-shadow-n200);  
+  }
 }
 
 footer {

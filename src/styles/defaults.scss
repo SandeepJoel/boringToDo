@@ -38,8 +38,12 @@ label {
   color: var(--primary-foreground);
 }
 
-span, p {
+span {
   color: var(--primary-foreground);
+}
+
+p {
+  color: var(--secondary-foreground);
 }
 
 
@@ -53,6 +57,10 @@ h6 {
   margin-top: 10px;
   margin-bottom: 10px;
   font-weight: 400;
+}
+
+h1{
+  font-weight: 500;
 }
 
 a {

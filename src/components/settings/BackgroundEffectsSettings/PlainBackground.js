@@ -31,7 +31,7 @@ const PlainBackground = BgsActionsWrapper(
     render() {
       let { isDirty, currentEffectConfig: { color }, applyBtn} = this.props;
       return (
-        <div className='setting-500 clearfix mt-30'>
+        <div className='setting-500 clearfix mt-50'>
           <div className='space-between-center mb-20'>
             <label> Choose a plain color for background </label>
             <BtnColorPicker 

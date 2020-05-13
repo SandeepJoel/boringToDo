@@ -21,6 +21,7 @@ input[type="checkbox"] {
   align-items: center;
   height: 100vh;
   flex-direction: column;
+  background-image: var(--primary-gradient);
 }
 
 .widgets-container {
@@ -46,7 +47,7 @@ input[type="checkbox"] {
 
 .selected {
   box-shadow: var(--box-shadow-s300);
-  background-color: var(--primary-color);
+  background-color: var(--primary-foreground);
   color: var(--white);
   transform: scale(1.2);
   transition: transform 0.15s;

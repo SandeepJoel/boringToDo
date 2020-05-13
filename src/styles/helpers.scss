@@ -31,6 +31,10 @@ $sides: (top, bottom, left, right);
   }  
 }
 
+.relative {
+  position: relative;
+}
+
 .flex {
   display: flex;
 }
@@ -41,7 +45,7 @@ $sides: (top, bottom, left, right);
   justify-content: space-between;
 }
 
-.justify-content-center {
+.justify-content-center {  
   justify-content: center;
 }
 
@@ -86,7 +90,7 @@ button {
   }
 
   &.primary {
-    background-color: var(--primary-color);
+    background-color: var(--green-color);
     color: var(--secondary-background)
   }
 
@@ -108,6 +112,10 @@ button {
   color: var(--primary-color);
 }
 
+.bold {
+  font-weight: 500;
+}
+
 .text-ellipsis {
   white-space: nowrap;  
   overflow: hidden;
@@ -126,6 +134,10 @@ button {
   }
 }
 
+.text-center {
+  text-align: center;
+}
+
 .flex-wrap {
   display: flex;
   flex-wrap: wrap;
@@ -136,7 +148,7 @@ button {
 }
 
 .margin-right-auto {
-  margin-left: auto;
+  margin-right: auto;
 }
 
 .float-right {
@@ -149,4 +161,19 @@ button {
 
 .pointer {
   cursor: pointer;
+}
+
+.color-bright {
+  color: var(--bright-color); 
+}
+
+.backdrop {
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  background-image: var(--primary-gradient);
+
+  &.white {
+    background: var(--white);
+  }
 }

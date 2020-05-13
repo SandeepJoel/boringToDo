@@ -1,5 +1,6 @@
 import React from 'react';
 import { googleSignIn } from '../api/auth';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export class UserLoginSignup extends React.Component {
     constructor (props) {
@@ -19,7 +20,10 @@ export class UserLoginSignup extends React.Component {
     render () {
       return (
         <div className='login'>
-          <h1> Creative New Tab</h1>
+          <div className='backdrop white mb-20 text-center'>
+            <FontAwesomeIcon className='mt-15 primary' icon='fire' size='3x' ></FontAwesomeIcon>
+          </div>
+          <h1 class='color-bright'>Creative New Tab</h1>
           <p>An extension which starts all your new tabs with creative effects</p>
           <h2> {this.state.status}</h2>
           <button onClick={googleSignIn.bind(null, this.setStatus)}>

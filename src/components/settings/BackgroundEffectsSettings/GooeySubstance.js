@@ -75,7 +75,7 @@ const GooeySubstance = BgsActionsWrapper(
       let { config: { backgroundColor, blobColor, position, randomize } } = currentEffectConfig
       let selectedPosition = PositionList.find(x => x.value === position);
       return (
-        <div className='setting-500 clearfix mt-30'>
+        <div className='setting-500 clearfix mt-50'>
           <div className='space-between-center mb-20'>
             <label> Gooey Color </label>
             <BtnColorPicker

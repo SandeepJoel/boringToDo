@@ -1,16 +1,24 @@
 :root {
   --black: hsl(0, 0%, 0%);
   --white: hsl(0, 0%, 100%);
-  --primary-color: hsl(168, 76%, 42%);
+  // --primary-color: #a18cd1;
+  --primary-color: #D9AEE1;
+
+  --primary-gradient: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+  --secondary-gradient: linear-gradient(to left, #a18cd1 0%, #fbc2eb 100%);
+
   --primary-background: hsl(0, 0%, 95%);
   --secondary-background: var(--white);
   --primary-foreground: hsl(0, 0%, 40%);
   --secondary-foreground: hsl(0, 0%, 20%);
+  --bright-color: var(--secondary-background);
+
 
   --blob-color: hsl(0, 0%, 9%); 
 
   --font-family: 'Roboto', sans-serif;
   --red-color: #e74c3c;
+  --green-color: hsl(168, 76%, 42%);
   --danger-color: #eb4d4b;
   --box-shadow-100: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
   --box-shadow-200: 0 12px 12px 1px rgba(0, 0, 0, 0.1);
@@ -26,5 +34,6 @@
   --primary-background: hsl(212, 26%, 11%);
   --secondary-background: hsl(210, 18%, 19%);
   --primary-foreground: hsl(0, 0%, 95%);
-  --secondary-foreground: var(--white);
+  --secondary-foreground: hsl(0, 0%, 70%);
+  // --secondary-foreground: var(--white);
 }

@@ -61,7 +61,7 @@ const SpawningShapes = BgsActionsWrapper(
       let { config: { backgroundColor, particleColor, position} } = currentEffectConfig
       let selectedPosition = PositionList.find(x => x.value === position);
       return (
-        <div className='setting-500 clearfix mt-30'>
+        <div className='setting-500 clearfix mt-50'>
           <div className='space-between-center mb-20'>
             <label> Particle Color </label>
             <BtnColorPicker

@@ -26,30 +26,41 @@ export const SettingsView = withUserContext(
       return (
         <div className="settings-container">
           <section className="sidebar-nav">
-            <div className="user-info">
-              <img className="pic" src={this.props.userPhotoUrl} width="50" height="50"></img>
-              <div className="text">
-                <h4>{this.props.userName}</h4>
-                <p className="sub-text">abc@freshworks.com</p>
-              </div>
-            </div>            
-            {
-              SettingsNav.map((val) =>
-                (
-                  <div key={generateRandomString()}
-                    className={`nav-item ${this.state.currentNav === val.key ? 'active' : ''}`}
-                    onClick={() => this.selectSection(val.key)}>
-                    {val.type}
-                  </div>
+            <section>
+              <div className="user-info">
+                <img className="pic" src={this.props.userPhotoUrl} width="50" height="50"></img>
+                <div className="text">
+                  <h4>{this.props.userName}</h4>
+                  <p className="sub-text">abc@freshworks.com</p>
+                </div>
+              </div>              
+              {
+                SettingsNav.map((val) =>
+                  (
+                    <div key={generateRandomString()}
+                      className={`nav-item ${this.state.currentNav === val.key ? 'active' : ''}`}
+                      onClick={() => this.selectSection(val.key)}>
+                      {val.type}
+                    </div>
+                  )
                 )
-              )
-            }
-            <div className='nav-item' onClick={googleSignOut}><FontAwesomeIcon className='logout mr-10' icon='sign-out-alt' size='lg'></FontAwesomeIcon>Logout</div>
+              }
+              <div className='nav-item' onClick={googleSignOut}>
+                Logout
+             </div>
+            </section>
+            <section className='text-center mb-50'>
+              <div className='justify-content-center relative backdrop margin-left-auto margin-right-auto mb-20'>
+                <FontAwesomeIcon className='mt-15' icon='fire' size='3x' color="#FFF"></FontAwesomeIcon>
+              </div>
+              <h3 className='bold'>Creative New Tab</h3>
+              <p className='m-0'>An extension which starts all your new tabs with creative effects</p>
+            </section>            
           </section>
           <div className="settings">
             <header>
-              <h1>Creative New Tab</h1>
-              <FontAwesomeIcon className="close" icon='times' size='2x' onClick={this.props.toggleSettings}></FontAwesomeIcon>
+              <h1 className='color-bright'>Settings</h1>
+              <FontAwesomeIcon className="close color-bright" icon='times' size='2x' onClick={this.props.toggleSettings}></FontAwesomeIcon>
             </header>            
             <div className="mt-15 mb-15 ml-20 mr-20">
               <SettingsItem name={this.state.currentNav} />

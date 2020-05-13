@@ -27,10 +27,13 @@
 
 .settings {
   flex-grow: 1;
-  background-color: var(--primary-background);
+  background-image: var(--primary-gradient);
 }
 
 .sidebar-nav {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
   max-width: 300px;
   width: 100%;
   padding: 60px 40px 0;
@@ -127,10 +130,6 @@
   cursor: pointer;
   border-radius: 4px;
   box-shadow: var(--box-shadow-200);
-
-  &.selected {
-   
-  }
 }
 
 .effect-container {

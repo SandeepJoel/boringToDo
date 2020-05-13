@@ -122,7 +122,7 @@ const ColorLiquids = BgsActionsWrapper(
       let { currentEffectConfig, initialState, isDirty, applyBtn } = this.props;
       let { config: liquids } = currentEffectConfig;
       return (
-        <div className='setting-fluid flex-wrap clearfix m-30'> 
+        <div className='setting-fluid flex-wrap clearfix m-30 mt-50'> 
           <section className="existing-liquids pt-20 pl-20 pr-20">
             <h2>Existing Liquids</h2>
             <span>

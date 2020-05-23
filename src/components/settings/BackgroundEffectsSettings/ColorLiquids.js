@@ -126,8 +126,8 @@ const ColorLiquids = BgsActionsWrapper(
           <section className="existing-liquids pt-20 pl-20 pr-20">
             <h2>Existing Liquids</h2>
             <span>
-              <button onClick={this.addLiquid.bind(this)}>New</button>
-              <button onClick={this.removeLiquid.bind(this)}>Delete</button>
+              <button className='normal' onClick={this.addLiquid.bind(this)}>New</button>
+              <button className='normal' onClick={this.removeLiquid.bind(this)}>Delete</button>
             </span>
             <div className='flex-wrap justify-content-center mt-15'>
               {
@@ -155,6 +155,7 @@ const ColorLiquids = BgsActionsWrapper(
               }
             </div>          
           </section>
+          <div className='divider mt-25'></div>
           {liquidIndex !== undefined ? 
             <Liquid
               liquid={currentEffectConfig.config[liquidIndex]} 

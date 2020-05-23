@@ -26,7 +26,7 @@ input[type="checkbox"] {
 
 .widgets-container {
   display: flex;
-  padding: 50px 60px;  
+  padding: 70px 60px;  
   z-index: 10;
   position: relative;
 }
@@ -47,9 +47,9 @@ input[type="checkbox"] {
 
 .selected {
   box-shadow: var(--box-shadow-s300);
-  background-color: var(--primary-foreground);
-  color: var(--white);
-  transform: scale(1.2);
+  background-color: var(--bright-color);
+  color: var(--black);
+  transform: scale(1.35);
   transition: transform 0.15s;
 }
 

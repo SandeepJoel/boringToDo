@@ -53,8 +53,8 @@ export const SettingsView = withUserContext(
               <div className='justify-content-center relative backdrop margin-left-auto margin-right-auto mb-20'>
                 <FontAwesomeIcon className='mt-15' icon='fire' size='3x' color="#FFF"></FontAwesomeIcon>
               </div>
-              <h3 className='bold'>Creative New Tab</h3>
-              <p className='m-0'>An extension which starts all your new tabs with creative effects</p>
+              <h3 className='bold primary'>Creative New Tab</h3>
+              <span className='m-0'>An extension which starts all your new tabs with creative effects</span>
             </section>            
           </section>
           <div className="settings">

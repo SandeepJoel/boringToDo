@@ -82,7 +82,7 @@ export class Liquid extends React.Component {
     let selectedFillOption = FillList.find(x => x.value === liquid.fill);
     let colors = liquid.colors ? liquid.colors : [liquid.color]
     return (
-      <section className='liquid-setting pt-20 pl-20 pr-20'>
+      <section className='liquid-setting pt-40 pl-20 pr-20'>
         <div className='space-between-center mb-20'>
           <label> Liquid Type </label>
           <Select name='liquidType'

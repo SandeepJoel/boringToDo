@@ -9,7 +9,7 @@
 
   --primary-background: hsl(0, 0%, 95%);
   --secondary-background: var(--white);
-  --primary-foreground: hsl(0, 0%, 40%);
+  --primary-foreground: hsl(0, 0%, 50%);
   --secondary-foreground: hsl(0, 0%, 20%);
   --bright-color: var(--secondary-background);
 
@@ -35,5 +35,5 @@
   --secondary-background: hsl(210, 18%, 19%);
   --primary-foreground: hsl(0, 0%, 95%);
   --secondary-foreground: hsl(0, 0%, 70%);
-  // --secondary-foreground: var(--white);
+  --bright-color: var(--secondary-background);
 }

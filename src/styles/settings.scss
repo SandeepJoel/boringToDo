@@ -65,7 +65,7 @@
   max-width: 500px;
   margin-left: auto;
   margin-right: auto;  
-  padding: 25px 30px;
+  padding: 25px;
 }
 
 .setting-fluid {
@@ -115,7 +115,7 @@
 
 .existing-liquids {
   display: flex;
-  flex-basis: 60%;
+  flex-basis: 59%;
   flex-wrap: wrap;
   justify-content: space-between;
 }
@@ -124,12 +124,16 @@
 }
 
 .liquid-box {
-  width: 85px;
+  width: 75px;
   height: 75px;
   margin: 20px;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 50%;
   box-shadow: var(--box-shadow-200);
+
+  &.selected {
+    box-shadow: 0 8px 15px 0px rgba(0, 0, 0, 0.3);
+  }
 }
 
 .effect-container {

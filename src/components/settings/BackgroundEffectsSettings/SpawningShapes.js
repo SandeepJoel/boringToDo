@@ -63,6 +63,15 @@ const SpawningShapes = BgsActionsWrapper(
       return (
         <div className='setting-500 clearfix mt-50'>
           <div className='space-between-center mb-20'>
+            <label> Position </label>
+            <Select name='position'
+              options={PositionList}
+              value={selectedPosition}
+              onChange={this.onSelectChange.bind(this, 'position')}
+              styles={customSelectStyles}
+              theme={customSelectTheme} />
+          </div>          
+          <div className='space-between-center mb-20'>
             <label> Particle Color </label>
             <BtnColorPicker
               color={particleColor} key={`${generateRandomString()}`} colorChange={this.handleChange.bind(this, 'particleColor')} />
@@ -71,15 +80,6 @@ const SpawningShapes = BgsActionsWrapper(
             <label> Background Color </label>
             <BtnColorPicker
               color={backgroundColor} key={`${generateRandomString()}`} colorChange={this.handleChange.bind(this, 'backgroundColor')} />
-          </div>
-          <div className='space-between-center mb-20'>
-            <label> Position </label>
-            <Select name='position'
-              options={PositionList}
-              value={selectedPosition}
-              onChange={this.onSelectChange.bind(this, 'position')}
-              styles={customSelectStyles}
-              theme={customSelectTheme} />
           </div>
           <section className="float-right">
             <button className='danger' onClick={this.reset} disabled={!isDirty}>

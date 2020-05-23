@@ -77,6 +77,15 @@ const GooeySubstance = BgsActionsWrapper(
       return (
         <div className='setting-500 clearfix mt-50'>
           <div className='space-between-center mb-20'>
+            <label> Position </label>
+            <Select name='position'
+              options={PositionList}
+              value={selectedPosition}
+              onChange={this.onSelectChange.bind(this, 'position')}
+              styles={customSelectStyles}
+              theme={customSelectTheme} />
+          </div>          
+          <div className='space-between-center mb-20'>
             <label> Gooey Color </label>
             <BtnColorPicker
               color={blobColor} key={`${generateRandomString()}`} colorChange={this.handleChange.bind(this, 'blobColor')} />
@@ -85,15 +94,6 @@ const GooeySubstance = BgsActionsWrapper(
             <label> Background Color </label>
             <BtnColorPicker
               color={backgroundColor} key={`${generateRandomString()}`} colorChange={this.handleChange.bind(this, 'backgroundColor')} />
-          </div>
-          <div className='space-between-center mb-20'>
-            <label> Position </label>
-            <Select name='position'
-              options={PositionList}
-              value={selectedPosition}
-              onChange={this.onSelectChange.bind(this, 'position')}
-              styles={customSelectStyles}
-              theme={customSelectTheme} />
           </div>
           {/* <div className='space-between-center mb-20'>
             <label> Randomize </label>

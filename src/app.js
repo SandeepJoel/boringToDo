@@ -13,6 +13,7 @@ import { SettingsView } from './components/SettingsView';
 import { Widgets } from './components/Widgets';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getFromLocalStorage } from './utils/helpers';
+
 library.add(fas, far);
 
 const App = withSettingsContext(withUserContext(

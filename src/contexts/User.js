@@ -1,7 +1,7 @@
 import React from 'react';
 import { authStateChange } from '../api/auth';
 import { getUserIdFromFS } from '../api/settingsFirestore';
-import { getFromLocalStorage } from '../utils/helpers';
+import { getFromLocalStorage, deepClone } from '../utils/helpers';
 
 export const UserContext = React.createContext();
 UserContext.displayName = 'UserContext'
@@ -27,7 +27,7 @@ export class UserProvider extends React.Component {
       userPhotoUrl: '',
       userId: '',
     }
-    this.state = JSON.parse(JSON.stringify(this.defaultState));
+    this.state = deepClone(this.defaultState);
     this.setUserState = this.setUserState.bind(this);
     this.removeUserState = this.removeUserState.bind(this);
   }
@@ -43,9 +43,7 @@ export class UserProvider extends React.Component {
   }
 
   removeUserState () {
-    localStorage.removeItem('userData')
-    localStorage.removeItem('generalSettings');
-    localStorage.removeItem('activeBackgroundEffectSettings');
+    localStorage.removeItem('userData');
     localStorage.removeItem('tasks');
     localStorage.removeItem('defaultList')
     this.setState(this.defaultState);

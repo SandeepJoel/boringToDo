@@ -29,7 +29,7 @@ export const General = withSettingsContext(
       super(props);
       this.state = {
         generalSettings: props.generalSettings,
-        initialState: (props.generalSettings ? JSON.parse(JSON.stringify(props.generalSettings)) : undefined),
+        initialState: (props.generalSettings ? deepClone(props.generalSettings) : undefined),
         applyState: 'Done',
         isDirty: false,
       }
@@ -45,7 +45,7 @@ export const General = withSettingsContext(
         return {
           // TODO: How to make this better
           generalSettings: nextProps.generalSettings,
-          initialState: (nextProps.generalSettings ? JSON.parse(JSON.stringify(nextProps.generalSettings)) : undefined),
+          initialState: (nextProps.generalSettings ? deepClone(nextProps.generalSettings) : undefined),
           isDirty: false,
           applyState: 'Done'
         }

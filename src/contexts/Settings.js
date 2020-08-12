@@ -31,16 +31,15 @@ export class SettingsProvider extends React.Component {
   }
 
   async componentDidMount() {
-    let activeBackgroundEffectSettings = getFromLocalStorage('activeBackgroundEffectSettings');
-    let generalSettings = getFromLocalStorage('generalSettings');
-    
-    if (!activeBackgroundEffectSettings || !generalSettings) {
-      let settings = await getSettingsFS(getFromLocalStorage('userData', 'id'));
-      activeBackgroundEffectSettings = settings.activeBackgroundEffect;
-      generalSettings = settings.general;
-      localStorage.setItem("generalSettings", JSON.stringify(generalSettings));
-      localStorage.setItem("activeBackgroundEffectSettings", JSON.stringify(activeBackgroundEffectSettings));
+    let activeBackgroundEffectSettings, generalSettings;
+    let userId = getFromLocalStorage('userData', 'id');
+    if (!userId) {
+      return;
     }
+    let settings = await getSettingsFS(userId);
+    activeBackgroundEffectSettings = settings.activeBackgroundEffect;
+    generalSettings = settings.general;
+
     // flattening out context state for separation of concerns
     this.setState({
       activeBackgroundEffectSettings,

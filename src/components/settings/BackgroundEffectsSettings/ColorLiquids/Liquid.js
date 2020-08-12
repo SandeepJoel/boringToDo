@@ -3,6 +3,7 @@ import Select from 'react-select';
 import { BtnColorPicker } from "../../../BtnColorPicker";
 import { generateRandomString } from '../../../../utils/helpers';
 import { customSelectStyles, customSelectTheme } from '../../../../constants/styles';
+import { deepClone } from '../../../../utils/helpers';
 
 const DefaultValues = {
   gradient: ['#000', '#FFF'],
@@ -33,7 +34,7 @@ export class Liquid extends React.Component {
     let colorKey = this.props.liquid.colors ? 'colors' : 'color';
     let colorVal;
     if (colorKey === 'colors') {
-      colorVal = JSON.parse(JSON.stringify(this.props.liquid[colorKey]))
+      colorVal = deepClone(this.props.liquid[colorKey])
       colorVal[colorIndex] = data.color;
     } else {
       colorVal = data.color

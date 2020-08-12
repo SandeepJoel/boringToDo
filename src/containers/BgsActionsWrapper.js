@@ -1,10 +1,11 @@
 import React from 'react';
 import {
   getBackgroundEffectFS,
-  activateAndUpdateBackgroundEffectFS
+  activateAndUpdateBackgroundEffectFS 
 } from '../api/settingsFirestore';
 import { getFromLocalStorage } from '../utils/helpers';
 import { Loader } from '../components/Loader';
+import { deepClone } from '../utils/helpers';
 
 // TODO: Need to enable Airbnb style guide to make naming conventions better
 
@@ -17,7 +18,7 @@ export const BgsActionsWrapper = (PassedComponent) => {
         isDirty: false,
         isLoaded: props.config ? true : false,
         currentEffectConfig: props.config,
-        initialState: props.config ? JSON.parse(JSON.stringify(props.config)) : undefined
+        initialState: props.config ? deepClone(props.config) : undefined
       };
       this.fetchBackgroundEffect = this.fetchBackgroundEffect.bind(this);
       this.ourSetState = this.ourSetState.bind(this);
@@ -47,11 +48,8 @@ export const BgsActionsWrapper = (PassedComponent) => {
         getFromLocalStorage('userData', 'id'),
         payload
       );
-      this.setState({ applyState: 'Done', isDirty: false, initialState: payload });
-
-      // TODO: Here we need to update both context and localStorage. Think to find a better way
+      this.setState({ applyState: 'Done', isDirty: false, initialState: payload });      
       this.props.updateBackgroundContext({ activeBackgroundEffectSettings: payload });
-      localStorage.setItem('activeBackgroundEffectSettings', JSON.stringify(payload));
     };
 
     ourSetState(stateData) {

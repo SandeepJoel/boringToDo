@@ -2,6 +2,7 @@ import firebase from '@firebase/app';
 import '@firebase/auth';
 import { db } from "../config/firestoreConfig";
 import { defaultSettings } from '../constants/settings';
+import { deepClone } from '../utils/helpers';
 
 // ** Authentication related api functions **
 
@@ -36,7 +37,7 @@ export function googleSignOut () {
 
 function accountSetup (user) {
   // Assuming first element in `backgroundEffects` is active by default
-  let ActiveBackgroundEffect = JSON.parse(JSON.stringify(defaultSettings.backgroundEffects[0]));
+  let ActiveBackgroundEffect = deepClone(defaultSettings.backgroundEffects[0]);
   return new Promise(function (resolve, reject) {
     let batch = db.batch();
     let userRef = db.collection('users').doc(user.uid);

@@ -46,3 +46,18 @@
   border-radius: 4px !important;
   width: auto !important;
 }
+
+// overriding colorpicker styless
+.colorpicker-container {
+  box-shadow: none !important;
+  background: transparent !important;
+  padding: 10px;
+  
+  input {
+    color: var(--primary-foreground) !important;
+  }
+
+  svg {
+    fill: var(--primary-foreground) !important
+  }
+}
